@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeekPlanner — Dr. Julio Leyrer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    /* ─────────────────────────────────────────────
+       DESIGN TOKENS
+    ───────────────────────────────────────────── */
+    :root {
+      --bg-base:        #0d1117;
+      --bg-surface:     #161b22;
+      --bg-elevated:    #21262d;
+      --bg-hover:       #2d333b;
+      --border:         #30363d;
+      --border-subtle:  #21262d;
+      --text-primary:   #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted:     #6e7681;
+      --accent:         #58a6ff;
+      --accent-soft:    rgba(88,166,255,0.12);
+
+      --cat-docencia:       #3b82f6;
+      --cat-docencia-soft:  rgba(59,130,246,0.15);
+      --cat-invest:         #a78bfa;
+      --cat-invest-soft:    rgba(167,139,250,0.15);
+      --cat-admin:          #fbbf24;
+      --cat-admin-soft:     rgba(251,191,36,0.15);
+      --cat-personal:       #34d399;
+      --cat-personal-soft:  rgba(52,211,153,0.15);
+
+      --status-pending:    #fbbf24;
+      --status-progress:   #60a5fa;
+      --status-done:       #34d399;
+      --status-overdue:    #f87171;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+
+      --sidebar-w: 240px;
+      --header-h: 60px;
+    }
+
+    [data-theme="light"] {
+      --bg-base:        #f0f2f5;
+      --bg-surface:     #ffffff;
+      --bg-elevated:    #f6f8fa;
+      --bg-hover:       #eaeef2;
+      --border:         #d0d7de;
+      --border-subtle:  #eaeef2;
+      --text-primary:   #1f2328;
+      --text-secondary: #57606a;
+      --text-muted:     #818b98;
+      --accent-soft:    rgba(9,105,218,0.1);
+      --accent:         #0969da;
+    }
+
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 14px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+    input, textarea, select {
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 7px 11px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    select option { background: var(--bg-elevated); }
+    a { color: var(--accent); text-decoration: none; }
+
+    /* ─────────────────────────────────────────────
+       SCROLLBAR
+    ───────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    /* ─────────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────────── */
+    #app { display: flex; height: 100vh; }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: var(--sidebar-w);
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: hidden;
+      transition: width 0.25s ease;
+      z-index: 100;
+    }
+    #sidebar.collapsed { width: 56px; }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 14px;
+      border-bottom: 1px solid var(--border);
+      height: var(--header-h);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .logo-text { font-weight: 700; font-size: 1rem; letter-spacing: -0.02em; }
+    .logo-sub { font-size: 0.7rem; color: var(--text-muted); }
+
+    .sidebar-nav { flex: 1; padding: 10px 8px; overflow-y: auto; }
+    .nav-section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 10px 8px 4px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    #sidebar.collapsed .nav-section-label { opacity: 0; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 2px;
+    }
+    .nav-item svg { flex-shrink: 0; }
+    .nav-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .nav-item.active { background: var(--accent-soft); color: var(--accent); }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--status-overdue);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 99px;
+    }
+    #sidebar.collapsed .nav-badge { display: none; }
+
+    .sidebar-footer {
+      padding: 10px 8px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* MAIN */
+    #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* TOPBAR */
+    #topbar {
+      height: var(--header-h);
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      flex-shrink: 0;
+    }
+    #toggle-sidebar {
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      transition: background 0.15s;
+    }
+    #toggle-sidebar:hover { background: var(--bg-hover); }
+    #page-title { font-size: 1rem; font-weight: 600; flex: 1; }
+    #week-label { font-size: 0.8rem; color: var(--text-secondary); background: var(--bg-elevated); padding: 4px 10px; border-radius: 99px; }
+    .topbar-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .topbar-btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #79c0ff; }
+    .btn-ghost { color: var(--text-secondary); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+    /* CONTENT */
+    #content { flex: 1; overflow-y: auto; padding: 24px; }
+
+    /* PAGE SECTIONS */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    /* ─────────────────────────────────────────────
+       WEEK VIEW
+    ───────────────────────────────────────────── */
+    .week-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .week-nav h2 { font-size: 1.2rem; font-weight: 700; flex: 1; }
+    .week-nav button { padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); color: var(--text-secondary); font-size: 0.8rem; transition: all 0.15s; }
+    .week-nav button:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) { .week-grid { grid-template-columns: 1fr; } }
+
+    .day-col {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .day-col.today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+
+    .day-header {
+      padding: 10px 14px 8px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .day-name { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); }
+    .day-date { font-size: 1.4rem; font-weight: 800; line-height: 1; }
+    .day-col.today .day-date { color: var(--accent); }
+    .day-count { font-size: 0.7rem; color: var(--text-muted); background: var(--bg-elevated); padding: 2px 7px; border-radius: 99px; }
+
+    .day-tasks { padding: 8px; min-height: 100px; }
+    .task-add-btn {
+      width: 100%;
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: 1px dashed var(--border);
+      transition: all 0.15s;
+      margin-top: 6px;
+    }
+    .task-add-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+    /* TASK CARD */
+    .task-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+    .task-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+    }
+    .task-card[data-cat="Docencia"]::before    { background: var(--cat-docencia); }
+    .task-card[data-cat="Investigación"]::before { background: var(--cat-invest); }
+    .task-card[data-cat="Administración"]::before { background: var(--cat-admin); }
+    .task-card[data-cat="Personal"]::before   { background: var(--cat-personal); }
+
+    .task-card:hover { border-color: var(--border); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+    .task-card.done { opacity: 0.5; }
+    .task-card.done .task-title { text-decoration: line-through; }
+    .task-card.overdue { border-color: var(--status-overdue); }
+
+    .task-top { display: flex; align-items: flex-start; gap: 7px; }
+    .task-check {
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .task-card.done .task-check { background: var(--status-done); border-color: var(--status-done); }
+    .task-title { font-size: 0.82rem; font-weight: 600; line-height: 1.3; flex: 1; }
+    .task-meta { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; margin-top: 7px; padding-left: 23px; }
+    .task-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 99px;
+      letter-spacing: 0.02em;
+    }
+    .tag-Docencia    { background: var(--cat-docencia-soft); color: var(--cat-docencia); }
+    .tag-Investigación { background: var(--cat-invest-soft); color: var(--cat-invest); }
+    .tag-Administración { background: var(--cat-admin-soft); color: var(--cat-admin); }
+    .tag-Personal    { background: var(--cat-personal-soft); color: var(--cat-personal); }
+
+    .task-time { font-size: 0.68rem; color: var(--text-muted); display: flex; align-items: center; gap: 3px; }
+    .task-deadline-tag { font-size: 0.65rem; color: var(--status-overdue); font-weight: 600; display: flex; align-items: center; gap: 3px; }
+    .task-carry { font-size: 0.65rem; color: var(--status-pending); display: flex; align-items: center; gap: 3px; }
+
+    /* CARRYOVER BANNER */
+    .carryover-section {
+      margin-bottom: 20px;
+      background: rgba(251,191,36,0.08);
+      border: 1px solid rgba(251,191,36,0.3);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+    .carryover-section h3 { font-size: 0.85rem; color: var(--status-pending); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .carryover-tasks { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* ─────────────────────────────────────────────
+       STATS & HISTORY PAGE
+    ───────────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 1000px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+    }
+    .stat-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 8px; }
+    .stat-value { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .stat-sub { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
+    .stat-trend-up { color: var(--status-done); }
+    .stat-trend-down { color: var(--status-overdue); }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) { .charts-grid { grid-template-columns: 1fr; } }
+
+    .chart-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+    }
+    .chart-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .chart-wrap { position: relative; height: 200px; }
+
+    /* HISTORY */
+    .history-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .history-controls input[type="search"],
+    .history-controls select {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      font-size: 0.82rem;
+    }
+    .history-table th {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      background: var(--bg-elevated);
+      cursor: pointer;
+      user-select: none;
+    }
+    .history-table th:hover { color: var(--text-primary); }
+    .history-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); vertical-align: middle; }
+    .history-table tr:last-child td { border-bottom: none; }
+    .history-table tr:hover td { background: var(--bg-elevated); }
+    .status-pill {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+    .pill-done    { background: rgba(52,211,153,0.15); color: var(--status-done); }
+    .pill-pending { background: rgba(251,191,36,0.15); color: var(--status-pending); }
+    .pill-overdue { background: rgba(248,113,113,0.15); color: var(--status-overdue); }
+    .pill-progress{ background: rgba(96,165,250,0.15); color: var(--status-progress); }
+
+    /* ─────────────────────────────────────────────
+       MODAL
+    ───────────────────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.15s ease;
+    }
+    .modal-overlay.open { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; } }
+
+    .modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.2s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } }
+
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .modal-header h2 { font-size: 1.05rem; font-weight: 700; }
+    .modal-close { padding: 4px 8px; border-radius: var(--radius-sm); color: var(--text-muted); font-size: 1.2rem; transition: all 0.15s; }
+    .modal-close:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+    .btn-danger { background: rgba(248,113,113,0.15); color: var(--status-overdue); border: 1px solid rgba(248,113,113,0.3); padding: 7px 14px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; transition: all 0.15s; }
+    .btn-danger:hover { background: rgba(248,113,113,0.25); }
+
+    /* PRIORITY DOTS */
+    .priority-select { display: flex; gap: 8px; align-items: center; }
+    .priority-opt { display: flex; align-items: center; gap: 5px; font-size: 0.78rem; cursor: pointer; }
+    .priority-opt input { accent-color: var(--accent); }
+
+    /* ─────────────────────────────────────────────
+       TOAST
+    ───────────────────────────────────────────── */
+    #toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toast {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: slideInRight 0.25s ease, fadeOutDown 0.3s ease 2.7s forwards;
+      max-width: 320px;
+    }
+    .toast.success { border-left: 3px solid var(--status-done); }
+    .toast.error   { border-left: 3px solid var(--status-overdue); }
+    @keyframes slideInRight { from { transform: translateX(60px); opacity: 0; } }
+    @keyframes fadeOutDown  { to   { transform: translateY(20px); opacity: 0; } }
+
+    /* ─────────────────────────────────────────────
+       THEME TOGGLE
+    ───────────────────────────────────────────── */
+    #theme-toggle {
+      display: flex; align-items: center; gap: 6px;
+      width: 100%; padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      transition: background 0.15s;
+    }
+    #theme-toggle:hover { background: var(--bg-hover); }
+
+    /* ─────────────────────────────────────────────
+       CATEGORY LEGEND
+    ───────────────────────────────────────────── */
+    .cat-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .cat-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; padding: 4px 8px; border-radius: 99px; transition: background 0.15s; }
+    .cat-item:hover { background: var(--bg-elevated); }
+    .cat-item.muted { opacity: 0.35; }
+
+    /* SEARCH BAR */
+    .search-bar { display: flex; align-items: center; gap: 8px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 10px; }
+    .search-bar svg { color: var(--text-muted); flex-shrink: 0; }
+    .search-bar input { border: none; background: none; padding: 7px 4px; flex: 1; }
+    .search-bar input:focus { box-shadow: none; }
+
+    /* EMPTY STATE */
+    .empty-state {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px 16px; color: var(--text-muted); text-align: center; gap: 8px;
+    }
+    .empty-state svg { opacity: 0.4; margin-bottom: 4px; }
+    .empty-state p { font-size: 0.82rem; }
+
+    /* SECTION HEADER */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .section-header h2 { font-size: 1.1rem; font-weight: 700; }
+
+    /* PROGRESS BAR */
+    .progress-bar { height: 4px; background: var(--bg-elevated); border-radius: 99px; overflow: hidden; margin-top: 6px; }
+    .progress-fill { height: 100%; border-radius: 99px; background: var(--accent); transition: width 0.4s ease; }
+
+    /* WEEK SUMMARY CARD */
+    .summary-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .summary-item { display: flex; flex-direction: column; gap: 2px; }
+    .summary-item .label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+    .summary-item .value { font-size: 1.3rem; font-weight: 800; }
+    .summary-progress { flex: 1; min-width: 200px; }
+    .summary-progress .label { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">📅</div>
+      <div>
+        <div class="logo-text">WeekPlanner</div>
+        <div class="logo-sub">Dr. Julio Leyrer</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Planificación</div>
+      <div class="nav-item active" data-page="week" onclick="navigateTo('week',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Semana Actual</span>
+        <span class="nav-badge" id="overdue-badge" style="display:none">!</span>
+      </div>
+      <div class="nav-item" data-page="all-tasks" onclick="navigateTo('all-tasks',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span>Todas las Tareas</span>
+      </div>
+
+      <div class="nav-section-label">Análisis</div>
+      <div class="nav-item" data-page="stats" onclick="navigateTo('stats',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Estadísticas</span>
+      </div>
+      <div class="nav-item" data-page="history" onclick="navigateTo('history',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Historial</span>
+      </div>
+
+      <div class="nav-section-label">Categorías</div>
+      <div class="nav-item" data-page="cat-Docencia" onclick="navigateTo('cat-Docencia',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span style="color:var(--cat-docencia)">Docencia</span>
+      </div>
+      <div class="nav-item" data-page="cat-Investigación" onclick="navigateTo('cat-Investigación',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span style="color:var(--cat-invest)">Investigación</span>
+      </div>
+      <div class="nav-item" data-page="cat-Administración" onclick="navigateTo('cat-Administración',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        <span style="color:var(--cat-admin)">Administración</span>
+      </div>
+      <div class="nav-item" data-page="cat-Personal" onclick="navigateTo('cat-Personal',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span style="color:var(--cat-personal)">Personal</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button id="theme-toggle" onclick="toggleTheme()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <span>Tema</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main">
+    <!-- TOPBAR -->
+    <header id="topbar">
+      <button id="toggle-sidebar" onclick="toggleSidebar()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span id="page-title">Semana Actual</span>
+      <span id="week-label"></span>
+      <div style="flex:1"></div>
+      <button class="topbar-btn btn-ghost" onclick="exportData()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exportar
+      </button>
+      <button class="topbar-btn btn-primary" onclick="openModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nueva Actividad
+      </button>
+    </header>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+      <!-- WEEK PAGE -->
+      <section id="page-week" class="page-section active">
+        <div class="week-nav">
+          <button onclick="changeWeek(-1)">← Ant.</button>
+          <h2 id="week-range-title"></h2>
+          <button onclick="changeWeek(0)">Hoy</button>
+          <button onclick="changeWeek(1)">Sig. →</button>
+        </div>
+
+        <div class="summary-card" id="week-summary"></div>
+
+        <!-- Carryover tasks from previous weeks -->
+        <div id="carryover-section" class="carryover-section" style="display:none">
+          <h3>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.18-5.41"/></svg>
+            Actividades sin completar de semanas anteriores
+          </h3>
+          <div class="carryover-tasks" id="carryover-tasks"></div>
+        </div>
+
+        <!-- Category legend -->
+        <div class="cat-legend" id="cat-legend"></div>
+
+        <!-- Week grid -->
+        <div class="week-grid" id="week-grid"></div>
+      </section>
+
+      <!-- ALL TASKS -->
+      <section id="page-all-tasks" class="page-section">
+        <div class="section-header">
+          <h2>Todas las Tareas</h2>
+          <button class="topbar-btn btn-primary" onclick="openModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nueva
+          </button>
+        </div>
+        <div class="history-controls">
+          <div class="search-bar" style="flex:2;min-width:200px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="all-search" placeholder="Buscar..." oninput="renderAllTasks()">
+          </div>
+          <select id="all-cat-filter" onchange="renderAllTasks()">
+            <option value="">Todas las categorías</option>
+            <option>Docencia</option><option>Investigación</option>
+            <option>Administración</option><option>Personal</option>
+          </select>
+          <select id="all-status-filter" onchange="renderAllTasks()">
+            <option value="">Todos los estados</option>
+            <option value="pending">Pendiente</option>
+            <option value="progress">En progreso</option>
+            <option value="done">Completada</option>
+            <option value="overdue">Vencida</option>
+          </select>
+        </div>
+        <div id="all-tasks-container"></div>
+      </section>
+
+      <!-- STATS PAGE -->
+      <section id="page-stats" class="page-section">
+        <div class="section-header"><h2>Estadísticas</h2></div>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Tareas por Categoría</h3>
+            <div class="chart-wrap"><canvas id="chart-cat"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h3>Completadas por Semana</h3>
+            <div class="chart-wrap"><canvas id="chart-weekly"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h3>Tasa de Completado (%)</h3>
+            <div class="chart-wrap"><canvas id="chart-rate"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h3>Distribución por Estado</h3>
+            <div class="chart-wrap"><canvas id="chart-status"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORY PAGE -->
+      <section id="page-history" class="page-section">
+        <div class="section-header"><h2>Historial de Actividades</h2></div>
+        <div class="history-controls">
+          <div class="search-bar" style="flex:2;min-width:200px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="hist-search" placeholder="Buscar actividad..." oninput="renderHistory()">
+          </div>
+          <select id="hist-cat" onchange="renderHistory()">
+            <option value="">Todas las categorías</option>
+            <option>Docencia</option><option>Investigación</option>
+            <option>Administración</option><option>Personal</option>
+          </select>
+          <select id="hist-status" onchange="renderHistory()">
+            <option value="">Todos los estados</option>
+            <option value="done">Completadas</option>
+            <option value="pending">Pendientes</option>
+            <option value="overdue">Vencidas</option>
+          </select>
+          <input type="month" id="hist-month" onchange="renderHistory()" style="width:140px">
+        </div>
+        <div id="hist-container"></div>
+      </section>
+
+      <!-- CATEGORY PAGES (Docencia, Investigación, etc.) -->
+      <section id="page-cat-Docencia" class="page-section">
+        <div class="section-header">
+          <h2 style="color:var(--cat-docencia)">📚 Docencia</h2>
+          <button class="topbar-btn btn-primary" onclick="openModal('Docencia')">+ Nueva</button>
+        </div>
+        <div id="cat-Docencia-container"></div>
+      </section>
+      <section id="page-cat-Investigación" class="page-section">
+        <div class="section-header">
+          <h2 style="color:var(--cat-invest)">🔬 Investigación</h2>
+          <button class="topbar-btn btn-primary" onclick="openModal('Investigación')">+ Nueva</button>
+        </div>
+        <div id="cat-Investigación-container"></div>
+      </section>
+      <section id="page-cat-Administración" class="page-section">
+        <div class="section-header">
+          <h2 style="color:var(--cat-admin)">📋 Administración</h2>
+          <button class="topbar-btn btn-primary" onclick="openModal('Administración')">+ Nueva</button>
+        </div>
+        <div id="cat-Administración-container"></div>
+      </section>
+      <section id="page-cat-Personal" class="page-section">
+        <div class="section-header">
+          <h2 style="color:var(--cat-personal)">👤 Personal</h2>
+          <button class="topbar-btn btn-primary" onclick="openModal('Personal')">+ Nueva</button>
+        </div>
+        <div id="cat-Personal-container"></div>
+      </section>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /app -->
+
+<!-- ─────────────────────────────────────────────
+     MODAL — Nueva / Editar Actividad
+───────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Nueva Actividad</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <form id="task-form" onsubmit="saveTask(event)">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">Título *</label>
+          <input type="text" id="f-title" placeholder="Ej. Clase de Hidrodinámica" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoría *</label>
+          <select id="f-cat" required>
+            <option value="">Seleccionar...</option>
+            <option>Docencia</option>
+            <option>Investigación</option>
+            <option>Administración</option>
+            <option>Personal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Estado</label>
+          <select id="f-status">
+            <option value="pending">Pendiente</option>
+            <option value="progress">En Progreso</option>
+            <option value="done">Completada</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fecha de actividad *</label>
+          <input type="date" id="f-date" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hora</label>
+          <input type="time" id="f-time">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Deadline / Fecha límite</label>
+          <input type="date" id="f-deadline">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lugar</label>
+          <input type="text" id="f-location" placeholder="Sala 201 / Zoom link">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Participantes</label>
+          <input type="text" id="f-participants" placeholder="Dr. García, alumnos G3...">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Prioridad</label>
+          <div class="priority-select">
+            <label class="priority-opt"><input type="radio" name="priority" value="low" id="f-prio-low"> 🟢 Baja</label>
+            <label class="priority-opt"><input type="radio" name="priority" value="medium" id="f-prio-med" checked> 🟡 Media</label>
+            <label class="priority-opt"><input type="radio" name="priority" value="high" id="f-prio-hi"> 🔴 Alta</label>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Notas / Recursos</label>
+          <textarea id="f-notes" placeholder="Materiales necesarios, links, instrucciones..."></textarea>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-danger" id="modal-delete-btn" onclick="deleteTask()" style="display:none">Eliminar</button>
+        <button type="button" class="topbar-btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="topbar-btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ─────────────────────────────────────────────
+     JAVASCRIPT
+───────────────────────────────────────────── -->
+<script>
+// ═══════════════════════════════════════════════
+//  DATA LAYER
+// ═══════════════════════════════════════════════
+const STORAGE_KEY = 'weekplanner_tasks_v2';
+let tasks = [];
+
+function loadTasks() {
+  try { tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { tasks = []; }
+}
+function saveTasks() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+}
+
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
+
+// ═══════════════════════════════════════════════
+//  WEEK NAVIGATION
+// ═══════════════════════════════════════════════
+let currentWeekOffset = 0;  // 0 = this week
+
+function getWeekDates(offset = 0) {
+  const today = new Date();
+  const day = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (day === 0 ? 6 : day - 1) + offset * 7);
+  const dates = [];
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    dates.push(d);
+  }
+  return dates;
+}
+
+function toISO(d) { return d.toISOString().split('T')[0]; }
+function todayISO() { return toISO(new Date()); }
+
+function formatDate(iso) {
+  if (!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+function formatDateShort(iso) {
+  if (!iso) return '';
+  const [,m,d] = iso.split('-');
+  return `${d}/${m}`;
+}
+
+function isOverdue(task) {
+  if (task.status === 'done') return false;
+  const check = task.deadline || task.date;
+  return check && check < todayISO();
+}
+
+// ═══════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════
+let currentPage = 'week';
+let sidebarCollapsed = false;
+
+function navigateTo(page, el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById(`page-${page}`);
+  if (target) target.classList.add('active');
+  currentPage = page;
+
+  // Update topbar title
+  const titles = {
+    'week': 'Semana Actual',
+    'all-tasks': 'Todas las Tareas',
+    'stats': 'Estadísticas',
+    'history': 'Historial',
+    'cat-Docencia': 'Docencia',
+    'cat-Investigación': 'Investigación',
+    'cat-Administración': 'Administración',
+    'cat-Personal': 'Personal',
+  };
+  document.getElementById('page-title').textContent = titles[page] || page;
+
+  renderCurrentPage();
+}
+
+function renderCurrentPage() {
+  if (currentPage === 'week') renderWeek();
+  else if (currentPage === 'all-tasks') renderAllTasks();
+  else if (currentPage === 'stats') renderStats();
+  else if (currentPage === 'history') renderHistory();
+  else if (currentPage.startsWith('cat-')) renderCatPage(currentPage.replace('cat-',''));
+}
+
+function toggleSidebar() {
+  sidebarCollapsed = !sidebarCollapsed;
+  document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
+}
+
+function changeWeek(dir) {
+  if (dir === 0) currentWeekOffset = 0;
+  else currentWeekOffset += dir;
+  renderWeek();
+}
+
+// ═══════════════════════════════════════════════
+//  WEEK RENDER
+// ═══════════════════════════════════════════════
+const DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
+const CATS = ['Docencia','Investigación','Administración','Personal'];
+const CAT_COLORS = {
+  Docencia: 'var(--cat-docencia)',
+  Investigación: 'var(--cat-invest)',
+  Administración: 'var(--cat-admin)',
+  Personal: 'var(--cat-personal)',
+};
+let hiddenCats = new Set();
+
+function renderWeek() {
+  const dates = getWeekDates(currentWeekOffset);
+  const today = todayISO();
+  const startISO = toISO(dates[0]);
+  const endISO   = toISO(dates[4]);
+
+  // Week label
+  const opts = {day:'numeric', month:'short'};
+  document.getElementById('week-label').textContent =
+    `${dates[0].toLocaleDateString('es-CL',opts)} – ${dates[4].toLocaleDateString('es-CL',opts)}`;
+  document.getElementById('week-range-title').textContent =
+    `Semana del ${dates[0].toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'})}`;
+
+  // Carryover tasks (past weeks, not done)
+  const carryovers = tasks.filter(t => t.date < startISO && t.status !== 'done');
+  const cs = document.getElementById('carryover-section');
+  const ct = document.getElementById('carryover-tasks');
+  if (carryovers.length > 0) {
+    cs.style.display = '';
+    ct.innerHTML = carryovers.map(t => `
+      <div class="task-card" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" style="cursor:pointer;min-width:200px;max-width:260px">
+        ${taskCardInner(t)}
+      </div>
+    `).join('');
+  } else { cs.style.display = 'none'; }
+
+  // Summary
+  const weekTasks = tasks.filter(t => t.date >= startISO && t.date <= endISO);
+  const done = weekTasks.filter(t => t.status === 'done').length;
+  const total = weekTasks.length;
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  const overdue = weekTasks.filter(isOverdue).length;
+  document.getElementById('week-summary').innerHTML = `
+    <div class="summary-item"><span class="label">Total</span><span class="value">${total}</span></div>
+    <div class="summary-item"><span class="label">Completadas</span><span class="value" style="color:var(--status-done)">${done}</span></div>
+    <div class="summary-item"><span class="label">Pendientes</span><span class="value" style="color:var(--status-pending)">${total-done}</span></div>
+    <div class="summary-item"><span class="label">Vencidas</span><span class="value" style="color:var(--status-overdue)">${overdue}</span></div>
+    <div class="summary-progress">
+      <div class="label">Progreso semanal — ${pct}%</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+  `;
+
+  // Category legend
+  document.getElementById('cat-legend').innerHTML = CATS.map(c => `
+    <div class="cat-item ${hiddenCats.has(c)?'muted':''}" onclick="toggleCat('${c}')">
+      <div class="cat-dot" style="background:${CAT_COLORS[c]}"></div>${c}
+    </div>
+  `).join('');
+
+  // Day columns
+  const grid = document.getElementById('week-grid');
+  grid.innerHTML = dates.map((d, i) => {
+    const iso = toISO(d);
+    const isToday = iso === today;
+    const dayTasks = tasks
+      .filter(t => t.date === iso && !hiddenCats.has(t.cat))
+      .sort((a,b) => (a.time||'99:99').localeCompare(b.time||'99:99'));
+    return `
+      <div class="day-col ${isToday?'today':''}">
+        <div class="day-header">
+          <div>
+            <div class="day-name">${DAYS[i]}</div>
+            <div class="day-date">${d.getDate()}</div>
+          </div>
+          <span class="day-count">${dayTasks.length}</span>
+        </div>
+        <div class="day-tasks">
+          ${dayTasks.length ? dayTasks.map(t => taskCardHTML(t)).join('') : `
+            <div class="empty-state" style="padding:16px 8px">
+              <p style="font-size:0.7rem">Sin actividades</p>
+            </div>
+          `}
+          <button class="task-add-btn" onclick="openModal(null,null,'${iso}')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Agregar
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  updateOverdueBadge();
+}
+
+function toggleCat(cat) {
+  hiddenCats.has(cat) ? hiddenCats.delete(cat) : hiddenCats.add(cat);
+  renderWeek();
+}
+
+function taskCardHTML(t) {
+  return `<div class="task-card ${t.status==='done'?'done':''} ${isOverdue(t)?'overdue':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')">${taskCardInner(t)}</div>`;
+}
+
+function taskCardInner(t) {
+  const prioEmoji = t.priority === 'high' ? '🔴 ' : t.priority === 'medium' ? '🟡 ' : '🟢 ';
+  return `
+    <div class="task-top">
+      <div class="task-check" onclick="event.stopPropagation();toggleDone('${t.id}')">
+        ${t.status==='done'?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':''}
+      </div>
+      <div class="task-title">${prioEmoji}${escHtml(t.title)}</div>
+    </div>
+    <div class="task-meta">
+      <span class="task-tag tag-${t.cat}">${t.cat}</span>
+      ${t.time ? `<span class="task-time"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.time}</span>` : ''}
+      ${t.deadline && t.deadline !== t.date ? `<span class="task-deadline-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${formatDateShort(t.deadline)}</span>` : ''}
+      ${isOverdue(t) ? `<span class="task-carry">⚠ Vencida</span>` : ''}
+    </div>
+  `;
+}
+
+function updateOverdueBadge() {
+  const overdue = tasks.filter(t => isOverdue(t) && t.date < todayISO()).length;
+  const badge = document.getElementById('overdue-badge');
+  if (overdue > 0) { badge.style.display = ''; badge.textContent = overdue; }
+  else { badge.style.display = 'none'; }
+}
+
+// ═══════════════════════════════════════════════
+//  ALL TASKS RENDER
+// ═══════════════════════════════════════════════
+function renderAllTasks() {
+  const search = (document.getElementById('all-search')?.value||'').toLowerCase();
+  const cat    = document.getElementById('all-cat-filter')?.value||'';
+  const status = document.getElementById('all-status-filter')?.value||'';
+
+  let filtered = tasks.filter(t => {
+    const matchSearch = !search || t.title.toLowerCase().includes(search) || (t.notes||'').toLowerCase().includes(search);
+    const matchCat    = !cat || t.cat === cat;
+    const matchStatus = !status || (status==='overdue' ? isOverdue(t) : t.status === status);
+    return matchSearch && matchCat && matchStatus;
+  }).sort((a,b) => b.date.localeCompare(a.date));
+
+  const c = document.getElementById('all-tasks-container');
+  if (!filtered.length) { c.innerHTML = emptyState('No hay tareas que coincidan'); return; }
+
+  c.innerHTML = `
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoría</th>
+          <th>Fecha</th>
+          <th>Deadline</th>
+          <th>Estado</th>
+          <th>Prioridad</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${filtered.map(t => `
+          <tr onclick="openModal(null,'${t.id}')" style="cursor:pointer">
+            <td style="color:var(--text-primary);font-weight:500">${escHtml(t.title)}</td>
+            <td><span class="task-tag tag-${t.cat}">${t.cat}</span></td>
+            <td>${formatDate(t.date)}</td>
+            <td>${t.deadline ? formatDate(t.deadline) : '<span style="color:var(--text-muted)">—</span>'}</td>
+            <td>${statusPill(t)}</td>
+            <td>${prioLabel(t.priority)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ═══════════════════════════════════════════════
+//  HISTORY RENDER
+// ═══════════════════════════════════════════════
+function renderHistory() {
+  const search = (document.getElementById('hist-search')?.value||'').toLowerCase();
+  const cat    = document.getElementById('hist-cat')?.value||'';
+  const status = document.getElementById('hist-status')?.value||'';
+  const month  = document.getElementById('hist-month')?.value||'';
+
+  let filtered = tasks.filter(t => {
+    const matchSearch = !search || t.title.toLowerCase().includes(search);
+    const matchCat    = !cat || t.cat === cat;
+    const matchStatus = !status || (status==='overdue' ? isOverdue(t) : t.status === status);
+    const matchMonth  = !month || t.date.startsWith(month);
+    return matchSearch && matchCat && matchStatus && matchMonth;
+  }).sort((a,b) => b.date.localeCompare(a.date));
+
+  const c = document.getElementById('hist-container');
+  if (!filtered.length) { c.innerHTML = emptyState('No hay actividades en el historial'); return; }
+
+  c.innerHTML = `
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoría</th>
+          <th>Fecha</th>
+          <th>Deadline</th>
+          <th>Lugar</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${filtered.map(t => `
+          <tr onclick="openModal(null,'${t.id}')" style="cursor:pointer">
+            <td style="color:var(--text-primary);font-weight:500">${escHtml(t.title)}</td>
+            <td><span class="task-tag tag-${t.cat}">${t.cat}</span></td>
+            <td>${formatDate(t.date)}</td>
+            <td>${t.deadline ? formatDate(t.deadline) : '<span style="color:var(--text-muted)">—</span>'}</td>
+            <td style="color:var(--text-secondary);font-size:0.75rem">${escHtml(t.location||'—')}</td>
+            <td>${statusPill(t)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ═══════════════════════════════════════════════
+//  CATEGORY PAGES
+// ═══════════════════════════════════════════════
+function renderCatPage(cat) {
+  const catTasks = tasks.filter(t => t.cat === cat).sort((a,b) => b.date.localeCompare(a.date));
+  const c = document.getElementById(`cat-${cat}-container`);
+  if (!c) return;
+  if (!catTasks.length) { c.innerHTML = emptyState('No hay actividades en esta categoría'); return; }
+
+  c.innerHTML = `
+    <table class="history-table">
+      <thead><tr><th>Título</th><th>Fecha</th><th>Deadline</th><th>Lugar</th><th>Estado</th><th>Prioridad</th></tr></thead>
+      <tbody>
+        ${catTasks.map(t => `
+          <tr onclick="openModal(null,'${t.id}')" style="cursor:pointer">
+            <td style="color:var(--text-primary);font-weight:500">${escHtml(t.title)}</td>
+            <td>${formatDate(t.date)}</td>
+            <td>${t.deadline ? formatDate(t.deadline) : '<span style="color:var(--text-muted)">—</span>'}</td>
+            <td style="font-size:0.75rem;color:var(--text-secondary)">${escHtml(t.location||'—')}</td>
+            <td>${statusPill(t)}</td>
+            <td>${prioLabel(t.priority)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ═══════════════════════════════════════════════
+//  STATS
+// ═══════════════════════════════════════════════
+let charts = {};
+
+function renderStats() {
+  const total = tasks.length;
+  const done  = tasks.filter(t => t.status === 'done').length;
+  const overdue = tasks.filter(isOverdue).length;
+  const rate = total > 0 ? Math.round(done/total*100) : 0;
+
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Total Actividades</div>
+      <div class="stat-value">${total}</div>
+      <div class="stat-sub">registradas en el sistema</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Completadas</div>
+      <div class="stat-value" style="color:var(--status-done)">${done}</div>
+      <div class="stat-sub stat-trend-up">↑ ${rate}% tasa de completado</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pendientes</div>
+      <div class="stat-value" style="color:var(--status-pending)">${total-done}</div>
+      <div class="stat-sub">sin completar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Vencidas</div>
+      <div class="stat-value" style="color:var(--status-overdue)">${overdue}</div>
+      <div class="stat-sub ${overdue>0?'stat-trend-down':''}">requieren atención</div>
+    </div>
+  `;
+
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  const textColor = isDark ? '#8b949e' : '#57606a';
+
+  // Chart: by category
+  destroyChart('chart-cat');
+  const catCounts = CATS.map(c => tasks.filter(t=>t.cat===c).length);
+  charts['chart-cat'] = new Chart(document.getElementById('chart-cat'), {
+    type: 'doughnut',
+    data: {
+      labels: CATS,
+      datasets: [{ data: catCounts,
+        backgroundColor: ['rgba(59,130,246,0.8)','rgba(167,139,250,0.8)','rgba(251,191,36,0.8)','rgba(52,211,153,0.8)'],
+        borderColor: isDark ? '#21262d' : '#fff', borderWidth: 3 }]
+    },
+    options: { responsive:true, maintainAspectRatio:false,
+      plugins: { legend: { position:'right', labels: { color: textColor, font:{size:11}, boxWidth:12 } } }
+    }
+  });
+
+  // Chart: tasks per week (last 8 weeks)
+  destroyChart('chart-weekly');
+  const weekLabels = [], weekDone = [], weekTotal = [];
+  for (let i = 7; i >= 0; i--) {
+    const dates = getWeekDates(-i);
+    const s = toISO(dates[0]), e = toISO(dates[4]);
+    const wt = tasks.filter(t => t.date >= s && t.date <= e);
+    weekLabels.push(`S-${i===0?'actual':i}`);
+    weekTotal.push(wt.length);
+    weekDone.push(wt.filter(t=>t.status==='done').length);
+  }
+  charts['chart-weekly'] = new Chart(document.getElementById('chart-weekly'), {
+    type: 'bar',
+    data: {
+      labels: weekLabels,
+      datasets: [
+        { label:'Total', data:weekTotal, backgroundColor:'rgba(88,166,255,0.25)', borderColor:'rgba(88,166,255,0.8)', borderWidth:1.5, borderRadius:4 },
+        { label:'Completadas', data:weekDone, backgroundColor:'rgba(52,211,153,0.5)', borderColor:'rgba(52,211,153,0.9)', borderWidth:1.5, borderRadius:4 }
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false,
+      plugins: { legend: { labels: { color:textColor, font:{size:11} } } },
+      scales: {
+        x: { grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}} },
+        y: { grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}}, beginAtZero:true }
+      }
+    }
+  });
+
+  // Chart: completion rate per week
+  destroyChart('chart-rate');
+  const rates = weekTotal.map((t,i) => t>0 ? Math.round(weekDone[i]/t*100) : 0);
+  charts['chart-rate'] = new Chart(document.getElementById('chart-rate'), {
+    type: 'line',
+    data: {
+      labels: weekLabels,
+      datasets: [{ label:'% Completado', data:rates,
+        borderColor:'rgba(88,166,255,0.9)', backgroundColor:'rgba(88,166,255,0.1)',
+        fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'rgba(88,166,255,1)' }]
+    },
+    options: { responsive:true, maintainAspectRatio:false,
+      plugins: { legend: { labels: { color:textColor, font:{size:11} } } },
+      scales: {
+        x: { grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}} },
+        y: { grid:{color:gridColor}, ticks:{color:textColor,font:{size:10}, callback:v=>v+'%'}, min:0, max:100 }
+      }
+    }
+  });
+
+  // Chart: status distribution
+  destroyChart('chart-status');
+  const statuses = {
+    'Completadas': tasks.filter(t=>t.status==='done').length,
+    'En Progreso': tasks.filter(t=>t.status==='progress').length,
+    'Pendientes':  tasks.filter(t=>t.status==='pending'&&!isOverdue(t)).length,
+    'Vencidas':    tasks.filter(isOverdue).length,
+  };
+  charts['chart-status'] = new Chart(document.getElementById('chart-status'), {
+    type: 'pie',
+    data: {
+      labels: Object.keys(statuses),
+      datasets: [{ data: Object.values(statuses),
+        backgroundColor:['rgba(52,211,153,0.8)','rgba(96,165,250,0.8)','rgba(251,191,36,0.8)','rgba(248,113,113,0.8)'],
+        borderColor: isDark ? '#21262d' : '#fff', borderWidth: 3 }]
+    },
+    options: { responsive:true, maintainAspectRatio:false,
+      plugins: { legend: { position:'right', labels:{color:textColor,font:{size:11},boxWidth:12} } }
+    }
+  });
+}
+
+function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+
+// ═══════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════
+let editingId = null;
+
+function openModal(presetCat = null, taskId = null, presetDate = null) {
+  editingId = taskId;
+  const form = document.getElementById('task-form');
+  form.reset();
+
+  if (taskId) {
+    const t = tasks.find(x => x.id === taskId);
+    if (!t) return;
+    document.getElementById('modal-title').textContent = 'Editar Actividad';
+    document.getElementById('modal-delete-btn').style.display = '';
+    document.getElementById('f-title').value = t.title;
+    document.getElementById('f-cat').value = t.cat;
+    document.getElementById('f-status').value = t.status;
+    document.getElementById('f-date').value = t.date;
+    document.getElementById('f-time').value = t.time || '';
+    document.getElementById('f-deadline').value = t.deadline || '';
+    document.getElementById('f-location').value = t.location || '';
+    document.getElementById('f-participants').value = t.participants || '';
+    document.getElementById('f-notes').value = t.notes || '';
+    const prio = t.priority || 'medium';
+    document.querySelector(`input[name=priority][value="${prio}"]`).checked = true;
+  } else {
+    document.getElementById('modal-title').textContent = 'Nueva Actividad';
+    document.getElementById('modal-delete-btn').style.display = 'none';
+    document.getElementById('f-date').value = presetDate || todayISO();
+    if (presetCat) document.getElementById('f-cat').value = presetCat;
+    document.getElementById('f-prio-med').checked = true;
+  }
+
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('f-title').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  editingId = null;
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function saveTask(e) {
+  e.preventDefault();
+  const priority = document.querySelector('input[name=priority]:checked')?.value || 'medium';
+  const task = {
+    id: editingId || genId(),
+    title: document.getElementById('f-title').value.trim(),
+    cat: document.getElementById('f-cat').value,
+    status: document.getElementById('f-status').value,
+    date: document.getElementById('f-date').value,
+    time: document.getElementById('f-time').value,
+    deadline: document.getElementById('f-deadline').value,
+    location: document.getElementById('f-location').value.trim(),
+    participants: document.getElementById('f-participants').value.trim(),
+    notes: document.getElementById('f-notes').value.trim(),
+    priority,
+    createdAt: editingId ? (tasks.find(t=>t.id===editingId)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  if (editingId) {
+    const idx = tasks.findIndex(t => t.id === editingId);
+    if (idx !== -1) tasks[idx] = task;
+  } else {
+    tasks.push(task);
+  }
+
+  saveTasks();
+  closeModal();
+  toast('success', editingId ? 'Actividad actualizada ✓' : 'Actividad creada ✓');
+  renderCurrentPage();
+  updateOverdueBadge();
+}
+
+function deleteTask() {
+  if (!editingId) return;
+  if (!confirm('¿Eliminar esta actividad?')) return;
+  tasks = tasks.filter(t => t.id !== editingId);
+  saveTasks();
+  closeModal();
+  toast('success', 'Actividad eliminada');
+  renderCurrentPage();
+  updateOverdueBadge();
+}
+
+function toggleDone(id) {
+  const t = tasks.find(x => x.id === id);
+  if (!t) return;
+  t.status = t.status === 'done' ? 'pending' : 'done';
+  t.updatedAt = new Date().toISOString();
+  saveTasks();
+  renderCurrentPage();
+  updateOverdueBadge();
+  toast('success', t.status === 'done' ? '¡Completada! ✓' : 'Marcada como pendiente');
+}
+
+// ═══════════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════════
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function statusPill(t) {
+  if (isOverdue(t)) return `<span class="status-pill pill-overdue">Vencida</span>`;
+  const map = { done:'pill-done', pending:'pill-pending', progress:'pill-progress' };
+  const label = { done:'Completada', pending:'Pendiente', progress:'En Progreso' };
+  return `<span class="status-pill ${map[t.status]||'pill-pending'}">${label[t.status]||t.status}</span>`;
+}
+
+function prioLabel(p) {
+  const map = { high:'🔴 Alta', medium:'🟡 Media', low:'🟢 Baja' };
+  return map[p] || '🟡 Media';
+}
+
+function emptyState(msg) {
+  return `<div class="empty-state" style="margin-top:40px">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <p>${msg}</p>
+  </div>`;
+}
+
+function toast(type, msg) {
+  const c = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `${type==='success'?'✅':'❌'} ${msg}`;
+  c.appendChild(el);
+  setTimeout(() => el.remove(), 3100);
+}
+
+// ═══════════════════════════════════════════════
+//  THEME
+// ═══════════════════════════════════════════════
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('wp_theme', next);
+  if (currentPage === 'stats') { setTimeout(renderStats, 50); }
+}
+
+// ═══════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════
+function exportData() {
+  const data = JSON.stringify(tasks, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `weekplanner_backup_${todayISO()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('success', 'Datos exportados ✓');
+}
+
+// ═══════════════════════════════════════════════
+//  KEYBOARD
+// ═══════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'n' && !['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) {
+    e.preventDefault(); openModal();
+  }
+});
+
+// ═══════════════════════════════════════════════
+//  SEED DATA (demo tasks for first load)
+// ═══════════════════════════════════════════════
+function seedDemoData() {
+  if (tasks.length > 0) return;
+  const today = new Date();
+  const iso = d => { const x = new Date(today); x.setDate(today.getDate()+d); return toISO(x); };
+  const day = today.getDay();
+  const mondayOffset = day===0 ? -6 : 1-day;
+
+  tasks = [
+    { id:genId(), title:'Clase Hidrodinámica — Grupo A', cat:'Docencia', status:'done', date:iso(mondayOffset), time:'09:00', deadline:iso(mondayOffset), location:'Sala 302', participants:'Estudiantes Ing. Civil 3er año', notes:'Traer apuntes de flujo turbulento', priority:'high', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Revisión artículo Journal of Fluids', cat:'Investigación', status:'progress', date:iso(mondayOffset+1), time:'11:00', deadline:iso(mondayOffset+3), location:'Oficina', participants:'Dr. Martínez', notes:'Deadline: este jueves', priority:'high', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Reunión Departamento', cat:'Administración', status:'pending', date:iso(mondayOffset+1), time:'15:00', deadline:'', location:'Sala de Reuniones B1', participants:'Equipo Departamento', notes:'Orden del día: presupuesto 2026', priority:'medium', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Tutoría estudiantes proyecto final', cat:'Docencia', status:'pending', date:iso(mondayOffset+2), time:'10:00', deadline:'', location:'Zoom', participants:'Grupo 4 — 5 alumnos', notes:'Revisar avance modelado CFD', priority:'medium', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Análisis datos experimento canal', cat:'Investigación', status:'pending', date:iso(mondayOffset+2), time:'14:00', deadline:iso(mondayOffset+4), location:'Lab Fluidos', participants:'Ayudante Roberto', notes:'Procesar datos velocimetría', priority:'high', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Corrección informe Lab 2', cat:'Docencia', status:'pending', date:iso(mondayOffset+3), time:'', deadline:iso(mondayOffset+4), location:'', participants:'', notes:'25 informes grupo B', priority:'medium', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Enviar propuesta proyecto FONDECYT', cat:'Investigación', status:'pending', date:iso(mondayOffset+4), time:'17:00', deadline:iso(mondayOffset+4), location:'', participants:'Co-investigadores', notes:'Revisar formulario en plataforma ANID', priority:'high', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Responder correos alumnos', cat:'Administración', status:'pending', date:iso(mondayOffset+3), time:'09:00', deadline:'', location:'', participants:'', notes:'', priority:'low', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+    { id:genId(), title:'Deporte — natación', cat:'Personal', status:'pending', date:iso(mondayOffset+2), time:'07:00', deadline:'', location:'Piscina Campus', participants:'', notes:'', priority:'low', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString() },
+  ];
+  saveTasks();
+}
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+(function init() {
+  loadTasks();
+  // Restore theme
+  const savedTheme = localStorage.getItem('wp_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  // Seed demo data on first load
+  seedDemoData();
+  // Init date filter
+  const hm = document.getElementById('hist-month');
+  if (hm) hm.value = todayISO().slice(0,7);
+  renderWeek();
+  updateOverdueBadge();
+})();
+</script>
+</body>
+</html>
