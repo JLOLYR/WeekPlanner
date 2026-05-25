@@ -1,0 +1,125 @@
+name: 📅 Recordatorio Lunes — Recopilación Semanal
+
+on:
+  schedule:
+    # Todos los lunes a las 8:30 AM hora de Chile (UTC-4 en verano / UTC-3 invierno)
+    # Chile Standard Time (CLT) = UTC-4, Cron usa UTC
+    # 8:30 AM CLT = 12:30 PM UTC (verano) — ajustar según DST
+    - cron: '30 12 * * 1'
+  workflow_dispatch:  # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  send-monday-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener fecha actual y semana
+        id: date
+        run: |
+          echo "TODAY=$(TZ='America/Santiago' date '+%A %d de %B de %Y')" >> $GITHUB_OUTPUT
+          echo "WEEK_NUM=$(TZ='America/Santiago' date '+%V')" >> $GITHUB_OUTPUT
+          echo "MONDAY=$(TZ='America/Santiago' date '+%d/%m/%Y')" >> $GITHUB_OUTPUT
+          # Calcular viernes
+          FRIDAY=$(TZ='America/Santiago' date -d 'next friday' '+%d/%m/%Y' 2>/dev/null || TZ='America/Santiago' date -v+4d '+%d/%m/%Y')
+          echo "FRIDAY=$FRIDAY" >> $GITHUB_OUTPUT
+
+      - name: Enviar email de recopilación semanal
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          to: ${{ secrets.RECIPIENT_EMAIL }}
+          from: WeekPlanner <${{ secrets.GMAIL_USER }}>
+          subject: "📅 WeekPlanner — Planificación Semana ${{ steps.date.outputs.WEEK_NUM }} (${{ steps.date.outputs.MONDAY }})"
+          html_body: |
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; margin: 0; padding: 0; }
+                .container { max-width: 600px; margin: 0 auto; padding: 32px 24px; }
+                .header { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border: 1px solid #30363d; border-radius: 12px; padding: 28px; margin-bottom: 24px; text-align: center; }
+                .logo { font-size: 2.5rem; margin-bottom: 8px; }
+                .header h1 { margin: 0; font-size: 1.4rem; font-weight: 700; color: #e6edf3; }
+                .header p { margin: 6px 0 0; color: #8b949e; font-size: 0.9rem; }
+                .week-badge { display: inline-block; background: rgba(88,166,255,0.15); color: #58a6ff; padding: 4px 14px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; margin-top: 10px; border: 1px solid rgba(88,166,255,0.3); }
+                .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+                .card h2 { margin: 0 0 14px; font-size: 1rem; font-weight: 700; color: #e6edf3; display: flex; align-items: center; gap: 8px; }
+                .fields { border-collapse: collapse; width: 100%; }
+                .fields tr td { padding: 8px 0; border-bottom: 1px solid #21262d; color: #8b949e; font-size: 0.85rem; }
+                .fields tr:last-child td { border-bottom: none; }
+                .fields .field-label { color: #58a6ff; font-weight: 600; width: 140px; }
+                .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+                .cat-item { background: #21262d; border-radius: 8px; padding: 10px 12px; border-left: 3px solid; font-size: 0.82rem; font-weight: 600; }
+                .cat-docencia { border-color: #3b82f6; color: #60a5fa; }
+                .cat-invest   { border-color: #a78bfa; color: #c4b5fd; }
+                .cat-admin    { border-color: #fbbf24; color: #fcd34d; }
+                .cat-personal { border-color: #34d399; color: #6ee7b7; }
+                .cta { text-align: center; margin: 24px 0; }
+                .btn { display: inline-block; background: #58a6ff; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; }
+                .footer { text-align: center; color: #6e7681; font-size: 0.75rem; margin-top: 24px; }
+                .tip { background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.2); border-radius: 8px; padding: 12px 16px; font-size: 0.82rem; color: #8b949e; }
+                .tip strong { color: #58a6ff; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <div class="logo">📅</div>
+                  <h1>Planificación Semanal</h1>
+                  <p>${{ steps.date.outputs.TODAY }}</p>
+                  <span class="week-badge">Semana ${{ steps.date.outputs.WEEK_NUM }} · ${{ steps.date.outputs.MONDAY }} – ${{ steps.date.outputs.FRIDAY }}</span>
+                </div>
+
+                <div class="card">
+                  <h2>👋 Buenos días, Dr. Leyrer</h2>
+                  <p style="color:#8b949e;font-size:0.88rem;margin:0">
+                    Es lunes — momento de planificar tu semana. Registra todas las actividades que tienes previstas
+                    para que puedas hacer seguimiento y no se te escape ninguna tarea importante.
+                  </p>
+                </div>
+
+                <div class="card">
+                  <h2>📝 ¿Qué registrar esta semana?</h2>
+                  <p style="color:#8b949e;font-size:0.82rem;margin:0 0 14px">Para cada actividad, ten a mano:</p>
+                  <table class="fields">
+                    <tr><td class="field-label">📌 Nombre</td><td>Título descriptivo de la actividad</td></tr>
+                    <tr><td class="field-label">📆 Fecha y hora</td><td>¿Cuándo ocurre?</td></tr>
+                    <tr><td class="field-label">📍 Lugar</td><td>Sala, edificio o enlace virtual</td></tr>
+                    <tr><td class="field-label">👥 Participantes</td><td>Alumnos, colegas, grupos</td></tr>
+                    <tr><td class="field-label">⏰ Deadline</td><td>¿Hay fecha límite de entrega?</td></tr>
+                    <tr><td class="field-label">📝 Notas</td><td>Recursos, preparación necesaria</td></tr>
+                  </table>
+                </div>
+
+                <div class="card">
+                  <h2>🗂 Categorías disponibles</h2>
+                  <div class="cat-grid">
+                    <div class="cat-item cat-docencia">📚 Docencia<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Clases, tutorías, correcciones</span></div>
+                    <div class="cat-item cat-invest">🔬 Investigación<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Proyectos, publicaciones, datos</span></div>
+                    <div class="cat-item cat-admin">📋 Administración<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Reuniones, correos, gestión</span></div>
+                    <div class="cat-item cat-personal">👤 Personal<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Desarrollo, deporte, otros</span></div>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <a href="https://jlolyr.github.io/WeekPlanner/" class="btn">
+                    📅 Abrir WeekPlanner
+                  </a>
+                </div>
+
+                <div class="tip">
+                  <strong>💡 Tip:</strong> Usa <strong>N</strong> como atajo de teclado para agregar una nueva actividad rápidamente.
+                  Marca tus actividades como completadas a medida que avanza la semana para ver tu progreso.
+                </div>
+
+                <div class="footer">
+                  <p>WeekPlanner · Sistema de Planificación Académica</p>
+                  <p>Este recordatorio se envía automáticamente todos los lunes a las 8:30 AM</p>
+                </div>
+              </div>
+            </body>
+            </html>

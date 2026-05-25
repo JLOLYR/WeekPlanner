@@ -1,0 +1,121 @@
+name: 📬 Recordatorio Diario — Martes a Viernes
+
+on:
+  schedule:
+    # Martes a Viernes a las 8:30 AM hora Chile (UTC-4)
+    # Cron: 30 12 * * 2-5  (martes=2, viernes=5 en cron, UTC)
+    - cron: '30 12 * * 2-5'
+  workflow_dispatch:
+
+jobs:
+  send-daily-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener datos de fecha
+        id: date
+        run: |
+          echo "TODAY=$(TZ='America/Santiago' date '+%A %d de %B')" >> $GITHUB_OUTPUT
+          echo "DAY_NAME=$(TZ='America/Santiago' date '+%A')" >> $GITHUB_OUTPUT
+          echo "WEEK_NUM=$(TZ='America/Santiago' date '+%V')" >> $GITHUB_OUTPUT
+          echo "MONDAY=$(TZ='America/Santiago' date -d 'last monday' '+%d/%m/%Y' 2>/dev/null || TZ='America/Santiago' date -v-mon '+%d/%m/%Y')" >> $GITHUB_OUTPUT
+          echo "FRIDAY=$(TZ='America/Santiago' date -d 'next friday' '+%d/%m/%Y' 2>/dev/null || TZ='America/Santiago' date -v+fri '+%d/%m/%Y')" >> $GITHUB_OUTPUT
+
+      - name: Enviar recordatorio diario
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          to: ${{ secrets.RECIPIENT_EMAIL }}
+          from: WeekPlanner <${{ secrets.GMAIL_USER }}>
+          subject: "⚡ WeekPlanner · ${{ steps.date.outputs.TODAY }} — Actividades del día"
+          html_body: |
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; margin: 0; padding: 0; }
+                .container { max-width: 600px; margin: 0 auto; padding: 32px 24px; }
+                .header { background: linear-gradient(135deg, #1a2332 0%, #111827 100%); border: 1px solid #30363d; border-radius: 12px; padding: 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; }
+                .header-icon { font-size: 2.2rem; flex-shrink: 0; }
+                .header-text h1 { margin: 0; font-size: 1.2rem; font-weight: 700; }
+                .header-text p  { margin: 4px 0 0; color: #8b949e; font-size: 0.85rem; }
+                .week-badge { display: inline-block; background: rgba(88,166,255,0.12); color: #58a6ff; padding: 3px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(88,166,255,0.25); margin-top: 6px; }
+                .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
+                .card h2 { margin: 0 0 12px; font-size: 0.92rem; font-weight: 700; color: #8b949e; text-transform: uppercase; letter-spacing: 0.06em; }
+                .checklist { list-style: none; margin: 0; padding: 0; }
+                .checklist li { padding: 8px 0; border-bottom: 1px solid #21262d; color: #e6edf3; font-size: 0.88rem; display: flex; align-items: flex-start; gap: 10px; }
+                .checklist li:last-child { border-bottom: none; }
+                .check-box { width: 16px; height: 16px; border: 2px solid #30363d; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+                .check-done { background: #34d399; border-color: #34d399; }
+                .cat-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+                .cat-Docencia    { background: rgba(59,130,246,0.15); color: #60a5fa; }
+                .cat-Investigación { background: rgba(167,139,250,0.15); color: #c4b5fd; }
+                .cat-Administración { background: rgba(251,191,36,0.15); color: #fcd34d; }
+                .cat-Personal    { background: rgba(52,211,153,0.15); color: #6ee7b7; }
+                .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+                .metric { background: #21262d; border-radius: 8px; padding: 12px; text-align: center; }
+                .metric .val { font-size: 1.5rem; font-weight: 800; }
+                .metric .lbl { font-size: 0.68rem; color: #8b949e; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+                .cta { text-align: center; margin: 22px 0; }
+                .btn { display: inline-block; background: #58a6ff; color: #fff; text-decoration: none; padding: 11px 26px; border-radius: 8px; font-weight: 700; font-size: 0.88rem; }
+                .pending-section { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.25); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+                .pending-section h2 { color: #fbbf24; font-size: 0.85rem; margin: 0 0 10px; display: flex; align-items: center; gap: 6px; }
+                .footer { text-align: center; color: #6e7681; font-size: 0.72rem; margin-top: 20px; }
+                .quote { border-left: 3px solid #58a6ff; padding: 10px 14px; color: #8b949e; font-size: 0.82rem; font-style: italic; background: rgba(88,166,255,0.05); border-radius: 0 6px 6px 0; margin: 16px 0; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <div class="header-icon">⚡</div>
+                  <div class="header-text">
+                    <h1>Buenos días, Dr. Leyrer</h1>
+                    <p>${{ steps.date.outputs.TODAY }}</p>
+                    <span class="week-badge">Semana ${{ steps.date.outputs.WEEK_NUM }}</span>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <h2>📋 Recordatorio de actividades</h2>
+                  <p style="color:#8b949e;font-size:0.85rem;margin:0 0 12px">
+                    Revisa tu WeekPlanner para ver las actividades pendientes de hoy y de la semana.
+                    Marca como completadas las que ya hayas realizado.
+                  </p>
+                  <ul class="checklist">
+                    <li><div class="check-box"></div><div>Revisar actividades del día de hoy</div></li>
+                    <li><div class="check-box"></div><div>Marcar como completadas las actividades realizadas ayer</div></li>
+                    <li><div class="check-box"></div><div>Verificar deadlines próximos a vencer</div></li>
+                    <li><div class="check-box"></div><div>Agregar cualquier actividad nueva que haya surgido</div></li>
+                  </ul>
+                </div>
+
+                <div class="pending-section">
+                  <h2>⚠️ Acciones recomendadas</h2>
+                  <ul style="margin:0;padding-left:16px;color:#8b949e;font-size:0.82rem;line-height:1.8">
+                    <li>Abre el dashboard y filtra las tareas <strong style="color:#fbbf24">pendientes y vencidas</strong></li>
+                    <li>Prioriza actividades con <strong style="color:#f87171">deadline esta semana</strong></li>
+                    <li>Si tienes actividades de semanas anteriores, decide si las continúas o las pospones</li>
+                  </ul>
+                </div>
+
+                <div class="quote">
+                  "La productividad no es hacer más cosas, sino hacer las cosas correctas en el momento correcto."
+                </div>
+
+                <div class="cta">
+                  <a href="https://jlolyr.github.io/WeekPlanner/" class="btn">
+                    📅 Ver mi WeekPlanner
+                  </a>
+                </div>
+
+                <div class="footer">
+                  <p>WeekPlanner · Recordatorio automático ${{ steps.date.outputs.DAY_NAME }}</p>
+                  <p>Semana ${{ steps.date.outputs.WEEK_NUM }} · ${{ steps.date.outputs.MONDAY }} – ${{ steps.date.outputs.FRIDAY }}</p>
+                </div>
+              </div>
+            </body>
+            </html>
