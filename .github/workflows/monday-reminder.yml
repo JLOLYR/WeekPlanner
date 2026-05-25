@@ -1,28 +1,227 @@
-name: 📅 Recordatorio Lunes — Recopilación Semanal
+name: 📅 Recordatorio Lunes — Vista Semanal
 
 on:
   schedule:
-    # Todos los lunes a las 8:30 AM hora de Chile (UTC-4 en verano / UTC-3 invierno)
-    # Chile Standard Time (CLT) = UTC-4, Cron usa UTC
-    # 8:30 AM CLT = 12:30 PM UTC (verano) — ajustar según DST
+    # Lunes 8:30 AM Chile (UTC-4 verano) = 12:30 UTC
     - cron: '30 12 * * 1'
-  workflow_dispatch:  # Permite ejecutar manualmente desde GitHub
+  workflow_dispatch:
 
 jobs:
   send-monday-reminder:
     runs-on: ubuntu-latest
     steps:
-      - name: Obtener fecha actual y semana
-        id: date
-        run: |
-          echo "TODAY=$(TZ='America/Santiago' date '+%A %d de %B de %Y')" >> $GITHUB_OUTPUT
-          echo "WEEK_NUM=$(TZ='America/Santiago' date '+%V')" >> $GITHUB_OUTPUT
-          echo "MONDAY=$(TZ='America/Santiago' date '+%d/%m/%Y')" >> $GITHUB_OUTPUT
-          # Calcular viernes
-          FRIDAY=$(TZ='America/Santiago' date -d 'next friday' '+%d/%m/%Y' 2>/dev/null || TZ='America/Santiago' date -v+4d '+%d/%m/%Y')
-          echo "FRIDAY=$FRIDAY" >> $GITHUB_OUTPUT
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
 
-      - name: Enviar email de recopilación semanal
+      - name: Generar email con tareas de la semana
+        id: gen
+        run: |
+          python3 << 'PYEOF'
+          import json, datetime, os
+
+          # ── Cargar tareas ──────────────────────────────────────
+          try:
+              with open('tasks.json', 'r', encoding='utf-8') as f:
+                  tasks = json.load(f)
+          except:
+              tasks = []
+
+          TZ_OFFSET = -4  # Chile summer (CLT)
+          now_utc = datetime.datetime.utcnow()
+          now_local = now_utc + datetime.timedelta(hours=TZ_OFFSET)
+          today = now_local.date()
+          monday = today - datetime.timedelta(days=today.weekday())
+          friday = monday + datetime.timedelta(days=4)
+
+          DAYS_ES = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+          MONTHS_ES = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+
+          def fmt_date(iso):
+              if not iso: return '—'
+              y,m,d = iso.split('-')
+              return f"{d}/{m}/{y}"
+
+          def is_overdue(t):
+              if t.get('status') == 'done': return False
+              check = t.get('deadline') or t.get('date', '')
+              return check and check < today.isoformat()
+
+          PRIO_ORDER = {'high': 0, 'medium': 1, 'low': 2}
+          CAT_COLORS = {
+              'Docencia':       ('#EFF6FF', '#2563EB', '#1D4ED8'),
+              'Investigación':  ('#F5F3FF', '#7C3AED', '#6D28D9'),
+              'Administración': ('#FFFBEB', '#B45309', '#92400E'),
+              'Personal':       ('#ECFDF5', '#047857', '#065F46'),
+          }
+          PRIO_LABELS = {'high':'🔴 Alta','medium':'🟡 Media','low':'🟢 Baja'}
+          STATUS_LABELS = {'done':'✅ Completada','progress':'🔄 En Progreso','pending':'⏳ Pendiente'}
+
+          # ── Filtrar tareas ────────────────────────────────────
+          week_tasks = [t for t in tasks
+                        if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
+          today_tasks = [t for t in week_tasks if t.get('date') == today.isoformat()]
+          pending_week = [t for t in week_tasks if t.get('status') != 'done']
+
+          week_tasks.sort(key=lambda t: (t.get('date',''), PRIO_ORDER.get(t.get('priority','medium'),1)))
+          today_tasks.sort(key=lambda t: (t.get('time') or '99:99', PRIO_ORDER.get(t.get('priority','medium'),1)))
+
+          done_count = len([t for t in week_tasks if t.get('status')=='done'])
+          total_count = len(week_tasks)
+          pct = round(done_count/total_count*100) if total_count > 0 else 0
+
+          # ── Generar HTML de tabla de tareas ──────────────────
+          def task_row(t):
+              cat = t.get('cat','')
+              bg, clr, _ = CAT_COLORS.get(cat, ('#F9F9F9','#444','#222'))
+              status = t.get('status','pending')
+              overdue = is_overdue(t)
+              row_bg = '#FEF2F2' if overdue else '#FFFFFF'
+              deadline = f"<br><small style='color:#DC2626'>⏰ Vence: {fmt_date(t.get('deadline'))}</small>" if t.get('deadline') and t.get('deadline') != t.get('date') else ''
+              time_str = f"<br><small style='color:#6B7280'>🕐 {t.get('time')}</small>" if t.get('time') else ''
+              loc = f"<br><small style='color:#6B7280'>📍 {t.get('location')}</small>" if t.get('location') else ''
+              overdue_badge = " <span style='color:#DC2626;font-weight:700;font-size:11px'>⚠ VENCIDA</span>" if overdue else ''
+              return f"""
+              <tr style="background:{row_bg}">
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;color:#1A1714;font-weight:600;font-size:13px">
+                  {t.get('title','Sin título')}{overdue_badge}{time_str}{loc}
+                </td>
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;text-align:center">
+                  <span style="background:{bg};color:{clr};padding:3px 8px;border-radius:99px;font-size:11px;font-weight:700">{cat}</span>
+                </td>
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;font-size:12px;color:#52504A;text-align:center">{PRIO_LABELS.get(t.get('priority','medium'),'🟡 Media')}</td>
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;font-size:12px;color:#52504A;text-align:center">{STATUS_LABELS.get(status,'Pendiente')}{deadline}</td>
+              </tr>"""
+
+          def tasks_table(task_list, title, icon):
+              if not task_list:
+                  return f"""
+                  <div style="background:#F0EFF9;border-radius:8px;padding:14px 16px;margin-bottom:16px;color:#9C9890;font-size:13px;text-align:center">
+                    {icon} {title}: <strong>Sin actividades programadas</strong>
+                  </div>"""
+              rows = ''.join(task_row(t) for t in task_list)
+              return f"""
+              <div style="margin-bottom:20px">
+                <h2 style="font-size:14px;font-weight:800;color:#52504A;text-transform:uppercase;letter-spacing:0.06em;margin:0 0 10px">{icon} {title}</h2>
+                <table style="width:100%;border-collapse:collapse;background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:10px;overflow:hidden;font-family:-apple-system,sans-serif">
+                  <thead>
+                    <tr style="background:#F4F2EE">
+                      <th style="padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1.5px solid #DDD9D1">Actividad</th>
+                      <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1.5px solid #DDD9D1">Categoría</th>
+                      <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1.5px solid #DDD9D1">Prioridad</th>
+                      <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1.5px solid #DDD9D1">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>{rows}</tbody>
+                </table>
+              </div>"""
+
+          # Category summary bars
+          cat_summary = ''
+          for cat, (bg, clr, dark) in CAT_COLORS.items():
+              count = len([t for t in week_tasks if t.get('cat') == cat])
+              done_cat = len([t for t in week_tasks if t.get('cat') == cat and t.get('status') == 'done'])
+              if count > 0:
+                  pct_cat = round(done_cat/count*100)
+                  cat_summary += f"""
+                  <div style="margin-bottom:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                      <span style="font-size:13px;font-weight:600;color:{dark}">{cat}</span>
+                      <span style="font-size:12px;color:#9C9890">{done_cat}/{count} completadas</span>
+                    </div>
+                    <div style="background:#F0EFF9;border-radius:99px;height:6px;overflow:hidden">
+                      <div style="background:{clr};width:{pct_cat}%;height:100%;border-radius:99px"></div>
+                    </div>
+                  </div>"""
+
+          today_section = tasks_table(today_tasks, f"Hoy — {DAYS_ES[today.weekday()]} {today.day} de {MONTHS_ES[today.month]}", "📌")
+          week_section = tasks_table(week_tasks, f"Vista completa semana ({monday.strftime('%d/%m')} – {friday.strftime('%d/%m')})", "📋")
+
+          overdue_tasks = [t for t in tasks if is_overdue(t) and t.get('date','') < monday.isoformat()]
+          overdue_section = ''
+          if overdue_tasks:
+              overdue_tasks.sort(key=lambda t: t.get('date',''))
+              rows = ''.join(task_row(t) for t in overdue_tasks)
+              overdue_section = f"""
+              <div style="background:#FEF2F2;border:1.5px solid rgba(220,38,38,0.25);border-radius:10px;padding:16px;margin-bottom:20px">
+                <h2 style="font-size:14px;font-weight:800;color:#DC2626;margin:0 0 12px;display:flex;align-items:center;gap:6px">
+                  ⚠️ Actividades vencidas de semanas anteriores ({len(overdue_tasks)})
+                </h2>
+                <table style="width:100%;border-collapse:collapse">
+                  <tbody>{rows}</tbody>
+                </table>
+              </div>"""
+
+          html = f"""<!DOCTYPE html>
+          <html lang="es">
+          <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+          <body style="margin:0;padding:0;background:#F4F2EE;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+          <div style="max-width:680px;margin:0 auto;padding:28px 20px">
+
+            <!-- HEADER -->
+            <div style="background:linear-gradient(135deg,#EEF2FF 0%,#F0FDF4 100%);border:1.5px solid #DDD9D1;border-radius:14px;padding:28px;margin-bottom:22px;text-align:center">
+              <div style="font-size:2.5rem;margin-bottom:10px">☀️</div>
+              <h1 style="margin:0;font-size:1.5rem;font-weight:800;color:#1A1714">Buenos días, Dr. Leyrer</h1>
+              <p style="margin:8px 0 0;color:#52504A;font-size:0.95rem">Lunes {today.day} de {MONTHS_ES[today.month]} de {today.year}</p>
+              <div style="display:inline-block;background:rgba(37,99,235,0.1);color:#2563EB;padding:5px 16px;border-radius:99px;font-size:0.82rem;font-weight:700;margin-top:10px;border:1px solid rgba(37,99,235,0.2)">
+                Semana {today.isocalendar()[1]} · {monday.strftime('%d/%m')} – {friday.strftime('%d/%m')}
+              </div>
+            </div>
+
+            <!-- PROGRESS SUMMARY -->
+            <div style="background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:12px;padding:20px 22px;margin-bottom:20px">
+              <h2 style="font-size:14px;font-weight:800;color:#52504A;text-transform:uppercase;letter-spacing:0.07em;margin:0 0 16px">📊 Resumen de la semana</h2>
+              <div style="display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap">
+                <div style="text-align:center;flex:1;min-width:80px">
+                  <div style="font-size:2rem;font-weight:800;color:#1A1714">{total_count}</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;letter-spacing:0.06em">Total</div>
+                </div>
+                <div style="text-align:center;flex:1;min-width:80px">
+                  <div style="font-size:2rem;font-weight:800;color:#047857">{done_count}</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;letter-spacing:0.06em">Completadas</div>
+                </div>
+                <div style="text-align:center;flex:1;min-width:80px">
+                  <div style="font-size:2rem;font-weight:800;color:#B45309">{len(pending_week)}</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;letter-spacing:0.06em">Pendientes</div>
+                </div>
+                <div style="text-align:center;flex:1;min-width:80px">
+                  <div style="font-size:2rem;font-weight:800;color:#2563EB">{pct}%</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;letter-spacing:0.06em">Avance</div>
+                </div>
+              </div>
+              <div style="background:#F4F2EE;border-radius:99px;height:8px;overflow:hidden;margin-bottom:16px">
+                <div style="background:#2563EB;width:{pct}%;height:100%;border-radius:99px;transition:width 0.4s"></div>
+              </div>
+              {cat_summary}
+            </div>
+
+            <!-- OVERDUE -->
+            {overdue_section}
+
+            <!-- HOY -->
+            {today_section}
+
+            <!-- SEMANA COMPLETA -->
+            {week_section}
+
+            <!-- CTA -->
+            <div style="text-align:center;margin:24px 0">
+              <a href="https://jlolyr.github.io/WeekPlanner/" style="display:inline-block;background:#2563EB;color:#fff;text-decoration:none;padding:13px 30px;border-radius:9px;font-weight:700;font-size:0.95rem;box-shadow:0 2px 8px rgba(37,99,235,0.3)">
+                📅 Abrir WeekPlanner
+              </a>
+            </div>
+
+            <div style="text-align:center;color:#9C9890;font-size:11px;margin-top:16px">
+              <p>WeekPlanner · Recordatorio automático de los lunes · 8:30 AM</p>
+            </div>
+          </div>
+          </body></html>"""
+
+          with open('email_body.html', 'w', encoding='utf-8') as f:
+              f.write(html)
+          print("Email generado correctamente")
+          PYEOF
+
+      - name: Enviar email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -31,95 +230,5 @@ jobs:
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           to: ${{ secrets.RECIPIENT_EMAIL }}
           from: WeekPlanner <${{ secrets.GMAIL_USER }}>
-          subject: "📅 WeekPlanner — Planificación Semana ${{ steps.date.outputs.WEEK_NUM }} (${{ steps.date.outputs.MONDAY }})"
-          html_body: |
-            <!DOCTYPE html>
-            <html lang="es">
-            <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; margin: 0; padding: 0; }
-                .container { max-width: 600px; margin: 0 auto; padding: 32px 24px; }
-                .header { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border: 1px solid #30363d; border-radius: 12px; padding: 28px; margin-bottom: 24px; text-align: center; }
-                .logo { font-size: 2.5rem; margin-bottom: 8px; }
-                .header h1 { margin: 0; font-size: 1.4rem; font-weight: 700; color: #e6edf3; }
-                .header p { margin: 6px 0 0; color: #8b949e; font-size: 0.9rem; }
-                .week-badge { display: inline-block; background: rgba(88,166,255,0.15); color: #58a6ff; padding: 4px 14px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; margin-top: 10px; border: 1px solid rgba(88,166,255,0.3); }
-                .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
-                .card h2 { margin: 0 0 14px; font-size: 1rem; font-weight: 700; color: #e6edf3; display: flex; align-items: center; gap: 8px; }
-                .fields { border-collapse: collapse; width: 100%; }
-                .fields tr td { padding: 8px 0; border-bottom: 1px solid #21262d; color: #8b949e; font-size: 0.85rem; }
-                .fields tr:last-child td { border-bottom: none; }
-                .fields .field-label { color: #58a6ff; font-weight: 600; width: 140px; }
-                .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
-                .cat-item { background: #21262d; border-radius: 8px; padding: 10px 12px; border-left: 3px solid; font-size: 0.82rem; font-weight: 600; }
-                .cat-docencia { border-color: #3b82f6; color: #60a5fa; }
-                .cat-invest   { border-color: #a78bfa; color: #c4b5fd; }
-                .cat-admin    { border-color: #fbbf24; color: #fcd34d; }
-                .cat-personal { border-color: #34d399; color: #6ee7b7; }
-                .cta { text-align: center; margin: 24px 0; }
-                .btn { display: inline-block; background: #58a6ff; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; }
-                .footer { text-align: center; color: #6e7681; font-size: 0.75rem; margin-top: 24px; }
-                .tip { background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.2); border-radius: 8px; padding: 12px 16px; font-size: 0.82rem; color: #8b949e; }
-                .tip strong { color: #58a6ff; }
-              </style>
-            </head>
-            <body>
-              <div class="container">
-                <div class="header">
-                  <div class="logo">📅</div>
-                  <h1>Planificación Semanal</h1>
-                  <p>${{ steps.date.outputs.TODAY }}</p>
-                  <span class="week-badge">Semana ${{ steps.date.outputs.WEEK_NUM }} · ${{ steps.date.outputs.MONDAY }} – ${{ steps.date.outputs.FRIDAY }}</span>
-                </div>
-
-                <div class="card">
-                  <h2>👋 Buenos días, Dr. Leyrer</h2>
-                  <p style="color:#8b949e;font-size:0.88rem;margin:0">
-                    Es lunes — momento de planificar tu semana. Registra todas las actividades que tienes previstas
-                    para que puedas hacer seguimiento y no se te escape ninguna tarea importante.
-                  </p>
-                </div>
-
-                <div class="card">
-                  <h2>📝 ¿Qué registrar esta semana?</h2>
-                  <p style="color:#8b949e;font-size:0.82rem;margin:0 0 14px">Para cada actividad, ten a mano:</p>
-                  <table class="fields">
-                    <tr><td class="field-label">📌 Nombre</td><td>Título descriptivo de la actividad</td></tr>
-                    <tr><td class="field-label">📆 Fecha y hora</td><td>¿Cuándo ocurre?</td></tr>
-                    <tr><td class="field-label">📍 Lugar</td><td>Sala, edificio o enlace virtual</td></tr>
-                    <tr><td class="field-label">👥 Participantes</td><td>Alumnos, colegas, grupos</td></tr>
-                    <tr><td class="field-label">⏰ Deadline</td><td>¿Hay fecha límite de entrega?</td></tr>
-                    <tr><td class="field-label">📝 Notas</td><td>Recursos, preparación necesaria</td></tr>
-                  </table>
-                </div>
-
-                <div class="card">
-                  <h2>🗂 Categorías disponibles</h2>
-                  <div class="cat-grid">
-                    <div class="cat-item cat-docencia">📚 Docencia<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Clases, tutorías, correcciones</span></div>
-                    <div class="cat-item cat-invest">🔬 Investigación<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Proyectos, publicaciones, datos</span></div>
-                    <div class="cat-item cat-admin">📋 Administración<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Reuniones, correos, gestión</span></div>
-                    <div class="cat-item cat-personal">👤 Personal<br><span style="font-weight:400;font-size:0.75rem;color:#8b949e">Desarrollo, deporte, otros</span></div>
-                  </div>
-                </div>
-
-                <div class="cta">
-                  <a href="https://jlolyr.github.io/WeekPlanner/" class="btn">
-                    📅 Abrir WeekPlanner
-                  </a>
-                </div>
-
-                <div class="tip">
-                  <strong>💡 Tip:</strong> Usa <strong>N</strong> como atajo de teclado para agregar una nueva actividad rápidamente.
-                  Marca tus actividades como completadas a medida que avanza la semana para ver tu progreso.
-                </div>
-
-                <div class="footer">
-                  <p>WeekPlanner · Sistema de Planificación Académica</p>
-                  <p>Este recordatorio se envía automáticamente todos los lunes a las 8:30 AM</p>
-                </div>
-              </div>
-            </body>
-            </html>
+          subject: "☀️ WeekPlanner Lunes — Tu semana completa"
+          html_body: file://email_body.html

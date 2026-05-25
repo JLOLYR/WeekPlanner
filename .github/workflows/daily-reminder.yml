@@ -1,26 +1,213 @@
-name: 📬 Recordatorio Diario — Martes a Viernes
+name: 📬 Recordatorio Diario — Mar a Jue
 
 on:
   schedule:
-    # Martes a Viernes a las 8:30 AM hora Chile (UTC-4)
-    # Cron: 30 12 * * 2-5  (martes=2, viernes=5 en cron, UTC)
-    - cron: '30 12 * * 2-5'
+    # Martes–Jueves 8:30 AM Chile (UTC-4) = 12:30 UTC
+    # (Viernes tiene su propio workflow de estadísticas a las 5pm)
+    - cron: '30 12 * * 2-4'
   workflow_dispatch:
 
 jobs:
   send-daily-reminder:
     runs-on: ubuntu-latest
     steps:
-      - name: Obtener datos de fecha
-        id: date
-        run: |
-          echo "TODAY=$(TZ='America/Santiago' date '+%A %d de %B')" >> $GITHUB_OUTPUT
-          echo "DAY_NAME=$(TZ='America/Santiago' date '+%A')" >> $GITHUB_OUTPUT
-          echo "WEEK_NUM=$(TZ='America/Santiago' date '+%V')" >> $GITHUB_OUTPUT
-          echo "MONDAY=$(TZ='America/Santiago' date -d 'last monday' '+%d/%m/%Y' 2>/dev/null || TZ='America/Santiago' date -v-mon '+%d/%m/%Y')" >> $GITHUB_OUTPUT
-          echo "FRIDAY=$(TZ='America/Santiago' date -d 'next friday' '+%d/%m/%Y' 2>/dev/null || TZ='America/Santiago' date -v+fri '+%d/%m/%Y')" >> $GITHUB_OUTPUT
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
 
-      - name: Enviar recordatorio diario
+      - name: Generar email diario con tareas reales
+        run: |
+          python3 << 'PYEOF'
+          import json, datetime
+
+          try:
+              with open('tasks.json', 'r', encoding='utf-8') as f:
+                  tasks = json.load(f)
+          except:
+              tasks = []
+
+          TZ_OFFSET = -4
+          now_utc = datetime.datetime.utcnow()
+          now_local = now_utc + datetime.timedelta(hours=TZ_OFFSET)
+          today = now_local.date()
+          monday = today - datetime.timedelta(days=today.weekday())
+          friday = monday + datetime.timedelta(days=4)
+
+          DAYS_ES = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+          MONTHS_ES = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+
+          def fmt_date(iso):
+              if not iso: return '—'
+              y,m,d = iso.split('-')
+              return f"{d}/{m}/{y}"
+
+          def is_overdue(t):
+              if t.get('status') == 'done': return False
+              check = t.get('deadline') or t.get('date', '')
+              return check and check < today.isoformat()
+
+          PRIO_ORDER = {'high': 0, 'medium': 1, 'low': 2}
+          CAT_COLORS = {
+              'Docencia':       ('#EFF6FF', '#2563EB', '#1D4ED8'),
+              'Investigación':  ('#F5F3FF', '#7C3AED', '#6D28D9'),
+              'Administración': ('#FFFBEB', '#B45309', '#92400E'),
+              'Personal':       ('#ECFDF5', '#047857', '#065F46'),
+          }
+          PRIO_LABELS = {'high':'🔴 Alta','medium':'🟡 Media','low':'🟢 Baja'}
+          STATUS_LABELS = {'done':'✅ Completada','progress':'🔄 En Progreso','pending':'⏳ Pendiente'}
+
+          today_tasks = [t for t in tasks if t.get('date') == today.isoformat()]
+          today_tasks.sort(key=lambda t: (t.get('time') or '99:99', PRIO_ORDER.get(t.get('priority','medium'),1)))
+
+          # Tareas de la semana restantes (hoy en adelante)
+          remaining = [t for t in tasks
+                       if t.get('date','') > today.isoformat()
+                       and t.get('date','') <= friday.isoformat()
+                       and t.get('status') != 'done']
+          remaining.sort(key=lambda t: (t.get('date',''), t.get('time') or '99:99'))
+
+          # Próximos deadlines (próximos 5 días)
+          deadline_limit = (today + datetime.timedelta(days=5)).isoformat()
+          upcoming_dl = [t for t in tasks
+                         if t.get('deadline','') and today.isoformat() < t.get('deadline','') <= deadline_limit
+                         and t.get('status') != 'done']
+          upcoming_dl.sort(key=lambda t: t.get('deadline',''))
+
+          overdue_tasks = [t for t in tasks if is_overdue(t)]
+
+          def task_row(t, show_date=False):
+              cat = t.get('cat','')
+              bg, clr, dark = CAT_COLORS.get(cat, ('#F9F9F9','#444','#222'))
+              overdue = is_overdue(t)
+              row_bg = '#FEF2F2' if overdue else '#FFFFFF'
+              time_str = f"<small style='color:#6B7280;display:block'>🕐 {t.get('time')}</small>" if t.get('time') else ''
+              date_str = f"<small style='color:#6B7280;display:block'>📅 {fmt_date(t.get('date'))}</small>" if show_date else ''
+              loc = f"<small style='color:#6B7280;display:block'>📍 {t.get('location')}</small>" if t.get('location') else ''
+              dl = f"<small style='color:#DC2626;display:block;font-weight:600'>⏰ Vence: {fmt_date(t.get('deadline'))}</small>" if t.get('deadline') and t.get('deadline') != t.get('date') else ''
+              overdue_badge = " <span style='color:#DC2626;font-size:11px;font-weight:700'>⚠ VENCIDA</span>" if overdue else ''
+              return f"""<tr style="background:{row_bg}">
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;color:#1A1714;font-weight:600;font-size:13px">
+                  {t.get('title','Sin título')}{overdue_badge}{time_str}{date_str}{loc}
+                </td>
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;text-align:center">
+                  <span style="background:{bg};color:{clr};padding:3px 8px;border-radius:99px;font-size:11px;font-weight:700">{cat}</span>
+                </td>
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;font-size:12px;color:#52504A;text-align:center">{PRIO_LABELS.get(t.get('priority','medium'),'🟡')}</td>
+                <td style="padding:10px 12px;border-bottom:1px solid #F0EFF9;font-size:12px;color:#52504A">{STATUS_LABELS.get(t.get('status','pending'),'Pendiente')}{dl}</td>
+              </tr>"""
+
+          def make_table(task_list, show_date=False):
+              if not task_list: return '<p style="color:#9C9890;font-size:13px;text-align:center;padding:12px">Sin actividades</p>'
+              return f"""<table style="width:100%;border-collapse:collapse;background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:10px;overflow:hidden">
+                <thead><tr style="background:#F4F2EE">
+                  <th style="padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Actividad</th>
+                  <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Categoría</th>
+                  <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Prio.</th>
+                  <th style="padding:9px 12px;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Estado / Deadline</th>
+                </tr></thead>
+                <tbody>{''.join(task_row(t, show_date) for t in task_list)}</tbody>
+              </table>"""
+
+          # Progress del día
+          today_done = len([t for t in today_tasks if t.get('status')=='done'])
+          today_total = len(today_tasks)
+
+          # Week progress
+          week_tasks = [t for t in tasks if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
+          week_done = len([t for t in week_tasks if t.get('status')=='done'])
+          week_total = len(week_tasks)
+          week_pct = round(week_done/week_total*100) if week_total > 0 else 0
+
+          overdue_block = ''
+          if overdue_tasks:
+              overdue_block = f"""
+              <div style="background:#FEF2F2;border:1.5px solid rgba(220,38,38,0.25);border-radius:10px;padding:16px;margin-bottom:18px">
+                <h2 style="font-size:13px;font-weight:800;color:#DC2626;margin:0 0 10px">⚠️ Vencidas — requieren atención ({len(overdue_tasks)})</h2>
+                {make_table(overdue_tasks, show_date=True)}
+              </div>"""
+
+          dl_block = ''
+          if upcoming_dl:
+              dl_block = f"""
+              <div style="background:#FFFBEB;border:1.5px solid rgba(180,83,9,0.25);border-radius:10px;padding:16px;margin-bottom:18px">
+                <h2 style="font-size:13px;font-weight:800;color:#B45309;margin:0 0 10px">⏰ Deadlines próximos (5 días)</h2>
+                {make_table(upcoming_dl, show_date=True)}
+              </div>"""
+
+          remaining_block = ''
+          if remaining:
+              remaining_block = f"""
+              <div style="background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:10px;padding:16px;margin-bottom:18px">
+                <h2 style="font-size:13px;font-weight:800;color:#52504A;margin:0 0 10px">📋 Resto de la semana ({len(remaining)} pendientes)</h2>
+                {make_table(remaining, show_date=True)}
+              </div>"""
+
+          greetings = {0:'¡Buen lunes!',1:'¡Buen martes!',2:'¡Buenos días!',3:'¡Buen jueves!',4:'¡Buen viernes!'}
+          greeting = greetings.get(today.weekday(), '¡Buenos días!')
+
+          html = f"""<!DOCTYPE html>
+          <html lang="es">
+          <head><meta charset="UTF-8"></head>
+          <body style="margin:0;padding:0;background:#F4F2EE;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+          <div style="max-width:680px;margin:0 auto;padding:28px 20px">
+
+            <div style="background:linear-gradient(135deg,#F0F9FF 0%,#EEF2FF 100%);border:1.5px solid #DDD9D1;border-radius:14px;padding:24px;margin-bottom:20px;text-align:center">
+              <div style="font-size:2.2rem;margin-bottom:8px">⚡</div>
+              <h1 style="margin:0;font-size:1.4rem;font-weight:800;color:#1A1714">{greeting}, Dr. Leyrer</h1>
+              <p style="margin:6px 0 0;color:#52504A;font-size:0.9rem">{DAYS_ES[today.weekday()]} {today.day} de {MONTHS_ES[today.month]} de {today.year}</p>
+            </div>
+
+            <!-- PROGRESO SEMANAL -->
+            <div style="background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:12px;padding:18px 22px;margin-bottom:18px">
+              <div style="display:flex;gap:20px;margin-bottom:12px;flex-wrap:wrap">
+                <div style="flex:1;text-align:center;min-width:70px">
+                  <div style="font-size:1.8rem;font-weight:800;color:#1A1714">{today_total}</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700">Hoy</div>
+                </div>
+                <div style="flex:1;text-align:center;min-width:70px">
+                  <div style="font-size:1.8rem;font-weight:800;color:#047857">{today_done}</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700">Completadas hoy</div>
+                </div>
+                <div style="flex:1;text-align:center;min-width:70px">
+                  <div style="font-size:1.8rem;font-weight:800;color:#2563EB">{week_pct}%</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700">Avance semana</div>
+                </div>
+                <div style="flex:1;text-align:center;min-width:70px">
+                  <div style="font-size:1.8rem;font-weight:800;color:#DC2626">{len(overdue_tasks)}</div>
+                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700">Vencidas</div>
+                </div>
+              </div>
+              <div style="background:#F4F2EE;border-radius:99px;height:6px;overflow:hidden">
+                <div style="background:#2563EB;width:{week_pct}%;height:100%;border-radius:99px"></div>
+              </div>
+              <div style="font-size:11px;color:#9C9890;margin-top:5px;text-align:right">{week_done}/{week_total} actividades semanales</div>
+            </div>
+
+            {overdue_block}
+            {dl_block}
+
+            <!-- ACTIVIDADES DE HOY -->
+            <div style="background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:12px;padding:18px;margin-bottom:18px">
+              <h2 style="font-size:14px;font-weight:800;color:#1A1714;margin:0 0 12px">📌 Actividades de hoy — {DAYS_ES[today.weekday()]} {today.day}</h2>
+              {make_table(today_tasks)}
+            </div>
+
+            {remaining_block}
+
+            <div style="text-align:center;margin:22px 0">
+              <a href="https://jlolyr.github.io/WeekPlanner/" style="display:inline-block;background:#2563EB;color:#fff;text-decoration:none;padding:12px 28px;border-radius:9px;font-weight:700;font-size:0.9rem">
+                📅 Abrir WeekPlanner
+              </a>
+            </div>
+            <div style="text-align:center;color:#9C9890;font-size:11px">WeekPlanner · Recordatorio diario 8:30 AM</div>
+          </div>
+          </body></html>"""
+
+          with open('email_body.html', 'w', encoding='utf-8') as f:
+              f.write(html)
+          print("Email generado")
+          PYEOF
+
+      - name: Enviar email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -29,93 +216,5 @@ jobs:
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           to: ${{ secrets.RECIPIENT_EMAIL }}
           from: WeekPlanner <${{ secrets.GMAIL_USER }}>
-          subject: "⚡ WeekPlanner · ${{ steps.date.outputs.TODAY }} — Actividades del día"
-          html_body: |
-            <!DOCTYPE html>
-            <html lang="es">
-            <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; margin: 0; padding: 0; }
-                .container { max-width: 600px; margin: 0 auto; padding: 32px 24px; }
-                .header { background: linear-gradient(135deg, #1a2332 0%, #111827 100%); border: 1px solid #30363d; border-radius: 12px; padding: 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; }
-                .header-icon { font-size: 2.2rem; flex-shrink: 0; }
-                .header-text h1 { margin: 0; font-size: 1.2rem; font-weight: 700; }
-                .header-text p  { margin: 4px 0 0; color: #8b949e; font-size: 0.85rem; }
-                .week-badge { display: inline-block; background: rgba(88,166,255,0.12); color: #58a6ff; padding: 3px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(88,166,255,0.25); margin-top: 6px; }
-                .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
-                .card h2 { margin: 0 0 12px; font-size: 0.92rem; font-weight: 700; color: #8b949e; text-transform: uppercase; letter-spacing: 0.06em; }
-                .checklist { list-style: none; margin: 0; padding: 0; }
-                .checklist li { padding: 8px 0; border-bottom: 1px solid #21262d; color: #e6edf3; font-size: 0.88rem; display: flex; align-items: flex-start; gap: 10px; }
-                .checklist li:last-child { border-bottom: none; }
-                .check-box { width: 16px; height: 16px; border: 2px solid #30363d; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
-                .check-done { background: #34d399; border-color: #34d399; }
-                .cat-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
-                .cat-Docencia    { background: rgba(59,130,246,0.15); color: #60a5fa; }
-                .cat-Investigación { background: rgba(167,139,250,0.15); color: #c4b5fd; }
-                .cat-Administración { background: rgba(251,191,36,0.15); color: #fcd34d; }
-                .cat-Personal    { background: rgba(52,211,153,0.15); color: #6ee7b7; }
-                .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-                .metric { background: #21262d; border-radius: 8px; padding: 12px; text-align: center; }
-                .metric .val { font-size: 1.5rem; font-weight: 800; }
-                .metric .lbl { font-size: 0.68rem; color: #8b949e; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
-                .cta { text-align: center; margin: 22px 0; }
-                .btn { display: inline-block; background: #58a6ff; color: #fff; text-decoration: none; padding: 11px 26px; border-radius: 8px; font-weight: 700; font-size: 0.88rem; }
-                .pending-section { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.25); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
-                .pending-section h2 { color: #fbbf24; font-size: 0.85rem; margin: 0 0 10px; display: flex; align-items: center; gap: 6px; }
-                .footer { text-align: center; color: #6e7681; font-size: 0.72rem; margin-top: 20px; }
-                .quote { border-left: 3px solid #58a6ff; padding: 10px 14px; color: #8b949e; font-size: 0.82rem; font-style: italic; background: rgba(88,166,255,0.05); border-radius: 0 6px 6px 0; margin: 16px 0; }
-              </style>
-            </head>
-            <body>
-              <div class="container">
-                <div class="header">
-                  <div class="header-icon">⚡</div>
-                  <div class="header-text">
-                    <h1>Buenos días, Dr. Leyrer</h1>
-                    <p>${{ steps.date.outputs.TODAY }}</p>
-                    <span class="week-badge">Semana ${{ steps.date.outputs.WEEK_NUM }}</span>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <h2>📋 Recordatorio de actividades</h2>
-                  <p style="color:#8b949e;font-size:0.85rem;margin:0 0 12px">
-                    Revisa tu WeekPlanner para ver las actividades pendientes de hoy y de la semana.
-                    Marca como completadas las que ya hayas realizado.
-                  </p>
-                  <ul class="checklist">
-                    <li><div class="check-box"></div><div>Revisar actividades del día de hoy</div></li>
-                    <li><div class="check-box"></div><div>Marcar como completadas las actividades realizadas ayer</div></li>
-                    <li><div class="check-box"></div><div>Verificar deadlines próximos a vencer</div></li>
-                    <li><div class="check-box"></div><div>Agregar cualquier actividad nueva que haya surgido</div></li>
-                  </ul>
-                </div>
-
-                <div class="pending-section">
-                  <h2>⚠️ Acciones recomendadas</h2>
-                  <ul style="margin:0;padding-left:16px;color:#8b949e;font-size:0.82rem;line-height:1.8">
-                    <li>Abre el dashboard y filtra las tareas <strong style="color:#fbbf24">pendientes y vencidas</strong></li>
-                    <li>Prioriza actividades con <strong style="color:#f87171">deadline esta semana</strong></li>
-                    <li>Si tienes actividades de semanas anteriores, decide si las continúas o las pospones</li>
-                  </ul>
-                </div>
-
-                <div class="quote">
-                  "La productividad no es hacer más cosas, sino hacer las cosas correctas en el momento correcto."
-                </div>
-
-                <div class="cta">
-                  <a href="https://jlolyr.github.io/WeekPlanner/" class="btn">
-                    📅 Ver mi WeekPlanner
-                  </a>
-                </div>
-
-                <div class="footer">
-                  <p>WeekPlanner · Recordatorio automático ${{ steps.date.outputs.DAY_NAME }}</p>
-                  <p>Semana ${{ steps.date.outputs.WEEK_NUM }} · ${{ steps.date.outputs.MONDAY }} – ${{ steps.date.outputs.FRIDAY }}</p>
-                </div>
-              </div>
-            </body>
-            </html>
+          subject: "⚡ WeekPlanner — Actividades del día"
+          html_body: file://email_body.html
