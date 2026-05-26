@@ -204,5 +204,25 @@
     "createdAt": "2026-05-26T18:15:57.004Z",
     "updatedAt": "2026-05-26T18:15:57.004Z",
     "recurrenceParent": "mplr5f0te53o"
+  },
+  {
+    "id": "mpmyl7gdbuu7",
+    "title": "Clase Mecánica Industrial",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-05-26",
+    "time": "14:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "location": "Ensayos Universales",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-26T18:18:40.765Z",
+    "updatedAt": "2026-05-26T18:18:40.765Z"
   }
 ]
