@@ -4,7 +4,7 @@ on:
   schedule:
     # Martes–Jueves 8:30 AM Chile (UTC-4) = 12:30 UTC
     # (Viernes tiene su propio workflow de estadísticas a las 5pm)
-    - cron: '30 12 * * 2-4'
+    - cron: '00 08 * * 2-5'
   workflow_dispatch:
 
 jobs:
