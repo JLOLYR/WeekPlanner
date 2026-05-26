@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WeekPlanner</title>
 
-  <!-- Favicon: calendario SVG minimalista -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230066CC'/%3E%3Crect x='5' y='10' width='22' height='16' rx='3' fill='white' opacity='.95'/%3E%3Crect x='5' y='8' width='22' height='7' rx='3' fill='%230051A2'/%3E%3Ccircle cx='11' cy='7.5' r='2' fill='white'/%3E%3Ccircle cx='21' cy='7.5' r='2' fill='white'/%3E%3Crect x='9' y='17' width='4' height='4' rx='1.2' fill='%230066CC'/%3E%3Crect x='14' y='17' width='4' height='4' rx='1.2' fill='%230066CC' opacity='.45'/%3E%3Crect x='19' y='17' width='4' height='4' rx='1.2' fill='%230066CC' opacity='.2'/%3E%3C/svg%3E">
+  <!-- Google Fonts: Plus Jakarta Sans (Sleek Apple SF Alternative) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Favicon: Calendario SVG minimalista de alto contraste -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231D1D1F'/%3E%3Crect x='6' y='10' width='20' height='16' rx='3' fill='white'/%3E%3Crect x='6' y='6' width='20' height='6' rx='1.5' fill='%23FF3B30'/%3E%3Ccircle cx='11' cy='6.5' r='1.5' fill='white'/%3E%3Ccircle cx='21' cy='6.5' r='1.5' fill='white'/%3E%3Crect x='9' y='14' width='4' height='4' rx='1' fill='%231D1D1F'/%3E%3Crect x='14' y='14' width='4' height='4' rx='1' fill='%231D1D1F' opacity='.3'/%3E%3Crect x='19' y='14' width='4' height='4' rx='1' fill='%231D1D1F' opacity='.1'/%3E%3C/svg%3E">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
@@ -71,14 +76,14 @@
       -moz-osx-font-smoothing: grayscale;
     }
     body {
-      font-family: -apple-system, "SF Pro Text", BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, "SF Pro Text", BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
       background: var(--bg-base);
       color: var(--text-primary);
       line-height: 1.5;
       letter-spacing: -0.011em;
     }
     h1,h2,h3,.font-display {
-      font-family: -apple-system, "SF Pro Display", BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, "SF Pro Display", BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
       letter-spacing: -0.025em;
     }
     button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
@@ -125,11 +130,11 @@
     }
     .logo-icon {
       width: 34px; height: 34px; flex-shrink: 0;
-      background: linear-gradient(145deg, #0066CC 0%, #5E5CE6 100%);
+      background: #1D1D1F;
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 17px;
-      box-shadow: 0 2px 8px rgba(0,102,204,.3);
+      font-size: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.12);
     }
     .logo-text { font-weight: 700; font-size: 1rem; letter-spacing: -0.03em; }
     .logo-sub  { font-size: .68rem; color: var(--text-muted); margin-top: 1px; }
@@ -418,6 +423,302 @@
       background: rgba(198,40,40,.08); padding: 2px 6px; border-radius: 99px;
     }
 
+    /* ── PRIORITY PREMIUM TAGS ── */
+    .prio-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+    .prio-high {
+      background: rgba(198,40,40,.09);
+      color: var(--status-overdue);
+      border: 1px solid rgba(198,40,40,.18);
+    }
+    .prio-medium {
+      background: rgba(178,89,0,.09);
+      color: var(--status-pending);
+      border: 1px solid rgba(178,89,0,.18);
+    }
+    .prio-low {
+      background: rgba(26,143,90,.09);
+      color: var(--status-done);
+      border: 1px solid rgba(26,143,90,.18);
+    }
+
+    /* ── OVERLAP WARNING ── */
+    .tc.overlap, .tb-card.overlap {
+      border: 2px solid var(--status-overdue) !important;
+      animation: blink-red 1.6s infinite;
+    }
+    @keyframes blink-red {
+      0%, 100% { border-color: var(--status-overdue); box-shadow: 0 0 5px rgba(198,40,40,.4); }
+      50% { border-color: transparent; box-shadow: none; }
+    }
+
+    /* ── COMPROMISO VS ENTREGABLE styles ── */
+    .tc.deliverable {
+      border-style: dashed !important;
+      border-width: 1.5px !important;
+    }
+
+    /* ── WORKLOAD SEMAPHORE BADGE ── */
+    .workload-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-top: 3px;
+      display: inline-block;
+    }
+    .load-light    { background: rgba(26,143,90,.1);  color: var(--status-done); }
+    .load-moderate { background: rgba(178,89,0,.1);   color: var(--status-pending); }
+    .load-heavy    { background: rgba(198,40,40,.1);  color: var(--status-overdue); }
+
+    /* ── TIME-BLOCKING CSS ── */
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 65px repeat(5, 1fr);
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-top: 16px;
+      position: relative;
+    }
+    .timeline-col {
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .timeline-col:last-child {
+      border-right: none;
+    }
+    .timeline-col.today {
+      background: rgba(0,102,204,.02);
+    }
+    .timeline-col.today .timeline-hdr {
+      background: var(--accent-soft);
+      border-bottom-color: var(--accent);
+    }
+    .timeline-col.today .timeline-hdr-day {
+      color: var(--accent);
+    }
+    .timeline-col.today .timeline-hdr-date {
+      color: var(--accent);
+    }
+    .timeline-hdr {
+      padding: 12px 10px;
+      text-align: center;
+      background: var(--bg-elevated);
+      border-bottom: 1.5px solid var(--border);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .timeline-hdr-day {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+    .timeline-hdr-date {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .timeline-hours-col {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      background: var(--bg-elevated);
+      z-index: 10;
+    }
+    .timeline-hour-slot {
+      height: 60px; /* 1 hour = 60px */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+    .timeline-body-col {
+      height: 780px; /* 13 hours (08:00 - 21:00) * 60px = 780px */
+      position: relative;
+      background: linear-gradient(to bottom, transparent 59px, var(--border-subtle) 59px);
+      background-size: 100% 60px;
+    }
+    .timeline-flexible-sec {
+      padding: 10px;
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+      min-height: 80px;
+      flex: 1;
+    }
+    .timeline-flexible-title {
+      font-size: 0.64rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .tb-card {
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      border-radius: var(--radius-xs);
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-xs);
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      border-left: 3.5px solid var(--accent);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .tb-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+      z-index: 100;
+    }
+    .tb-card-time {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .tb-card-title {
+      line-height: 1.25;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .tb-card-subcat {
+      font-size: 0.64rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    /* ── RESEARCH STREAKS CSS ── */
+    .streaks-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .streak-big-number {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--cat-invest);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .streak-lbl-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .streak-lbl {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--text-muted);
+    }
+    .streak-sub {
+      font-size: .78rem;
+      color: var(--text-secondary);
+    }
+    .streak-grid {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-left: auto;
+    }
+    .streak-week-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      position: relative;
+      cursor: default;
+    }
+    .streak-week-box.active {
+      background: var(--cat-invest);
+      border-color: var(--cat-invest);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(107,63,160,0.3);
+    }
+    .streak-week-box .tooltip {
+      visibility: hidden;
+      background: #1d1d1f;
+      color: #fff;
+      text-align: center;
+      padding: 5px 9px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      white-space: nowrap;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .streak-week-box:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Drag over style */
+    .day-tasks.drag-over {
+      background: var(--accent-soft);
+      border: 2px dashed var(--accent);
+      border-radius: var(--radius-xs);
+    }
+
     /* ══════════════════════════════════════════════
        STATS
     ══════════════════════════════════════════════ */
@@ -559,7 +860,9 @@
   <!-- ══ SIDEBAR ══ -->
   <aside id="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon">📅</div>
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
       <div>
         <div class="logo-text">WeekPlanner</div>
         <div class="logo-sub">Dr. Julio Leyrer</div>
@@ -572,6 +875,10 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         <span class="nav-span">Semana Actual</span>
         <span class="nav-badge" id="overdue-badge" style="display:none">!</span>
+      </div>
+      <div class="nav-item" onclick="go('timeline',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="nav-span">Línea de Tiempo</span>
       </div>
       <div class="nav-item" onclick="go('all',this)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
@@ -587,21 +894,27 @@
         <span class="nav-span">Historial</span>
       </div>
       <div class="nav-label">Categorías</div>
-      <div class="nav-item" onclick="go('cat-Docencia',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        <span class="nav-span" style="color:var(--cat-docencia)">Docencia</span>
+      <div id="sidebar-cats-container">
+        <div class="nav-item" onclick="go('cat-Docencia',this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span class="nav-span" style="color:var(--cat-docencia)">Docencia</span>
+        </div>
+        <div class="nav-item" onclick="go('cat-Investigación',this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="nav-span" style="color:var(--cat-invest)">Investigación</span>
+        </div>
+        <div class="nav-item" onclick="go('cat-Administración',this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span class="nav-span" style="color:var(--cat-admin)">Administración</span>
+        </div>
+        <div class="nav-item" onclick="go('cat-Personal',this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="nav-span" style="color:var(--cat-personal)">Personal</span>
+        </div>
       </div>
-      <div class="nav-item" onclick="go('cat-Investigación',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <span class="nav-span" style="color:var(--cat-invest)">Investigación</span>
-      </div>
-      <div class="nav-item" onclick="go('cat-Administración',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <span class="nav-span" style="color:var(--cat-admin)">Administración</span>
-      </div>
-      <div class="nav-item" onclick="go('cat-Personal',this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span class="nav-span" style="color:var(--cat-personal)">Personal</span>
+      <div class="nav-item" onclick="openCategoryManager()" style="border-top:1px solid var(--border-subtle);margin-top:6px;padding-top:10px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span class="nav-span">Gestionar Categorías</span>
       </div>
     </nav>
 
@@ -654,6 +967,19 @@
         </div>
         <div class="cat-legend" id="cat-legend"></div>
         <div class="week-grid" id="week-grid"></div>
+      </section>
+
+      <!-- TIMELINE (TIME-BLOCKING) PAGE -->
+      <section id="page-timeline" class="page-section">
+        <div class="week-nav">
+          <button class="week-nav-btn" onclick="chWeek(-1)">← Anterior</button>
+          <h2 id="timeline-title">Línea de Tiempo Horaria</h2>
+          <button class="week-nav-btn" onclick="chWeek(0)">Hoy</button>
+          <button class="week-nav-btn" onclick="chWeek(1)">Siguiente →</button>
+        </div>
+        <div class="timeline-grid" id="timeline-grid">
+          <!-- Se renderiza dinámicamente con JS -->
+        </div>
       </section>
 
       <!-- ALL TASKS -->
@@ -711,11 +1037,14 @@
     <form id="task-form" onsubmit="saveTask(event)">
       <div class="form-grid">
         <div class="fg full"><label>Título *</label><input type="text" id="f-title" placeholder="Ej. Clase Hidrodinámica — Grupo A" required></div>
-        <div class="fg"><label>Categoría *</label><select id="f-cat" required><option value="">Seleccionar…</option><option>Docencia</option><option>Investigación</option><option>Administración</option><option>Personal</option></select></div>
+        <div class="fg"><label>Tipo de Actividad</label><select id="f-type" onchange="toggleFormFields()"><option value="evento">📆 Compromiso Fijo (Evento)</option><option value="entregable">📋 Tarea Flexible (Entregable)</option></select></div>
         <div class="fg"><label>Estado</label><select id="f-status"><option value="pending">Pendiente</option><option value="progress">En Progreso</option><option value="done">Completada</option></select></div>
+        <div class="fg"><label>Categoría *</label><select id="f-cat" required onchange="populateSubcategories()"><option value="">Seleccionar…</option><option>Docencia</option><option>Investigación</option><option>Administración</option><option>Personal</option></select></div>
+        <div class="fg"><label>Subcategoría</label><select id="f-subcat"><option value="">Seleccionar…</option></select></div>
         <div class="fg"><label>Fecha *</label><input type="date" id="f-date" required></div>
-        <div class="fg"><label>Hora</label><input type="time" id="f-time"></div>
-        <div class="fg"><label>Deadline</label><input type="date" id="f-deadline"></div>
+        <div class="fg" id="fg-time"><label>Hora de Inicio</label><input type="time" id="f-time"></div>
+        <div class="fg" id="fg-duration"><label>Duración</label><select id="f-duration"><option value="30">30 minutos</option><option value="60" selected>1 hora</option><option value="90">1.5 horas</option><option value="120">2 horas</option><option value="180">3 horas</option><option value="240">4 horas</option></select></div>
+        <div class="fg" id="fg-deadline"><label>Fecha Límite (Deadline)</label><input type="date" id="f-deadline"></div>
         <div class="fg"><label>🔄 Repetición</label><select id="f-recur"><option value="none">Sin repetición</option><option value="daily">Diariamente</option><option value="weekly">Cada semana</option><option value="biweekly">Cada 2 semanas</option><option value="monthly">Mensualmente</option></select></div>
         <div class="fg"><label>Lugar</label><input type="text" id="f-loc" placeholder="Sala 201 / Zoom link"></div>
         <div class="fg full"><label>Participantes</label><input type="text" id="f-parts" placeholder="Dr. García, Grupo 4…"></div>
@@ -763,9 +1092,52 @@
       <h3>👤 Perfil</h3>
       <div class="set-row"><label>Nombre</label><input type="text" id="cfg-name" placeholder="Dr. Julio Leyrer"></div>
     </div>
+    <div class="set-sec">
+      <h3>📊 Distribución de Tiempo Planificada (%)</h3>
+      <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:14px">Define el porcentaje de dedicación esperado para cada categoría en tus estadísticas (debe sumar 100%).</p>
+      <div class="set-row"><label>📚 Docencia</label><input type="number" id="cfg-target-docencia" min="0" max="100" placeholder="40"></div>
+      <div class="set-row"><label>🔬 Investigación</label><input type="number" id="cfg-target-invest" min="0" max="100" placeholder="40"></div>
+      <div class="set-row"><label>📋 Administración</label><input type="number" id="cfg-target-admin" min="0" max="100" placeholder="10"></div>
+      <div class="set-row"><label>👤 Personal</label><input type="number" id="cfg-target-personal" min="0" max="100" placeholder="10"></div>
+    </div>
+    <div class="set-sec">
+      <h3>📥 Copia de Seguridad</h3>
+      <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:12px">Importa o restaura tus actividades de un archivo JSON exportado previamente.</p>
+      <input type="file" id="import-file" accept=".json" onchange="importData(event)" style="display:none">
+      <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="document.getElementById('import-file').click()">
+        📥 Importar Archivo JSON (.json)
+      </button>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeSettings()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveSettings()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CATEGORY MANAGER MODAL ══ -->
+<div class="overlay" id="cat-manager-overlay" onclick="closeOvOutside(event,'cat-manager-overlay')">
+  <div class="modal" style="max-width:540px">
+    <div class="modal-hdr">
+      <h2>🗂️ Administrar Categorías</h2>
+      <button class="modal-x" onclick="closeCategoryManager()">✕</button>
+    </div>
+    <div style="margin-bottom:20px">
+      <h3>Crear Nueva Categoría</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="fg" style="grid-column: 1 / span 2"><label>Nombre de Categoría *</label><input type="text" id="new-cat-name" placeholder="Ej. Extensión / Proyectos"></div>
+        <div class="fg"><label>Color (Hexadecimal) *</label><input type="color" id="new-cat-color" value="#0066cc" style="padding:0;height:38px;cursor:pointer"></div>
+        <div class="fg" style="display:flex;align-items:flex-end"><button class="btn btn-primary" style="width:100%;justify-content:center" onclick="addCustomCategory()">Crear</button></div>
+      </div>
+    </div>
+    <div>
+      <h3>Categorías Actuales</h3>
+      <div id="cat-manager-list" style="margin-top:10px;display:flex;flex-direction:column;gap:12px">
+        <!-- Renders dynamically -->
+      </div>
+    </div>
+    <div class="modal-actions" style="margin-top:24px">
+      <button class="btn btn-primary" onclick="closeCategoryManager()">Cerrar</button>
     </div>
   </div>
 </div>
@@ -798,8 +1170,83 @@ function isOverdue(t)      { if(t.status==='done') return false; const c=t.deadl
 function escH(s)           { return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 const PRIO_ORDER = {high:0,medium:1,low:2};
-const CAT_COLORS = { Docencia:'var(--cat-docencia)', Investigación:'var(--cat-invest)', Administración:'var(--cat-admin)', Personal:'var(--cat-personal)' };
-const CATS = ['Docencia','Investigación','Administración','Personal'];
+
+// Default categories setup
+const DEFAULT_CATS = ['Docencia', 'Investigación', 'Administración', 'Personal'];
+const DEFAULT_COLORS = {
+  'Docencia': '#0066CC',
+  'Investigación': '#6B3FA0',
+  'Administración': '#B25900',
+  'Personal': '#1A8F5A'
+};
+const DEFAULT_SUBCATS = {
+  'Docencia': ['Clase', 'Preparación', 'Tutoría', 'Reunión', 'Evaluación'],
+  'Investigación': ['Redacción Paper', 'Experimento', 'Simulación', 'Reunión Proyecto', 'Lectura Paper'],
+  'Administración': ['Reunión Depto', 'Presupuesto', 'Documentos', 'Informes'],
+  'Personal': ['Deporte', 'Salud', 'Trámites', 'Ocio']
+};
+
+let CATS = [];
+let CAT_COLORS = {};
+let SUBCATS = {};
+
+function hexToRGBA(hex, alpha) {
+  hex = hex.replace('#', '');
+  let r = 0, g = 0, b = 0;
+  if(hex.length === 3) {
+    r = parseInt(hex[0]+hex[0], 16);
+    g = parseInt(hex[1]+hex[1], 16);
+    b = parseInt(hex[2]+hex[2], 16);
+  } else if(hex.length === 6) {
+    r = parseInt(hex.substring(0,2), 16);
+    g = parseInt(hex.substring(2,4), 16);
+    b = parseInt(hex.substring(4,6), 16);
+  }
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function initCategories() {
+  try {
+    CATS = JSON.parse(localStorage.getItem('wp_categories_list')) || [...DEFAULT_CATS];
+    CAT_COLORS = JSON.parse(localStorage.getItem('wp_categories_colors')) || {...DEFAULT_COLORS};
+    SUBCATS = JSON.parse(localStorage.getItem('wp_categories_subcats')) || {...DEFAULT_SUBCATS};
+  } catch {
+    CATS = [...DEFAULT_CATS];
+    CAT_COLORS = {...DEFAULT_COLORS};
+    SUBCATS = {...DEFAULT_SUBCATS};
+  }
+  
+  // Inject dynamic styles
+  let styleEl = document.getElementById('dynamic-cat-styles');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'dynamic-cat-styles';
+    document.head.appendChild(styleEl);
+  }
+  
+  let cssText = '';
+  CATS.forEach(c => {
+    const rawColor = CAT_COLORS[c] || '#8E8E93';
+    const varName = c.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    const softColor = hexToRGBA(rawColor, 0.1);
+    const borderSoft = hexToRGBA(rawColor, 0.22);
+    
+    cssText += `
+      :root {
+        --cat-${varName}: ${rawColor};
+        --cat-${varName}-soft: ${softColor};
+        --cat-${varName}-border: ${borderSoft};
+      }
+      .tag-${c} { background: var(--cat-${varName}-soft) !important; color: var(--cat-${varName}) !important; }
+      .tc[data-cat="${c}"]::before { background: var(--cat-${varName}) !important; }
+      .tb-card[data-cat="${c}"] { border-left-color: var(--cat-${varName}) !important; background: var(--cat-${varName}-soft) !important; }
+    `;
+  });
+  styleEl.textContent = cssText;
+}
+
+initCategories();
+
 const DAYS5 = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
 
 // ══════════════════════════════════════════════
@@ -844,13 +1291,44 @@ function openSettings() {
   document.getElementById('cfg-repo').value=c.repo||'WeekPlanner';
   document.getElementById('cfg-tok').value=c.token||'';
   document.getElementById('cfg-name').value=c.name||'Dr. Julio Leyrer';
+  
+  // Cargar targets planificados
+  const targets = c.targets || { 'Docencia': 40, 'Investigación': 40, 'Administración': 10, 'Personal': 10 };
+  document.getElementById('cfg-target-docencia').value = targets['Docencia'] !== undefined ? targets['Docencia'] : 40;
+  document.getElementById('cfg-target-invest').value = targets['Investigación'] !== undefined ? targets['Investigación'] : 40;
+  document.getElementById('cfg-target-admin').value = targets['Administración'] !== undefined ? targets['Administración'] : 10;
+  document.getElementById('cfg-target-personal').value = targets['Personal'] !== undefined ? targets['Personal'] : 10;
+  
   document.getElementById('settings-overlay').classList.add('open');
 }
 function closeSettings() { document.getElementById('settings-overlay').classList.remove('open'); }
 function saveSettings() {
-  const c={owner:document.getElementById('cfg-owner').value.trim(),repo:document.getElementById('cfg-repo').value.trim(),token:document.getElementById('cfg-tok').value.trim(),name:document.getElementById('cfg-name').value.trim()};
+  const tDoc = parseInt(document.getElementById('cfg-target-docencia').value) || 0;
+  const tInv = parseInt(document.getElementById('cfg-target-invest').value) || 0;
+  const tAdm = parseInt(document.getElementById('cfg-target-admin').value) || 0;
+  const tPer = parseInt(document.getElementById('cfg-target-personal').value) || 0;
+  
+  if (tDoc + tInv + tAdm + tPer !== 100) {
+    if(!confirm('La distribución planificada no suma 100% (suma actual: ' + (tDoc + tInv + tAdm + tPer) + '%). ¿Deseas guardar de todos modos?')) {
+      return;
+    }
+  }
+
+  const c={
+    owner:document.getElementById('cfg-owner').value.trim(),
+    repo:document.getElementById('cfg-repo').value.trim(),
+    token:document.getElementById('cfg-tok').value.trim(),
+    name:document.getElementById('cfg-name').value.trim(),
+    targets: {
+      'Docencia': tDoc,
+      'Investigación': tInv,
+      'Administración': tAdm,
+      'Personal': tPer
+    }
+  };
   localStorage.setItem('wp_cfg',JSON.stringify(c));
   closeSettings(); toast('ok','Configuración guardada ✓'); syncGH(true);
+  renderPage();
 }
 
 let syncT=null;
@@ -886,19 +1364,30 @@ function go(page,el) {
   const target=document.getElementById('page-'+page);
   if(target) target.classList.add('active');
   curPage=page;
-  const titles={week:'Semana Actual',all:'Todas las Tareas',stats:'Estadísticas',history:'Historial','cat-Docencia':'Docencia','cat-Investigación':'Investigación','cat-Administración':'Administración','cat-Personal':'Personal'};
+  const titles={
+    week:'Semana Actual',
+    timeline:'Línea de Tiempo Horaria',
+    all:'Todas las Tareas',
+    stats:'Estadísticas',
+    history:'Historial',
+    'cat-Docencia':'Docencia',
+    'cat-Investigación':'Investigación',
+    'cat-Administración':'Administración',
+    'cat-Personal':'Personal'
+  };
   document.getElementById('page-title').textContent=titles[page]||page;
   renderPage();
 }
 function renderPage() {
   if(curPage==='week') renderWeek();
+  else if(curPage==='timeline') renderTimeline();
   else if(curPage==='all') renderAll();
   else if(curPage==='stats') renderStats();
   else if(curPage==='history') renderHistory();
   else if(curPage.startsWith('cat-')) renderCat(curPage.replace('cat-',''));
 }
 function toggleSB() { sbCollapsed=!sbCollapsed; document.getElementById('sidebar').classList.toggle('collapsed',sbCollapsed); }
-function chWeek(d) { d===0?weekOff=0:weekOff+=d; renderWeek(); }
+function chWeek(d) { d===0?weekOff=0:weekOff+=d; renderPage(); }
 
 // ══════════════════════════════════════════════
 //  WEEK PULSE (mini bar chart per day)
@@ -906,46 +1395,57 @@ function chWeek(d) { d===0?weekOff=0:weekOff+=d; renderWeek(); }
 function buildPulse(dates) {
   const today=todayISO();
   const DAYS_S=['Lun','Mar','Mié','Jue','Vie'];
-  const maxTotal=Math.max(...dates.map(d=>tasks.filter(t=>t.date===toISO(d)).length),1);
+  
+  // Calcular horas reales de eventos fijos para cada día
+  const dayHours = dates.map(d => {
+    const iso = toISO(d);
+    return tasks
+      .filter(t => t.date === iso && t.type !== 'entregable' && t.time)
+      .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+  });
+  
+  const maxHours = Math.max(...dayHours, 8); // Base de 8 horas para escala visual
 
   const cols=dates.map((d,i)=>{
     const iso=toISO(d);
-    const dt=tasks.filter(t=>t.date===iso&&!t.recurrenceParent||t.date===iso);
-    const dayT=tasks.filter(t=>t.date===iso);
-    const done=dayT.filter(t=>t.status==='done').length;
-    const total=dayT.length;
-    const pct=total>0?done/total:0;
-    const barH=Math.max((total/maxTotal)*100,total>0?10:4);
-    const doneH=pct*100;
-    const clr=pct>=1?'var(--status-done)':pct>=.5?'var(--accent)':total>0?'var(--status-pending)':'var(--text-muted)';
+    const hrs = dayHours[i];
+    const barH=Math.max((hrs/maxHours)*100, hrs>0?12:4);
     const isToday=iso===today;
+    
+    // Semáforo de carga
+    const clr=hrs>6?'var(--status-overdue)':hrs>=3?'var(--status-pending)':'var(--status-done)';
+    const textLoad = hrs>6?'Saturado':hrs>=3?'Moderado':hrs>0?'Ligero':'Libre';
+    
     return `<div class="pulse-col${isToday?' is-today':''}">
       <div class="pulse-bar-area">
-        <div class="pulse-bar-track" style="height:${barH}%">
-          <div class="pulse-bar-fill" style="height:${doneH}%;background:${clr}"></div>
+        <div class="pulse-bar-track" style="height:${barH}%" title="${textLoad}: ${hrs.toFixed(1)} hrs">
+          <div class="pulse-bar-fill" style="height:100%;background:${hrs>0?clr:'var(--text-muted)'}"></div>
         </div>
       </div>
       <div class="pulse-day-name">${DAYS_S[i]}</div>
-      <div class="pulse-count" style="color:${total>0?clr:'var(--text-muted)'}">${total>0?done+'/'+total:'—'}</div>
+      <div class="pulse-count" style="color:${hrs>0?clr:'var(--text-muted)'};font-size:0.68rem;white-space:nowrap">${hrs>0?hrs.toFixed(1)+'h':'—'}</div>
     </div>`;
   }).join('');
 
   document.getElementById('pulse-wrap').innerHTML=`
     <div class="week-pulse-card">
-      <div class="week-pulse-title">Vista diaria — completadas / total</div>
+      <div class="week-pulse-title">Carga Horaria Diaria (Eventos Fijos)</div>
       <div class="week-pulse">${cols}</div>
     </div>`;
 }
 
 // ══════════════════════════════════════════════
-//  SVG PROGRESS RING for day header
+//  SVG PROGRESS RING for day header (with workload stress semaphore)
 // ══════════════════════════════════════════════
-function progressRing(done,total) {
+function progressRing(done,total,hours=0) {
   if(total===0) return `<svg width="38" height="38" viewBox="0 0 38 38"><circle cx="19" cy="19" r="15" fill="none" stroke="var(--border)" stroke-width="3.5"/><text x="19" y="23" text-anchor="middle" font-size="9" fill="var(--text-muted)" font-family="system-ui" font-weight="700">—</text></svg>`;
   const pct=done/total, r=15, c=2*Math.PI*r;
   const dash=(pct*c).toFixed(1);
-  const clr=pct>=1?'var(--status-done)':pct>=.5?'var(--accent)':'var(--status-pending)';
-  return `<svg width="38" height="38" viewBox="0 0 38 38">
+  
+  // Semáforo de carga horaria real (Green <3h, Yellow 3-6h, Red >6h)
+  const clr=hours>6?'var(--status-overdue)':hours>=3?'var(--status-pending)':'var(--status-done)';
+  
+  return `<svg width="38" height="38" viewBox="0 0 38 38" title="Carga Horaria: ${hours.toFixed(1)} hrs">
     <circle cx="19" cy="19" r="${r}" fill="none" stroke="var(--bg-elevated)" stroke-width="3.5"/>
     <circle cx="19" cy="19" r="${r}" fill="none" stroke="${clr}" stroke-width="3.5"
       stroke-dasharray="${dash} ${c.toFixed(1)}" stroke-linecap="round"
@@ -969,7 +1469,7 @@ function renderWeek() {
   // Carryover
   const co=tasks.filter(t=>t.date<s0&&t.status!=='done');
   const cw=document.getElementById('carryover-wrap');
-  document.getElementById('carryover-tasks').innerHTML=co.map(t=>`<div class="tc" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" style="min-width:180px;max-width:230px">${tcInner(t)}</div>`).join('');
+  document.getElementById('carryover-tasks').innerHTML=co.map(t=>`<div class="tc${t.type==='entregable'?' deliverable':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" style="min-width:180px;max-width:230px" draggable="true" ondragstart="handleDragStart(event, '${t.id}')">${tcInner(t)}</div>`).join('');
   cw.style.display=co.length?'':'none';
 
   // Summary
@@ -982,7 +1482,7 @@ function renderWeek() {
     <div class="sum-item"><span class="sum-lbl">Vencidas</span><span class="sum-val" style="color:var(--status-overdue)">${ovd}</span></div>
     <div class="sum-progress"><div class="sum-lbl">Progreso semanal — ${pct}%</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>`;
 
-  // Pulse chart
+  // Pulse chart (Carga Horaria)
   buildPulse(dates);
 
   // Cat legend
@@ -994,12 +1494,27 @@ function renderWeek() {
     const dayT=tasks.filter(t=>t.date===iso&&!hiddenCats.has(t.cat)).sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99'));
     const dn2=dayT.filter(t=>t.status==='done').length;
     const pending=dayT.filter(t=>t.status!=='done'), done2=dayT.filter(t=>t.status==='done');
+    
+    // Carga horaria real
+    const dayHrs = dayT
+      .filter(t => t.type !== 'entregable' && t.time)
+      .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+      
+    // Text de carga
+    const loadClass = dayHrs>6?'load-heavy':dayHrs>=3?'load-moderate':'load-light';
+    const loadText = dayHrs>6?'🟢🟢🟢':dayHrs>=3?'🟢🟢':'🟢'; // visual blocks or text
+    const loadLabel = dayHrs>6?'Saturado':dayHrs>=3?'Moderado':dayHrs>0?'Ligero':'Libre';
+
     return `<div class="day-col${isT?' today':''}">
       <div class="day-hdr">
-        <div><div class="day-name-txt">${DAYS5[i]}</div><div class="day-date-num">${d.getDate()}</div></div>
-        ${progressRing(dn2,dayT.length)}
+        <div>
+          <div class="day-name-txt">${DAYS5[i]}</div>
+          <div class="day-date-num">${d.getDate()}</div>
+          <span class="workload-badge ${loadClass}">${loadLabel} ${dayHrs>0 ? '('+dayHrs.toFixed(1)+'h)' : ''}</span>
+        </div>
+        ${progressRing(dn2,dayT.length,dayHrs)}
       </div>
-      <div class="day-tasks">
+      <div class="day-tasks" ondragover="event.preventDefault(); this.classList.add('drag-over');" ondragleave="this.classList.remove('drag-over');" ondrop="handleDrop(event, '${iso}'); this.classList.remove('drag-over');">
         ${pending.map(t=>tcCard(t)).join('')}
         ${done2.length?`<div style="height:1px;background:var(--border-subtle);margin:6px 0"></div>${done2.map(t=>tcCard(t)).join('')}`:''}
         ${!dayT.length?`<div class="empty" style="padding:14px 8px"><p style="font-size:.75rem">Sin actividades</p></div>`:''}
@@ -1014,27 +1529,61 @@ function renderWeek() {
 }
 function toggleCat(c){ hiddenCats.has(c)?hiddenCats.delete(c):hiddenCats.add(c); renderWeek(); }
 
-function tcCard(t) { return `<div class="tc${t.status==='done'?' done':''}${isOverdue(t)?' overdue':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')">${tcInner(t)}</div>`; }
+function getDeadlineCountdown(t) {
+  if (t.status === 'done' || !t.deadline) return '';
+  const today = new Date(todayISO() + 'T12:00:00');
+  const dl = new Date(t.deadline + 'T12:00:00');
+  const diffTime = dl - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 0) {
+    return `<span class="tc-meta" style="color:var(--status-overdue);font-weight:700">⏳ ¡Hoy!</span>`;
+  } else if (diffDays === 1) {
+    return `<span class="tc-meta" style="color:var(--status-overdue);font-weight:700">⌛ Mañana</span>`;
+  } else if (diffDays > 1) {
+    const clr = diffDays < 3 ? 'var(--status-overdue)' : (diffDays < 7 ? 'var(--status-pending)' : 'var(--text-secondary)');
+    const icon = diffDays < 3 ? '🔴 ⌛' : '⏳';
+    return `<span class="tc-meta" style="color:${clr};font-weight:600">${icon} Faltan ${diffDays} días</span>`;
+  } else {
+    return `<span class="tc-meta" style="color:var(--status-overdue);font-weight:700">⚠️ Vencido hace ${Math.abs(diffDays)} d</span>`;
+  }
+}
+
+function getPrioBadge(prio) {
+  const label = { high: '▲ Alta', medium: '▲ Media', low: '▼ Baja' }[prio] || '▲ Media';
+  return `<span class="prio-tag prio-${prio}">${label}</span>`;
+}
+
+function tcCard(t) {
+  const isDeliv = t.type === 'entregable';
+  return `<div class="tc${t.status==='done'?' done':''}${isOverdue(t)?' overdue':''}${isDeliv ? ' deliverable':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" draggable="true" ondragstart="handleDragStart(event, '${t.id}')" ondragend="handleDragEnd(event)">${tcInner(t)}</div>`;
+}
 
 function tcInner(t) {
-  const PE={high:'🔴',medium:'🟡',low:'🟢'}; const prio=t.priority||'medium';
+  const prio=t.priority||'medium';
   const done=t.status==='done';
+  const countdown = getDeadlineCountdown(t);
+  
   return `<div class="tc-row">
     <div class="tc-chk${done?' done':''}" onclick="event.stopPropagation();toggleDone('${t.id}')">
       ${done?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="3,9 7,13 13,4"/></svg>':''}
     </div>
     <div class="tc-title">${escH(t.title)}</div>
-    <div class="tc-prio">${PE[prio]}</div>
+    <div class="tc-prio" style="margin-top:-2px">${getPrioBadge(prio)}</div>
   </div>
   <div class="tc-tags">
     <span class="tc-cat tag-${t.cat}">${t.cat}</span>
+    ${t.subcategory ? `<span class="tc-meta" style="font-weight:700">▪ ${escH(t.subcategory)}</span>` : ''}
     ${t.time?`<span class="tc-meta">🕐 ${t.time}</span>`:''}
-    ${t.deadline&&t.deadline!==t.date?`<span class="tc-meta" style="color:var(--status-overdue)">⏰ ${fmtShort(t.deadline)}</span>`:''}
-    ${isOverdue(t)?`<span class="tc-overdue-tag">Vencida</span>`:''}
+    ${t.duration && t.type !== 'entregable'?`<span class="tc-meta">⏱️ ${t.duration}m</span>`:''}
+    ${t.deadline&&t.deadline!==t.date?`<span class="tc-meta">⏰ ${fmtShort(t.deadline)}</span>`:''}
+    ${countdown}
+    ${isOverdue(t) && !countdown ?`<span class="tc-overdue-tag">Vencida</span>`:''}
     ${t.recurrence&&t.recurrence!=='none'?`<span class="tc-meta">🔄</span>`:''}
     ${t.addToCal?`<span class="tc-meta">📅</span>`:''}
   </div>`;
 }
+
 function updateBadge() { const n=tasks.filter(t=>isOverdue(t)&&t.date<todayISO()).length; const b=document.getElementById('overdue-badge'); b.style.display=n>0?'':'none'; b.textContent=n; }
 
 // ══════════════════════════════════════════════
@@ -1088,9 +1637,24 @@ function renderStats() {
     <div class="stat-card"><div class="stat-lbl">Pendientes</div><div class="stat-val" style="color:var(--status-pending)">${total-done}</div><div class="stat-sub">sin completar</div></div>
     <div class="stat-card"><div class="stat-lbl">Vencidas</div><div class="stat-val" style="color:var(--status-overdue)">${ovd}</div><div class="stat-sub">${ovd>0?'⚠ requieren atención':'Sin vencidas ✓'}</div></div>`;
 
-  const gc='rgba(0,0,0,.06)',tc='#AEAEB2';
+  // Renderizar rachas de investigación académica
+  let streaksEl = document.getElementById('streaks-wrap');
+  if(!streaksEl) {
+    streaksEl = document.createElement('div');
+    streaksEl.id = 'streaks-wrap';
+    const grid = document.querySelector('.charts-grid');
+    grid.parentNode.insertBefore(streaksEl, grid);
+  }
+  streaksEl.innerHTML = buildStreaksHTML();
+
+  const gc='rgba(0,0,0,.06)',tc='#6E6E73';
   dChart('c-cat');
-  charts['c-cat']=new Chart(document.getElementById('c-cat'),{type:'doughnut',data:{labels:CATS,datasets:[{data:CATS.map(c=>tasks.filter(t=>t.cat===c).length),backgroundColor:['rgba(0,102,204,.8)','rgba(107,63,160,.8)','rgba(178,89,0,.8)','rgba(26,143,90,.8)'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:tc,font:{size:12},boxWidth:12}}}}});
+  
+  // Usar colores dinámicos de categorías
+  const catColors = CATS.map(c => CAT_COLORS[c] || '#8E8E93');
+  const catColorsTrans = catColors.map(color => hexToRGBA(color, 0.8));
+  
+  charts['c-cat']=new Chart(document.getElementById('c-cat'),{type:'doughnut',data:{labels:CATS,datasets:[{data:CATS.map(c=>tasks.filter(t=>t.cat===c).length),backgroundColor:catColorsTrans,borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:tc,font:{size:12},boxWidth:12}}}}});
 
   dChart('c-week');
   const wl=[],wd=[],wt=[];
@@ -1104,23 +1668,165 @@ function renderStats() {
   dChart('c-status');
   const st={'Completadas':tasks.filter(t=>t.status==='done').length,'En Progreso':tasks.filter(t=>t.status==='progress').length,'Pendientes':tasks.filter(t=>t.status==='pending'&&!isOverdue(t)).length,'Vencidas':tasks.filter(isOverdue).length};
   charts['c-status']=new Chart(document.getElementById('c-status'),{type:'pie',data:{labels:Object.keys(st),datasets:[{data:Object.values(st),backgroundColor:['rgba(26,143,90,.8)','rgba(0,102,204,.8)','rgba(178,89,0,.8)','rgba(198,40,40,.8)'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:tc,font:{size:12},boxWidth:12}}}}});
+
+  // Dibujar gráfico de balance planificado vs real
+  const chartsGrid = document.querySelector('.charts-grid');
+  if (chartsGrid) {
+    let balanceCard = document.getElementById('c-balance-card');
+    if (!balanceCard) {
+      balanceCard = document.createElement('div');
+      balanceCard.id = 'c-balance-card';
+      balanceCard.className = 'chart-card';
+      balanceCard.style.gridColumn = '1 / -1';
+      balanceCard.innerHTML = '<h3>Balance de Dedicación: Planificado vs Real (Últimas 4 Semanas)</h3><div class="chart-wrap" style="height:260px"><canvas id="c-balance"></canvas></div>';
+      chartsGrid.appendChild(balanceCard);
+    }
+  }
+
+  const cfg = getCfg();
+  const targets = cfg.targets || { 'Docencia': 40, 'Investigación': 40, 'Administración': 10, 'Personal': 10 };
+  
+  // Sumar horas reales de actividades completadas en las últimas 4 semanas
+  const todayDate = new Date();
+  const fourWeeksAgo = new Date();
+  fourWeeksAgo.setDate(todayDate.getDate() - 28);
+  const fDateISO = toISO(fourWeeksAgo);
+  const recentDoneTasks = tasks.filter(t => t.status === 'done' && t.date >= fDateISO);
+  
+  const hoursPerCat = {};
+  CATS.forEach(cat => hoursPerCat[cat] = 0);
+  recentDoneTasks.forEach(t => {
+    if (hoursPerCat[t.cat] !== undefined) {
+      const dur = t.type === 'evento' ? (parseInt(t.duration) || 60) : 60;
+      hoursPerCat[t.cat] += dur / 60;
+    }
+  });
+  
+  const totalHours = Object.values(hoursPerCat).reduce((a, b) => a + b, 0);
+  
+  // Calcular porcentajes reales
+  const realPercentages = CATS.map(cat => {
+    if (totalHours === 0) {
+      const catCount = recentDoneTasks.filter(t => t.cat === cat).length;
+      const totalCount = recentDoneTasks.length;
+      return totalCount > 0 ? Math.round((catCount / totalCount) * 100) : 0;
+    }
+    return Math.round((hoursPerCat[cat] / totalHours) * 100);
+  });
+  
+  const plannedPercentages = CATS.map(cat => targets[cat] !== undefined ? targets[cat] : 25);
+  
+  dChart('c-balance');
+  const catColorsSolid = CATS.map(cat => CAT_COLORS[cat] || '#8E8E93');
+  const catColorsTrans2 = catColorsSolid.map(color => hexToRGBA(color, 0.75));
+  
+  charts['c-balance'] = new Chart(document.getElementById('c-balance'), {
+    type: 'bar',
+    data: {
+      labels: CATS,
+      datasets: [
+        {
+          label: 'Planificado (%)',
+          data: plannedPercentages,
+          backgroundColor: 'rgba(142, 142, 147, 0.18)',
+          borderColor: 'rgba(142, 142, 147, 0.5)',
+          borderWidth: 1.5,
+          borderRadius: 6
+        },
+        {
+          label: 'Real (%)',
+          data: realPercentages,
+          backgroundColor: catColorsTrans2,
+          borderColor: catColorsSolid,
+          borderWidth: 1.5,
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: tc, font: { size: 12 } }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: gc },
+          ticks: { color: tc, callback: v => v + '%' },
+          min: 0,
+          max: 100
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: tc, font: { weight: 'bold' } }
+        }
+      }
+    }
+  });
 }
 
 // ══════════════════════════════════════════════
 //  MODAL
 // ══════════════════════════════════════════════
+function populateSubcategories() {
+  const cat = document.getElementById('f-cat').value;
+  const subcatSelect = document.getElementById('f-subcat');
+  if(!cat || !SUBCATS[cat]) {
+    subcatSelect.innerHTML = '<option value="">Seleccionar…</option>';
+    return;
+  }
+  const list = SUBCATS[cat];
+  subcatSelect.innerHTML = '<option value="">Seleccionar…</option>' + list.map(s => `<option value="${s}">${s}</option>`).join('');
+}
+
+function toggleFormFields() {
+  const type = document.getElementById('f-type').value;
+  const fgTime = document.getElementById('fg-time');
+  const fgDuration = document.getElementById('fg-duration');
+  const fgDeadline = document.getElementById('fg-deadline');
+  
+  if (type === 'evento') {
+    fgTime.style.display = '';
+    fgDuration.style.display = '';
+    fgDeadline.style.display = 'none';
+    document.getElementById('f-deadline').value = '';
+  } else {
+    fgTime.style.display = 'none';
+    fgDuration.style.display = 'none';
+    fgDeadline.style.display = '';
+    document.getElementById('f-time').value = '';
+    document.getElementById('f-duration').value = '60';
+  }
+}
+
 let editId=null;
 function openModal(presetCat=null,taskId=null,presetDate=null) {
-  editId=taskId; document.getElementById('task-form').reset();
+  editId=taskId; 
+  document.getElementById('task-form').reset();
+  
+  // Poblar categorías de forma dinámica
+  const catSelect = document.getElementById('f-cat');
+  catSelect.innerHTML = '<option value="">Seleccionar…</option>' + CATS.map(c => `<option value="${c}">${c}</option>`).join('');
+
   if(taskId) {
     const t=tasks.find(x=>x.id===taskId); if(!t) return;
     document.getElementById('modal-title').textContent='Editar Actividad';
     document.getElementById('del-btn').style.display='';
     document.getElementById('f-title').value=t.title;
     document.getElementById('f-cat').value=t.cat;
+    document.getElementById('f-type').value=t.type || 'evento';
+    
+    // Poblar subcategorías e inicializar su valor
+    populateSubcategories();
+    document.getElementById('f-subcat').value=t.subcategory || '';
+    
     document.getElementById('f-status').value=t.status;
     document.getElementById('f-date').value=t.date;
     document.getElementById('f-time').value=t.time||'';
+    document.getElementById('f-duration').value=t.duration||'60';
     document.getElementById('f-deadline').value=t.deadline||'';
     document.getElementById('f-recur').value=t.recurrence||'none';
     document.getElementById('f-loc').value=t.location||'';
@@ -1133,10 +1839,16 @@ function openModal(presetCat=null,taskId=null,presetDate=null) {
     document.getElementById('modal-title').textContent='Nueva Actividad';
     document.getElementById('del-btn').style.display='none';
     document.getElementById('f-date').value=presetDate||todayISO();
-    if(presetCat) document.getElementById('f-cat').value=presetCat;
+    document.getElementById('f-type').value='evento';
+    if(presetCat) {
+      document.getElementById('f-cat').value=presetCat;
+    }
+    populateSubcategories();
     document.querySelector('input[name=prio][value="medium"]').checked=true;
     document.getElementById('f-ics').checked=false;
   }
+  
+  toggleFormFields();
   document.getElementById('modal-overlay').classList.add('open');
   setTimeout(()=>document.getElementById('f-title').focus(),100);
 }
@@ -1147,16 +1859,29 @@ function saveTask(e) {
   e.preventDefault();
   const prio=document.querySelector('input[name=prio]:checked')?.value||'medium';
   const addToCal=document.getElementById('f-ics').checked;
+  const type = document.getElementById('f-type').value;
+  
   const task={
-    id:editId||genId(), title:document.getElementById('f-title').value.trim(),
-    cat:document.getElementById('f-cat').value, status:document.getElementById('f-status').value,
-    date:document.getElementById('f-date').value, time:document.getElementById('f-time').value,
-    deadline:document.getElementById('f-deadline').value, recurrence:document.getElementById('f-recur').value,
-    location:document.getElementById('f-loc').value.trim(), participants:document.getElementById('f-parts').value.trim(),
-    notes:document.getElementById('f-notes').value.trim(), priority:prio, addToCal,
+    id:editId||genId(), 
+    title:document.getElementById('f-title').value.trim(),
+    cat:document.getElementById('f-cat').value, 
+    subcategory:document.getElementById('f-subcat').value,
+    status:document.getElementById('f-status').value,
+    type: type,
+    date:document.getElementById('f-date').value, 
+    time: type === 'evento' ? document.getElementById('f-time').value : '',
+    duration: type === 'evento' ? document.getElementById('f-duration').value : '',
+    deadline: type === 'entregable' ? document.getElementById('f-deadline').value : '',
+    recurrence:document.getElementById('f-recur').value,
+    location:document.getElementById('f-loc').value.trim(), 
+    participants:document.getElementById('f-parts').value.trim(),
+    notes:document.getElementById('f-notes').value.trim(), 
+    priority:prio, 
+    addToCal,
     createdAt:editId?(tasks.find(t=>t.id===editId)?.createdAt||new Date().toISOString()):new Date().toISOString(),
     updatedAt:new Date().toISOString(),
   };
+  
   if(editId){const i=tasks.findIndex(t=>t.id===editId);if(i!==-1)tasks[i]=task;}else tasks.push(task);
   saveTasks(); closeModal();
   toast('ok',editId?'Actividad actualizada ✓':'Actividad creada ✓');
@@ -1201,7 +1926,393 @@ function emptyState(m){ return`<div class="empty"><svg width="44" height="44" vi
 function toast(type,msg){ const c=document.getElementById('toasts');const el=document.createElement('div');el.className=`toast ${type}`;el.innerHTML=`${type==='ok'?'✅':'❌'} ${msg}`;c.appendChild(el);setTimeout(()=>el.remove(),3100); }
 function exportData(){ const b=new Blob([JSON.stringify(tasks,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`weekplanner_${todayISO()}.json`;a.click();URL.revokeObjectURL(u);toast('ok','Datos exportados ✓'); }
 
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeModal();closeSettings();} if(e.key==='n'&&!['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)){e.preventDefault();openModal();} });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeModal();closeSettings();closeCategoryManager();} if(e.key==='n'&&!['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)){e.preventDefault();openModal();} });
+
+// ══════════════════════════════════════════════
+//  DRAG AND DROP JS HANDLERS
+// ══════════════════════════════════════════════
+let draggedTaskId = null;
+function handleDragStart(e, id) {
+  draggedTaskId = id;
+  e.dataTransfer.setData('text/plain', id);
+  e.dataTransfer.effectAllowed = 'move';
+}
+function handleDragEnd(e) {
+  draggedTaskId = null;
+  document.querySelectorAll('.day-tasks').forEach(el => el.classList.remove('drag-over'));
+}
+function handleDrop(e, targetDate) {
+  e.preventDefault();
+  const id = e.dataTransfer.getData('text/plain') || draggedTaskId;
+  if (!id) return;
+  const t = tasks.find(x => x.id === id);
+  if (t && t.date !== targetDate) {
+    t.date = targetDate;
+    t.updatedAt = new Date().toISOString();
+    saveTasks();
+    renderPage();
+    toast('ok', 'Actividad movida ✓');
+  }
+}
+
+// ══════════════════════════════════════════════
+//  CATEGORY MANAGER JS
+// ══════════════════════════════════════════════
+function openCategoryManager() {
+  document.getElementById('cat-manager-overlay').classList.add('open');
+  renderCategoryManagerList();
+}
+function closeCategoryManager() {
+  document.getElementById('cat-manager-overlay').classList.remove('open');
+}
+function renderCategoryManagerList() {
+  const container = document.getElementById('cat-manager-list');
+  container.innerHTML = CATS.map(c => {
+    const color = CAT_COLORS[c] || '#8E8E93';
+    const subList = SUBCATS[c] || [];
+    const isDefault = DEFAULT_CATS.includes(c);
+    
+    return `
+      <div style="background:var(--bg-elevated);border-radius:var(--radius-xs);padding:14px;border:1px solid var(--border)">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="width:14px;height:14px;border-radius:50%;background:${color}"></span>
+            <strong style="font-size:0.95rem">${c}</strong>
+          </div>
+          ${!isDefault ? `<button class="btn btn-danger" style="padding:4px 10px;font-size:0.75rem" onclick="deleteCustomCategory('${c}')">Eliminar</button>` : '<span style="font-size:0.7rem;color:var(--text-muted);font-weight:700">POR DEFECTO</span>'}
+        </div>
+        <div style="margin-top:10px">
+          <span style="font-size:0.75rem;font-weight:700;color:var(--text-secondary)">Subcategorías:</span>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+            ${subList.map(s => `
+              <span style="background:var(--bg-surface);font-size:0.75rem;padding:3px 8px;border-radius:99px;border:1px solid var(--border);display:inline-flex;align-items:center;gap:4px">
+                ${s}
+                <span style="cursor:pointer;color:var(--status-overdue);font-weight:700" onclick="deleteSubcategory('${c}', '${s}')">✕</span>
+              </span>
+            `).join('')}
+            <button class="btn btn-ghost" style="padding:2px 8px;font-size:0.75rem;border-radius:99px" onclick="promptAddSubcategory('${c}')">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+function addCustomCategory() {
+  const name = document.getElementById('new-cat-name').value.trim();
+  const color = document.getElementById('new-cat-color').value;
+  if (!name) { toast('err', 'Escribe un nombre para la categoría'); return; }
+  if (CATS.includes(name)) { toast('err', 'Esta categoría ya existe'); return; }
+  
+  CATS.push(name);
+  CAT_COLORS[name] = color;
+  SUBCATS[name] = [];
+  
+  localStorage.setItem('wp_categories_list', JSON.stringify(CATS));
+  localStorage.setItem('wp_categories_colors', JSON.stringify(CAT_COLORS));
+  localStorage.setItem('wp_categories_subcats', JSON.stringify(SUBCATS));
+  
+  initCategories();
+  document.getElementById('new-cat-name').value = '';
+  renderCategoryManagerList();
+  toast('ok', 'Categoría creada ✓');
+  renderPage();
+}
+function deleteCustomCategory(name) {
+  if (DEFAULT_CATS.includes(name)) return;
+  if (tasks.some(t => t.cat === name)) {
+    if (!confirm('Hay tareas que usan esta categoría. ¿Seguro que deseas eliminarla? (Sus tareas se mantendrán pero la categoría desaparecerá de los filtros).')) {
+      return;
+    }
+  }
+  
+  CATS = CATS.filter(c => c !== name);
+  delete CAT_COLORS[name];
+  delete SUBCATS[name];
+  
+  localStorage.setItem('wp_categories_list', JSON.stringify(CATS));
+  localStorage.setItem('wp_categories_colors', JSON.stringify(CAT_COLORS));
+  localStorage.setItem('wp_categories_subcats', JSON.stringify(SUBCATS));
+  
+  initCategories();
+  renderCategoryManagerList();
+  toast('ok', 'Categoría eliminada');
+  renderPage();
+}
+function promptAddSubcategory(cat) {
+  const sub = prompt(`Agregar subcategoría para ${cat}:`);
+  if (!sub) return;
+  const name = sub.trim();
+  if (!name) return;
+  if (!SUBCATS[cat]) SUBCATS[cat] = [];
+  if (SUBCATS[cat].includes(name)) { toast('err', 'Esta subcategoría ya existe'); return; }
+  
+  SUBCATS[cat].push(name);
+  localStorage.setItem('wp_categories_subcats', JSON.stringify(SUBCATS));
+  renderCategoryManagerList();
+  toast('ok', 'Subcategoría agregada ✓');
+}
+function deleteSubcategory(cat, sub) {
+  if (!SUBCATS[cat]) return;
+  SUBCATS[cat] = SUBCATS[cat].filter(s => s !== sub);
+  localStorage.setItem('wp_categories_subcats', JSON.stringify(SUBCATS));
+  renderCategoryManagerList();
+  toast('ok', 'Subcategoría eliminada');
+}
+function renderSidebarCategories() {
+  const container = document.getElementById('sidebar-cats-container');
+  if (!container) return;
+  
+  container.innerHTML = CATS.map(c => {
+    const rawColor = CAT_COLORS[c] || '#8E8E93';
+    const varName = c.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    let svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>';
+    if (c === 'Docencia') {
+      svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
+    } else if (c === 'Investigación') {
+      svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+    } else if (c === 'Administración') {
+      svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+    } else if (c === 'Personal') {
+      svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+    }
+    
+    return `
+      <div class="nav-item" onclick="go('cat-${c}',this)">
+        ${svgIcon}
+        <span class="nav-span" style="color:var(--cat-${varName})">${c}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+//  BACKUP IMPORT
+// ══════════════════════════════════════════════
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const importedTasks = JSON.parse(evt.target.result);
+      if (!Array.isArray(importedTasks)) {
+        toast('err', 'El archivo no tiene el formato de respaldo de WeekPlanner.');
+        return;
+      }
+      
+      const option = confirm('Se encontraron ' + importedTasks.length + ' actividades.\n\nElige una opción:\n- Aceptar (OK): FUSIONAR con tus actividades actuales.\n- Cancelar (Cancel): REEMPLAZAR todas tus actividades actuales.');
+      
+      if (option) {
+        let addedCount = 0;
+        importedTasks.forEach(item => {
+          if (item.id && !tasks.some(t => t.id === item.id)) {
+            tasks.push(item);
+            addedCount++;
+          }
+        });
+        saveTasks();
+        toast('ok', `Fusión exitosa: se agregaron ${addedCount} actividades ✓`);
+      } else {
+        tasks = importedTasks;
+        saveTasks();
+        toast('ok', 'Restauración completa: tus actividades fueron reemplazadas ✓');
+      }
+      
+      renderPage();
+      updateBadge();
+    } catch {
+      toast('err', 'Error al leer el archivo JSON.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ══════════════════════════════════════════════
+//  TIMELINE (TIME-BLOCKING VISUAL) RENDER
+// ══════════════════════════════════════════════
+function renderTimeline() {
+  const dates = getWeekDates(weekOff);
+  const today = todayISO();
+  const s0 = toISO(dates[0]);
+  const s4 = toISO(dates[4]);
+  
+  const opts = { day: 'numeric', month: 'short' };
+  document.getElementById('week-label').textContent = `${dates[0].toLocaleDateString('es-CL', opts)} – ${dates[4].toLocaleDateString('es-CL', opts)}`;
+  document.getElementById('timeline-title').textContent = `Línea de Tiempo — Semana ${dates[0].toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+
+  // Crear rejilla horaria de 08:00 a 20:00
+  let hourSlotsHTML = '';
+  for (let h = 8; h <= 20; h++) {
+    hourSlotsHTML += `<div class="timeline-hour-slot">${String(h).padStart(2, '0')}:00</div>`;
+  }
+  
+  const DAYS_S = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+  const dayColsHTML = dates.map((d, i) => {
+    const iso = toISO(d);
+    const isToday = iso === today;
+    
+    // Filtrar tareas que no estén en categorías ocultas
+    const dayTasks = tasks.filter(t => t.date === iso && !hiddenCats.has(t.cat));
+    const events = dayTasks.filter(t => t.type !== 'entregable' && t.time);
+    const deliverables = dayTasks.filter(t => t.type === 'entregable' || !t.time);
+    
+    // Detectar traslapes horarias en compromisos fijos
+    // 1 hora = 60px -> 1 minuto = 1px. Inicio a las 08:00 (480 minutos).
+    const eventTimeBlocks = events.map(t => {
+      const [h, m] = t.time.split(':').map(Number);
+      const start = h * 60 + m;
+      const dur = parseInt(t.duration) || 60;
+      return { id: t.id, start, end: start + dur };
+    });
+    
+    const overlapIds = new Set();
+    for (let x = 0; x < eventTimeBlocks.length; x++) {
+      for (let y = x + 1; y < eventTimeBlocks.length; y++) {
+        const a = eventTimeBlocks[x];
+        const b = eventTimeBlocks[y];
+        if (a.start < b.end && b.start < a.end) {
+          overlapIds.add(a.id);
+          overlapIds.add(b.id);
+        }
+      }
+    }
+    
+    const eventsHTML = events.map(t => {
+      const [h, m] = t.time.split(':').map(Number);
+      const start = h * 60 + m;
+      const dur = parseInt(t.duration) || 60;
+      const top = Math.max(start - 480, 0); // 08:00 es top = 0px
+      const height = dur;
+      const isOvd = isOverdue(t);
+      const isOverlap = overlapIds.has(t.id);
+      
+      return `
+        <div class="tb-card${isOverlap ? ' overlap' : ''}${isOvd ? ' overdue' : ''}" 
+             data-cat="${t.cat}"
+             style="top:${top}px; height:${height}px;"
+             onclick="openModal(null, '${t.id}')">
+          <div class="tb-card-time">🕐 ${t.time} (${dur}m)</div>
+          <div class="tb-card-title">${escH(t.title)}</div>
+          ${t.subcategory ? `<div class="tb-card-subcat">${escH(t.subcategory)}</div>` : ''}
+        </div>
+      `;
+    }).join('');
+    
+    const delivHTML = deliverables.map(t => {
+      const isOvd = isOverdue(t);
+      const done = t.status === 'done';
+      return `
+        <div class="tc deliverable${done ? ' done' : ''}${isOvd ? ' overdue' : ''}" 
+             data-cat="${t.cat}" 
+             onclick="openModal(null, '${t.id}')">
+          ${tcInner(t)}
+        </div>
+      `;
+    }).join('');
+    
+    return `
+      <div class="timeline-col${isToday ? ' today' : ''}">
+        <div class="timeline-hdr">
+          <div class="timeline-hdr-day">${DAYS_S[i]}</div>
+          <div class="timeline-hdr-date">${d.getDate()}</div>
+        </div>
+        <div class="timeline-body-col" ondragover="event.preventDefault(); this.parentNode.classList.add('drag-over');" ondragleave="this.parentNode.classList.remove('drag-over');" ondrop="handleDrop(event, '${iso}'); this.parentNode.classList.remove('drag-over');">
+          ${eventsHTML}
+        </div>
+        <div class="timeline-flexible-sec">
+          <div class="timeline-flexible-title">Tareas Flexibles</div>
+          ${delivHTML.length ? delivHTML : '<div style="font-size:0.65rem;color:var(--text-muted);text-align:center;padding:8px 0">Ninguna</div>'}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('timeline-grid').innerHTML = `
+    <div class="timeline-hours-col">
+      <div class="timeline-hdr" style="visibility:hidden">
+        <div class="timeline-hdr-day">Hora</div>
+        <div class="timeline-hdr-date">00</div>
+      </div>
+      ${hourSlotsHTML}
+      <div style="flex:1;background:var(--bg-elevated);border-top:1px solid var(--border)"></div>
+    </div>
+    ${dayColsHTML}
+  `;
+}
+
+// ══════════════════════════════════════════════
+//  RESEARCH STREAKS (RACHAS) CALCULATION
+// ══════════════════════════════════════════════
+function getResearchStreaks() {
+  let currentStreak = 0;
+  let maxStreak = 0;
+  let tempStreak = 0;
+  
+  const totalWeeksToCheck = 52;
+  const weeklyStatus = [];
+  
+  for (let w = 0; w < totalWeeksToCheck; w++) {
+    const dates = getWeekDates(-w);
+    const s = toISO(dates[0]);
+    const e = toISO(dates[4]);
+    const weekTasks = tasks.filter(t => t.date >= s && t.date <= e && t.cat === 'Investigación' && t.status === 'done');
+    const isActive = weekTasks.length > 0;
+    
+    weeklyStatus.push({
+      weekOff: -w,
+      active: isActive,
+      label: `${dates[0].getDate()}/${dates[0].getMonth()+1} - ${dates[4].getDate()}/${dates[4].getMonth()+1}`,
+      count: weekTasks.length
+    });
+  }
+  
+  let checkStreak = true;
+  for (let w = 0; w < weeklyStatus.length; w++) {
+    if (weeklyStatus[w].active) {
+      if (checkStreak) currentStreak++;
+      tempStreak++;
+    } else {
+      checkStreak = false;
+      if (tempStreak > maxStreak) maxStreak = tempStreak;
+      tempStreak = 0;
+    }
+  }
+  if (tempStreak > maxStreak) maxStreak = tempStreak;
+  
+  const last12Weeks = weeklyStatus.slice(0, 12).reverse();
+  
+  return { currentStreak, maxStreak, last12Weeks };
+}
+
+function buildStreaksHTML() {
+  const { currentStreak, maxStreak, last12Weeks } = getResearchStreaks();
+  
+  const boxes = last12Weeks.map(w => {
+    const isAct = w.active;
+    return `
+      <div class="streak-week-box${isAct ? ' active' : ''}">
+        ${isAct ? '🔥' : '▪'}
+        <span class="tooltip">Semana ${w.label}: ${w.count} completadas</span>
+      </div>
+    `;
+  }).join('');
+  
+  return `
+    <div class="streaks-card">
+      <div class="streak-big-number">
+        ${currentStreak} <span style="font-size:1.8rem">semanas</span> 🔥
+      </div>
+      <div class="streak-lbl-container">
+        <div class="streak-lbl">Racha de Investigación</div>
+        <div class="streak-sub">Semanas consecutivas completando hitos científicos (Proyectos / papers). Máximo récord: <strong>${maxStreak} semanas</strong></div>
+      </div>
+      <div class="streak-grid">
+        ${boxes}
+      </div>
+    </div>
+  `;
+}
 
 // =====================
 //  SEED DATA
@@ -1211,14 +2322,12 @@ function seedDemo(){
   const t=new Date(),d=t.getDay(),mo=d===0?-6:1-d;
   const iso=n=>{const x=new Date(t);x.setDate(t.getDate()+n);return toISO(x);};
   tasks=[
-    {id:genId(),title:'Clase Hidrodin\u00e1mica \u2014 Grupo A',cat:'Docencia',status:'done',date:iso(mo),time:'09:00',deadline:iso(mo),recurrence:'weekly',location:'Sala 302',participants:'3er a\u00f1o Ing. Civil',notes:'Cap.5 flujo turbulento',priority:'high',addToCal:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
-    {id:genId(),title:'Revisi\u00f3n art\u00edculo Journal of Fluids',cat:'Investigaci\u00f3n',status:'progress',date:iso(mo+1),time:'11:00',deadline:iso(mo+3),recurrence:'none',location:'Oficina',participants:'Dr. Mart\u00ednez',notes:'Deadline el jueves',priority:'high',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
-    {id:genId(),title:'Reuni\u00f3n Departamento',cat:'Administraci\u00f3n',status:'pending',date:iso(mo+1),time:'15:00',deadline:'',recurrence:'none',location:'Sala B1',participants:'Equipo Dpto.',notes:'Presupuesto 2026',priority:'medium',addToCal:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
-    {id:genId(),title:'Tutor\u00eda Proyecto Final',cat:'Docencia',status:'pending',date:iso(mo+2),time:'10:00',deadline:'',recurrence:'none',location:'Zoom',participants:'Grupo 4',notes:'Avance CFD',priority:'medium',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
-    {id:genId(),title:'An\u00e1lisis datos canal experimental',cat:'Investigaci\u00f3n',status:'pending',date:iso(mo+2),time:'14:00',deadline:iso(mo+4),recurrence:'none',location:'Lab Fluidos',participants:'Ayudante Roberto',notes:'PIV velocimetr\u00eda',priority:'high',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
-    {id:genId(),title:'Correcci\u00f3n Informe Lab 2',cat:'Docencia',status:'pending',date:iso(mo+3),time:'',deadline:iso(mo+4),recurrence:'none',location:'',participants:'',notes:'25 informes grupo B',priority:'medium',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
-    {id:genId(),title:'Propuesta FONDECYT',cat:'Investigaci\u00f3n',status:'pending',date:iso(mo+4),time:'17:00',deadline:iso(mo+4),recurrence:'none',location:'',participants:'Co-investigadores',notes:'Plataforma ANID',priority:'high',addToCal:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
-    {id:genId(),title:'Nataci\u00f3n',cat:'Personal',status:'done',date:iso(mo+2),time:'07:00',deadline:'',recurrence:'weekly',location:'Piscina Campus',participants:'',notes:'',priority:'low',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
+    {id:genId(),title:'Clase Hidrodinámica',cat:'Docencia',subcategory:'Clase',status:'done',type:'evento',date:iso(mo),time:'09:00',duration:'90',deadline:iso(mo),recurrence:'weekly',location:'Sala 302',participants:'3er año Ing. Civil',notes:'Cap.5 flujo turbulento',priority:'high',addToCal:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
+    {id:genId(),title:'Revisión artículo Journal of Fluids',cat:'Investigación',subcategory:'Redacción Paper',status:'progress',type:'entregable',date:iso(mo+1),time:'',duration:'',deadline:iso(mo+3),recurrence:'none',location:'Oficina',participants:'Dr. Martínez',notes:'Deadline el jueves',priority:'high',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
+    {id:genId(),title:'Reunión Departamento',cat:'Administración',subcategory:'Reuniones Depto',status:'pending',type:'evento',date:iso(mo+1),time:'15:00',duration:'60',deadline:'',recurrence:'none',location:'Sala B1',participants:'Equipo Dpto.',notes:'Presupuesto 2026',priority:'medium',addToCal:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
+    {id:genId(),title:'Reunión Impresora Hydrogel',cat:'Investigación',subcategory:'Experimento',status:'pending',type:'evento',date:iso(mo+2),time:'11:30',duration:'90',deadline:'',recurrence:'none',location:'Lab Fluidos',participants:'Dr. Leyrer',notes:'Flujo bioimpresora',priority:'high',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
+    {id:genId(),title:'CFD Canal Experimental',cat:'Investigación',subcategory:'Simulación',status:'pending',type:'evento',date:iso(mo+2),time:'14:00',duration:'120',deadline:'',recurrence:'none',location:'Oficina',participants:'Ayudante Roberto',notes:'PIV velocimetría',priority:'medium',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
+    {id:genId(),title:'Natación',cat:'Personal',subcategory:'Deporte',status:'done',type:'evento',date:iso(mo+2),time:'07:00',duration:'60',deadline:'',recurrence:'weekly',location:'Piscina Campus',participants:'',notes:'',priority:'low',addToCal:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()},
   ];
   localStorage.setItem(SK,JSON.stringify(tasks));
 }

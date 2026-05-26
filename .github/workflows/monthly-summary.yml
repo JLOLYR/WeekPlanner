@@ -58,7 +58,8 @@ jobs:
               'Personal':       ('#ECFDF5', '#047857', '#065F46', '#D1FAE5'),
           }
           PRIO_ORDER = {'high': 0, 'medium': 1, 'low': 2}
-          PRIO_LABELS = {'high':'🔴 Alta','medium':'🟡 Media','low':'🟢 Baja'}
+          PRIO_LABELS = {'high':'▲ Alta','medium':'▲ Media','low':'▼ Baja'}
+          STATUS_LABELS = {'done':'Completada','progress':'En Progreso','pending':'Pendiente'}
 
           def fmt_date(iso):
               if not iso: return '—'
@@ -104,14 +105,20 @@ jobs:
               cat_total = len(cat_tasks)
               cat_pct = round(cat_done/cat_total*100) if cat_total > 0 else 0
               cat_blocks += f"""
-              <div style="background:{bg};border:1.5px solid {clr}40;border-radius:10px;padding:14px 16px;margin-bottom:10px">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                  <span style="font-size:14px;font-weight:800;color:{dark}">{cat}</span>
-                  <span style="font-size:13px;color:{dark};font-weight:700">{cat_done}/{cat_total} — {cat_pct}%</span>
-                </div>
-                <div style="background:rgba(255,255,255,0.6);border-radius:99px;height:7px;overflow:hidden">
-                  <div style="background:{clr};width:{cat_pct}%;height:100%;border-radius:99px"></div>
-                </div>
+              <div style="margin-bottom:14px">
+                <table style="width:100%;border-collapse:collapse;">
+                  <tr>
+                    <td style="font-size:13px;font-weight:600;color:{dark};padding-bottom:4px;">{cat}</td>
+                    <td style="font-size:12px;color:#6B7280;text-align:right;padding-bottom:4px;">{cat_done} de {cat_total} completadas ({cat_pct}%)</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <div style="background-color:#E5E7EB;border-radius:99px;height:6px;overflow:hidden">
+                        <div style="background-color:{clr};width:{cat_pct}%;height:100%;border-radius:99px"></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
               </div>"""
 
           # Semanas table
@@ -120,34 +127,75 @@ jobs:
               wp = round(ws['done']/ws['total']*100) if ws['total']>0 else 0
               color = '#047857' if wp>=80 else ('#B45309' if wp>=50 else '#DC2626')
               week_rows += f"""<tr>
-                <td style="padding:9px 12px;border-bottom:1px solid #F0EFF9;font-size:13px;color:#1A1714;font-weight:600">{ws['label']}</td>
-                <td style="padding:9px 12px;border-bottom:1px solid #F0EFF9;text-align:center;font-size:13px">{ws['total']}</td>
-                <td style="padding:9px 12px;border-bottom:1px solid #F0EFF9;text-align:center;font-size:13px;color:#047857;font-weight:700">{ws['done']}</td>
-                <td style="padding:9px 12px;border-bottom:1px solid #F0EFF9;text-align:center">
-                  <span style="background:{color}22;color:{color};padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700">{wp}%</span>
+                <td style="padding:12px;border-bottom:1px solid #E5E7EB;font-size:13px;color:#1A1714;font-weight:600">{ws['label']}</td>
+                <td style="padding:12px;border-bottom:1px solid #E5E7EB;text-align:center;font-size:13px;color:#1F2937">{ws['total']}</td>
+                <td style="padding:12px;border-bottom:1px solid #E5E7EB;text-align:center;font-size:13px;color:#047857;font-weight:700">{ws['done']}</td>
+                <td style="padding:12px;border-bottom:1px solid #E5E7EB;text-align:center">
+                  <span style="background-color:{color}18;color:{color};padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700;border:1px solid {color}18">{wp}%</span>
                 </td>
               </tr>"""
 
+          def task_row(t, show_date=False):
+              cat = t.get('cat','')
+              colors = CAT_COLORS.get(cat, ('#F3F4F6', '#4B5563', '#1F2937', '#E5E7EB'))
+              bg, clr, dark, light = colors
+              overdue = is_overdue(t)
+              
+              time_str = f"<span style='color:#6B7280;font-size:12px;margin-left:8px'>🕐 {t.get('time')}</span>" if t.get('time') else ''
+              date_str = f"<span style='color:#6B7280;font-size:12px;margin-left:8px'>📅 {fmt_date(t.get('date'))}</span>" if show_date else ''
+              loc = f"<span style='color:#6B7280;font-size:12px;margin-left:8px'>📍 {t.get('location')}</span>" if t.get('location') else ''
+              
+              dl = f"<div style='color:#EF4444;font-size:11px;font-weight:600;margin-top:4px;'>⏰ Vence: {fmt_date(t.get('deadline'))}</div>" if t.get('deadline') and t.get('deadline') != t.get('date') else ''
+              overdue_badge = " <span style='color:#EF4444;font-size:10px;font-weight:700;letter-spacing:0.05em;margin-left:6px;border:1px solid #FCA5A5;background:#FEF2F2;padding:1px 4px;border-radius:4px;'>VENCIDA</span>" if overdue else ''
+              
+              prio = t.get('priority', 'medium')
+              prio_lbl = PRIO_LABELS.get(prio, '▲ Media')
+              
+              prio_colors = {
+                  'high': ('#FEF2F2', '#EF4444', '#DC2626'),
+                  'medium': ('#FFFBEB', '#F59E0B', '#D97706'),
+                  'low': ('#F0FDF4', '#10B981', '#059669')
+              }
+              pbg, pclr, pdark = prio_colors.get(prio, ('#FFFBEB', '#F59E0B', '#D97706'))
+              prio_badge = f"<span style='background:{pbg};color:{pclr};font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;border:1px solid {pbg};'>{prio_lbl}</span>"
+              
+              status_badge = STATUS_LABELS.get(t.get('status','pending'), '⏳ Pendiente')
+              
+              return f"""<tr>
+                <td style="padding:12px;border-bottom:1px solid #E5E7EB;color:#1F2937;font-size:13px">
+                  <div style="font-weight:600;color:#111827;">{t.get('title','Sin título')}{overdue_badge}</div>
+                  <div style="margin-top:4px;">
+                    <span style="background:{bg};color:{clr};padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700;border:1px solid {bg}">{cat}</span>
+                    {time_str}{date_str}{loc}
+                  </div>
+                  {dl}
+                </td>
+                <td style="padding:12px;border-bottom:1px solid #E5E7EB;text-align:center;vertical-align:middle;">
+                  {prio_badge}
+                </td>
+                <td style="padding:12px;border-bottom:1px solid #E5E7EB;font-size:12px;color:#4B5563;vertical-align:middle;text-align:right;">
+                  <span style="font-weight:600;">{status_badge}</span>
+                </td>
+              </tr>"""
+
+          def make_table(task_list, show_date=False):
+              if not task_list:
+                  return '<p style="color:#9CA3AF;font-size:13px;text-align:center;padding:16px;margin:0;">Sin actividades</p>'
+              return f"""<table style="width:100%;border-collapse:collapse;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+                <thead><tr style="background:#F9FAFB">
+                  <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #E5E7EB">Actividad / Info</th>
+                  <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #E5E7EB">Prioridad</th>
+                  <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:700;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #E5E7EB">Estado</th>
+                </tr></thead>
+                <tbody>{''.join(task_row(t, show_date) for t in task_list)}</tbody>
+              </table>"""
+
           overdue_section = ''
           if overdue_tasks:
-              overdue_rows = ''.join(f"""<tr>
-                <td style="padding:9px 12px;border-bottom:1px solid #FEE2E2;font-size:13px;color:#1A1714;font-weight:600">{t.get('title','')}</td>
-                <td style="padding:9px 12px;border-bottom:1px solid #FEE2E2;font-size:12px;color:#52504A;text-align:center">{t.get('cat','')}</td>
-                <td style="padding:9px 12px;border-bottom:1px solid #FEE2E2;font-size:12px;color:#DC2626;text-align:center">{fmt_date(t.get('date',''))}</td>
-                <td style="padding:9px 12px;border-bottom:1px solid #FEE2E2;font-size:12px;color:#DC2626;text-align:center">{fmt_date(t.get('deadline',''))}</td>
-              </tr>""" for t in sorted(overdue_tasks, key=lambda t:t.get('date','')))
               overdue_section = f"""
-              <div style="background:#FEF2F2;border:1.5px solid rgba(220,38,38,0.25);border-radius:12px;padding:20px;margin-bottom:20px">
-                <h2 style="font-size:14px;font-weight:800;color:#DC2626;margin:0 0 12px">⚠️ Actividades vencidas sin completar ({len(overdue_tasks)})</h2>
-                <table style="width:100%;border-collapse:collapse">
-                  <thead><tr style="background:#FEE2E2">
-                    <th style="padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase">Actividad</th>
-                    <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase">Cat.</th>
-                    <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase">Fecha</th>
-                    <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase">Deadline</th>
-                  </tr></thead>
-                  <tbody>{overdue_rows}</tbody>
-                </table>
+              <div style="background-color:#FFF5F5;border:1px solid #FCA5A5;border-radius:8px;padding:16px;margin-bottom:24px">
+                <h2 style="font-size:0.85rem;font-weight:800;color:#EF4444;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 12px">⚠️ Actividades vencidas sin completar ({len(overdue_tasks)})</h2>
+                {make_table(overdue_tasks, show_date=True)}
               </div>"""
 
           if pct == 100:
@@ -161,79 +209,107 @@ jobs:
 
           html = f"""<!DOCTYPE html>
           <html lang="es">
-          <head><meta charset="UTF-8"></head>
-          <body style="margin:0;padding:0;background:#F4F2EE;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-          <div style="max-width:680px;margin:0 auto;padding:28px 20px">
-
-            <!-- HEADER -->
-            <div style="background:linear-gradient(135deg,#EDE9FE 0%,#DBEAFE 50%,#D1FAE5 100%);border:1.5px solid #DDD9D1;border-radius:14px;padding:30px;margin-bottom:22px;text-align:center">
-              <div style="font-size:3rem;margin-bottom:12px">🗓️</div>
-              <h1 style="margin:0;font-size:1.6rem;font-weight:800;color:#1A1714">Resumen Mensual</h1>
-              <p style="margin:8px 0 0;color:#52504A;font-size:1rem;text-transform:capitalize">{MONTHS_ES[current_month]} {current_year}</p>
-              <div style="margin-top:12px;background:rgba(255,255,255,0.75);border-radius:10px;padding:10px 18px;display:inline-block;font-size:14px;color:{badge[1]};font-weight:700">
-                {badge[0]} {badge[3]}
-              </div>
-            </div>
-
-            <!-- MÉTRICAS GLOBALES -->
-            <div style="background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:12px;padding:20px 22px;margin-bottom:20px">
-              <h2 style="font-size:14px;font-weight:800;color:#52504A;text-transform:uppercase;letter-spacing:0.07em;margin:0 0 16px">📈 Totales del mes</h2>
-              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
-                <div style="text-align:center;background:#F4F2EE;border-radius:10px;padding:16px 10px">
-                  <div style="font-size:2.2rem;font-weight:800;color:#1A1714">{total}</div>
-                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;margin-top:3px">Total</div>
-                </div>
-                <div style="text-align:center;background:#ECFDF5;border-radius:10px;padding:16px 10px">
-                  <div style="font-size:2.2rem;font-weight:800;color:#047857">{done_count}</div>
-                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;margin-top:3px">Completadas</div>
-                </div>
-                <div style="text-align:center;background:#FFFBEB;border-radius:10px;padding:16px 10px">
-                  <div style="font-size:2.2rem;font-weight:800;color:#B45309">{len(pending_tasks)}</div>
-                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;margin-top:3px">Pendientes</div>
-                </div>
-                <div style="text-align:center;background:#{'FEF2F2' if overdue_tasks else 'F4F2EE'};border-radius:10px;padding:16px 10px">
-                  <div style="font-size:2.2rem;font-weight:800;color:#{'DC2626' if overdue_tasks else '9C9890'}">{len(overdue_tasks)}</div>
-                  <div style="font-size:11px;color:#9C9890;text-transform:uppercase;font-weight:700;margin-top:3px">Vencidas</div>
-                </div>
-              </div>
-              <div style="background:#F4F2EE;border-radius:99px;height:8px;overflow:hidden">
-                <div style="background:#2563EB;width:{pct}%;height:100%;border-radius:99px"></div>
-              </div>
-              <div style="text-align:right;font-size:12px;color:#2563EB;font-weight:700;margin-top:5px">{pct}% completado</div>
-            </div>
-
-            <!-- POR CATEGORÍA -->
-            <div style="background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:12px;padding:20px 22px;margin-bottom:20px">
-              <h2 style="font-size:14px;font-weight:800;color:#52504A;text-transform:uppercase;letter-spacing:0.07em;margin:0 0 14px">🗂 Por categoría</h2>
-              {cat_blocks}
-            </div>
-
-            <!-- POR SEMANA -->
-            <div style="background:#FFFFFF;border:1.5px solid #DDD9D1;border-radius:12px;padding:20px 22px;margin-bottom:20px">
-              <h2 style="font-size:14px;font-weight:800;color:#52504A;text-transform:uppercase;letter-spacing:0.07em;margin:0 0 14px">📅 Por semana</h2>
-              <table style="width:100%;border-collapse:collapse">
-                <thead><tr style="background:#F4F2EE">
-                  <th style="padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Semana</th>
-                  <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Total</th>
-                  <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Completadas</th>
-                  <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#9C9890;text-transform:uppercase;border-bottom:1.5px solid #DDD9D1">Tasa</th>
-                </tr></thead>
-                <tbody>{week_rows}</tbody>
-              </table>
-            </div>
-
-            {overdue_section}
-
-            <div style="text-align:center;margin:22px 0">
-              <a href="https://jlolyr.github.io/WeekPlanner/" style="display:inline-block;background:#2563EB;color:#fff;text-decoration:none;padding:13px 30px;border-radius:9px;font-weight:700;font-size:0.95rem">
-                📅 Ver WeekPlanner
-              </a>
-            </div>
-            <div style="text-align:center;color:#9C9890;font-size:11px">
-              WeekPlanner · Resumen mensual automático · {MONTHS_ES[current_month].capitalize()} {current_year}
-            </div>
-          </div>
-          </body></html>"""
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Resumen Mensual</title>
+          </head>
+          <body style="margin:0;padding:0;background-color:#F9FAFB;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+            <table style="width:100%;border-collapse:collapse;background-color:#F9FAFB;padding:40px 0;">
+              <tr>
+                <td align="center" style="padding:40px 16px;">
+                  <table style="width:100%;max-width:600px;border-collapse:separate;background-color:#FFFFFF;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);padding:32px 24px;text-align:left;">
+                    <!-- HEADER -->
+                    <tr>
+                      <td style="border-bottom:1px solid #E5E7EB;padding-bottom:24px;margin-bottom:24px;">
+                        <h1 style="margin:0;font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;color:#111827;">Resumen Mensual</h1>
+                        <p style="margin:4px 0 0;color:#6B7280;font-size:0.9rem;font-weight:500;text-transform:capitalize;">{MONTHS_ES[current_month]} {current_year}</p>
+                        <div style="margin-top:12px;background-color:{badge[2]};border-radius:8px;padding:12px 16px;font-size:0.9rem;color:{badge[1]};font-weight:600;line-height:1.4;border:1px solid {badge[2]}">
+                          {badge[0]} {badge[3]}
+                        </div>
+                      </td>
+                    </tr>
+                    
+                    <!-- METRICS -->
+                    <tr>
+                      <td style="padding:12px 0 24px;">
+                        <table style="width:100%;border-collapse:collapse;">
+                          <tr>
+                            <td style="background-color:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:16px 20px;">
+                              <table style="width:100%;border-collapse:collapse;">
+                                <tr>
+                                  <td style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#4B5563;padding-bottom:8px;">Tasa de Completado</td>
+                                  <td style="font-size:0.9rem;font-weight:700;color:#0066CC;text-align:right;padding-bottom:8px;">{pct}%</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="padding-bottom:16px;">
+                                    <div style="background-color:#E5E7EB;border-radius:99px;height:6px;overflow:hidden;">
+                                      <div style="background-color:#0066CC;width:{pct}%;height:100%;border-radius:99px;"></div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="font-size:0.85rem;color:#1F2937;font-weight:600;" colspan="2">
+                                    Resumen Global: {done_count} completadas · {len(pending_tasks)} pendientes · {len(overdue_tasks)} vencidas · {total} totales
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    
+                    <!-- BY CATEGORY -->
+                    <tr>
+                      <td style="padding:12px 0;">
+                        <h2 style="font-size:0.85rem;font-weight:800;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 14px;">🗂️ Rendimiento por Categoría</h2>
+                        {cat_blocks}
+                      </td>
+                    </tr>
+                    
+                    <!-- BY WEEK -->
+                    <tr>
+                      <td style="padding:12px 0;">
+                        <h2 style="font-size:0.85rem;font-weight:800;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 14px;">📅 Desglose por Semana</h2>
+                        <table style="width:100%;border-collapse:collapse;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+                          <thead>
+                            <tr style="background-color:#F9FAFB">
+                              <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #E5E7EB">Semana</th>
+                              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #E5E7EB">Total</th>
+                              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #E5E7EB">Completadas</th>
+                              <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:#4B5563;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #E5E7EB">Tasa</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {week_rows}
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    
+                    <!-- BLOCKS -->
+                    <tr>
+                      <td style="padding:12px 0;">
+                        {overdue_section}
+                      </td>
+                    </tr>
+                    
+                    <!-- FOOTER / CTA -->
+                    <tr>
+                      <td align="center" style="border-top:1px solid #E5E7EB;padding-top:28px;margin-top:12px;text-align:center;">
+                        <a href="https://jlolyr.github.io/WeekPlanner/" style="display:inline-block;background-color:#0066CC;color:#FFFFFF;text-decoration:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:0.9rem;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+                          Ver WeekPlanner
+                        </a>
+                        <p style="margin:20px 0 0;color:#9CA3AF;font-size:0.75rem;text-align:center;">WeekPlanner · Resumen mensual automático · {MONTHS_ES[current_month].capitalize()} {current_year}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </body>
+          </html>"""
 
           with open('email_body.html', 'w', encoding='utf-8') as f:
               f.write(html)
@@ -251,7 +327,7 @@ jobs:
 
       - name: Enviar resumen mensual
         if: steps.should_send.outputs.send == 'true'
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v4
         with:
           server_address: smtp.gmail.com
           server_port: 587
