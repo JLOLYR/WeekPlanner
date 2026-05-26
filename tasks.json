@@ -217,12 +217,14 @@
     "duration": "120",
     "deadline": "",
     "recurrence": "weekly",
+    "recurrenceStart": "2026-05-26",
+    "recurrenceEnd": "2026-07-24",
     "location": "Ensayos Universales",
     "participants": "",
     "notes": "",
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-26T18:18:40.765Z",
-    "updatedAt": "2026-05-26T21:11:59.468Z"
+    "updatedAt": "2026-05-26T21:12:23.836Z"
   }
 ]
