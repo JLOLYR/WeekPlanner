@@ -1045,7 +1045,9 @@
         <div class="fg" id="fg-time"><label>Hora de Inicio</label><input type="time" id="f-time"></div>
         <div class="fg" id="fg-duration"><label>Duración</label><select id="f-duration"><option value="30">30 minutos</option><option value="60" selected>1 hora</option><option value="90">1.5 horas</option><option value="120">2 horas</option><option value="180">3 horas</option><option value="240">4 horas</option></select></div>
         <div class="fg" id="fg-deadline"><label>Fecha Límite (Deadline)</label><input type="date" id="f-deadline"></div>
-        <div class="fg"><label>🔄 Repetición</label><select id="f-recur"><option value="none">Sin repetición</option><option value="daily">Diariamente</option><option value="weekly">Cada semana</option><option value="biweekly">Cada 2 semanas</option><option value="monthly">Mensualmente</option></select></div>
+        <div class="fg"><label>🔄 Repetición</label><select id="f-recur" onchange="toggleFormFields()"><option value="none">Sin repetición</option><option value="daily">Diariamente</option><option value="weekly">Cada semana</option><option value="biweekly">Cada 2 semanas</option><option value="monthly">Mensualmente</option></select></div>
+        <div class="fg" id="fg-recur-start" style="display:none"><label>Desde (Inicio Recurrencia)</label><input type="date" id="f-recur-start"></div>
+        <div class="fg" id="fg-recur-end" style="display:none"><label>Hasta (Fin Recurrencia)</label><input type="date" id="f-recur-end"></div>
         <div class="fg"><label>Lugar</label><input type="text" id="f-loc" placeholder="Sala 201 / Zoom link"></div>
         <div class="fg full"><label>Participantes</label><input type="text" id="f-parts" placeholder="Dr. García, Grupo 4…"></div>
         <div class="fg full">
@@ -1254,6 +1256,13 @@ const DAYS5 = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
 // ══════════════════════════════════════════════
 function shouldRecur(tmpl, iso) {
   if(iso<=tmpl.date) return false;
+  
+  const start = tmpl.recurrenceStart || tmpl.date;
+  if (iso < start) return false;
+  
+  const end = tmpl.recurrenceEnd || '';
+  if (end && iso > end) return false;
+  
   const s=new Date(tmpl.date+'T12:00:00'), t=new Date(iso+'T12:00:00');
   const days=Math.round((t-s)/86400000);
   switch(tmpl.recurrence) {
@@ -1579,7 +1588,7 @@ function tcInner(t) {
     ${t.deadline&&t.deadline!==t.date?`<span class="tc-meta">⏰ ${fmtShort(t.deadline)}</span>`:''}
     ${countdown}
     ${isOverdue(t) && !countdown ?`<span class="tc-overdue-tag">Vencida</span>`:''}
-    ${t.recurrence&&t.recurrence!=='none'?`<span class="tc-meta">🔄</span>`:''}
+    ${t.recurrence&&t.recurrence!=='none'?`<span class="tc-meta" title="Recurre desde ${fmtDate(t.recurrenceStart || t.date)}${t.recurrenceEnd ? ' hasta ' + fmtDate(t.recurrenceEnd) : ''}">🔄</span>`:''}
     ${t.addToCal?`<span class="tc-meta">📅</span>`:''}
   </div>`;
 }
@@ -1800,6 +1809,21 @@ function toggleFormFields() {
     document.getElementById('f-time').value = '';
     document.getElementById('f-duration').value = '60';
   }
+  
+  const recur = document.getElementById('f-recur').value;
+  const fgRecurStart = document.getElementById('fg-recur-start');
+  const fgRecurEnd = document.getElementById('fg-recur-end');
+  
+  if (recur !== 'none') {
+    fgRecurStart.style.display = '';
+    fgRecurEnd.style.display = '';
+    if (!document.getElementById('f-recur-start').value) {
+      document.getElementById('f-recur-start').value = document.getElementById('f-date').value;
+    }
+  } else {
+    fgRecurStart.style.display = 'none';
+    fgRecurEnd.style.display = 'none';
+  }
 }
 
 let editId=null;
@@ -1829,6 +1853,8 @@ function openModal(presetCat=null,taskId=null,presetDate=null) {
     document.getElementById('f-duration').value=t.duration||'60';
     document.getElementById('f-deadline').value=t.deadline||'';
     document.getElementById('f-recur').value=t.recurrence||'none';
+    document.getElementById('f-recur-start').value=t.recurrenceStart||t.date||'';
+    document.getElementById('f-recur-end').value=t.recurrenceEnd||'';
     document.getElementById('f-loc').value=t.location||'';
     document.getElementById('f-parts').value=t.participants||'';
     document.getElementById('f-notes').value=t.notes||'';
@@ -1844,6 +1870,9 @@ function openModal(presetCat=null,taskId=null,presetDate=null) {
       document.getElementById('f-cat').value=presetCat;
     }
     populateSubcategories();
+    document.getElementById('f-recur').value='none';
+    document.getElementById('f-recur-start').value='';
+    document.getElementById('f-recur-end').value='';
     document.querySelector('input[name=prio][value="medium"]').checked=true;
     document.getElementById('f-ics').checked=false;
   }
@@ -1860,6 +1889,7 @@ function saveTask(e) {
   const prio=document.querySelector('input[name=prio]:checked')?.value||'medium';
   const addToCal=document.getElementById('f-ics').checked;
   const type = document.getElementById('f-type').value;
+  const recur = document.getElementById('f-recur').value;
   
   const task={
     id:editId||genId(), 
@@ -1872,7 +1902,9 @@ function saveTask(e) {
     time: type === 'evento' ? document.getElementById('f-time').value : '',
     duration: type === 'evento' ? document.getElementById('f-duration').value : '',
     deadline: type === 'entregable' ? document.getElementById('f-deadline').value : '',
-    recurrence:document.getElementById('f-recur').value,
+    recurrence: recur,
+    recurrenceStart: recur !== 'none' ? document.getElementById('f-recur-start').value : '',
+    recurrenceEnd: recur !== 'none' ? document.getElementById('f-recur-end').value : '',
     location:document.getElementById('f-loc').value.trim(), 
     participants:document.getElementById('f-parts').value.trim(),
     notes:document.getElementById('f-notes').value.trim(), 
@@ -2157,42 +2189,85 @@ function renderTimeline() {
     const events = dayTasks.filter(t => t.type !== 'entregable' && t.time);
     const deliverables = dayTasks.filter(t => t.type === 'entregable' || !t.time);
     
-    // Detectar traslapes horarias en compromisos fijos
-    // 1 hora = 60px -> 1 minuto = 1px. Inicio a las 08:00 (480 minutos).
-    const eventTimeBlocks = events.map(t => {
+    // Convertir eventos en objetos de diseño horaria
+    const layoutEvents = events.map(t => {
       const [h, m] = t.time.split(':').map(Number);
       const start = h * 60 + m;
       const dur = parseInt(t.duration) || 60;
-      return { id: t.id, start, end: start + dur };
+      const end = start + dur;
+      return { task: t, start, end, duration: dur };
     });
     
-    const overlapIds = new Set();
-    for (let x = 0; x < eventTimeBlocks.length; x++) {
-      for (let y = x + 1; y < eventTimeBlocks.length; y++) {
-        const a = eventTimeBlocks[x];
-        const b = eventTimeBlocks[y];
-        if (a.start < b.end && b.start < a.end) {
-          overlapIds.add(a.id);
-          overlapIds.add(b.id);
+    // Ordenar por hora de inicio y duración descendente
+    layoutEvents.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+    
+    // Asignar sub-columnas (colIndex)
+    const columns = [];
+    layoutEvents.forEach(ev => {
+      let colPlaced = -1;
+      for (let j = 0; j < columns.length; j++) {
+        const last = columns[j][columns[j].length - 1];
+        if (ev.start >= last.end) {
+          colPlaced = j;
+          break;
         }
       }
-    }
+      if (colPlaced === -1) {
+        columns.push([ev]);
+        ev.colIndex = columns.length - 1;
+      } else {
+        columns[colPlaced].push(ev);
+        ev.colIndex = colPlaced;
+      }
+    });
     
-    const eventsHTML = events.map(t => {
-      const [h, m] = t.time.split(':').map(Number);
-      const start = h * 60 + m;
-      const dur = parseInt(t.duration) || 60;
-      const top = Math.max(start - 480, 0); // 08:00 es top = 0px
-      const height = dur;
+    // Encontrar vecinos superpuestos
+    layoutEvents.forEach(ev => {
+      ev.overlapsWith = layoutEvents.filter(other => ev.start < other.end && other.start < ev.end);
+    });
+    
+    // Agrupación de componentes conectados (grupos de colisión)
+    const visited = new Set();
+    layoutEvents.forEach(ev => {
+      if (visited.has(ev.task.id)) return;
+      const group = [];
+      const queue = [ev];
+      visited.add(ev.task.id);
+      
+      while (queue.length > 0) {
+        const curr = queue.shift();
+        group.push(curr);
+        curr.overlapsWith.forEach(neighbor => {
+          if (!visited.has(neighbor.task.id)) {
+            visited.add(neighbor.task.id);
+            queue.push(neighbor);
+          }
+        });
+      }
+      
+      const maxCol = Math.max(...group.map(e => e.colIndex)) + 1;
+      group.forEach(e => {
+        e.totalCols = maxCol;
+      });
+    });
+    
+    // Generar el HTML con posicionamiento proporcional
+    const eventsHTML = layoutEvents.map(ev => {
+      const t = ev.task;
+      const top = Math.max(ev.start - 480, 0); // 08:00 es top = 0px
+      const height = ev.duration;
       const isOvd = isOverdue(t);
-      const isOverlap = overlapIds.has(t.id);
+      const isOverlap = ev.totalCols > 1;
+      
+      const colIndex = ev.colIndex;
+      const totalCols = ev.totalCols || 1;
       
       return `
         <div class="tb-card${isOverlap ? ' overlap' : ''}${isOvd ? ' overdue' : ''}" 
              data-cat="${t.cat}"
-             style="top:${top}px; height:${height}px;"
+             style="top:${top}px; height:${height}px; left: calc(6px + ${colIndex} * ((100% - 12px) / ${totalCols})); width: calc((100% - 12px) / ${totalCols});"
              onclick="openModal(null, '${t.id}')">
-          <div class="tb-card-time">🕐 ${t.time} (${dur}m)</div>
+          <div class="tb-card-time">🕐 ${t.time} (${ev.duration}m)</div>
           <div class="tb-card-title">${escH(t.title)}</div>
           ${t.subcategory ? `<div class="tb-card-subcat">${escH(t.subcategory)}</div>` : ''}
         </div>
