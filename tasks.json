@@ -302,5 +302,27 @@
     "addToCal": false,
     "createdAt": "2026-05-27T19:15:48.481Z",
     "updatedAt": "2026-05-27T19:16:33.196Z"
+  },
+  {
+    "id": "mpog5f1bynay",
+    "title": "Clase Mecánica Industrial",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-05-28",
+    "time": "08:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-28",
+    "recurrenceEnd": "2026-07-12",
+    "location": "Hidroneumática",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-27T19:18:03.359Z",
+    "updatedAt": "2026-05-27T19:18:03.359Z"
   }
 ]
