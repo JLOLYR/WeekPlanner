@@ -3,7 +3,7 @@
     "id": "mplkcng3ew3c",
     "title": "Reunión Avance MecFlu",
     "cat": "Docencia",
-    "status": "done",
+    "status": "pending",
     "date": "2026-05-25",
     "time": "08:30",
     "deadline": "",
@@ -14,7 +14,7 @@
     "priority": "low",
     "addToCal": true,
     "createdAt": "2026-05-25T18:52:20.787Z",
-    "updatedAt": "2026-05-25T19:09:04.847Z"
+    "updatedAt": "2026-05-27T19:39:32.082Z"
   },
   {
     "id": "mplkcng3r2db",
@@ -76,7 +76,7 @@
     "id": "mplks66xyf1f",
     "title": "Sim Laser",
     "cat": "Investigación",
-    "status": "pending",
+    "status": "done",
     "date": "2026-05-25",
     "time": "",
     "deadline": "2026-06-05",
@@ -87,7 +87,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-25T19:04:24.921Z",
-    "updatedAt": "2026-05-25T19:04:24.921Z"
+    "updatedAt": "2026-05-27T19:39:28.793Z"
   },
   {
     "id": "mplktynardcf",
