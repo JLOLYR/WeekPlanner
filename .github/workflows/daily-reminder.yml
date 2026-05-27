@@ -2,9 +2,8 @@ name: 📬 Recordatorio Diario — Mar a Jue
 
 on:
   schedule:
-    # Martes–Viernes 8:00 AM Chile (UTC-4) = 12:00 UTC
-    # (Viernes tiene su propio workflow de estadísticas a las 5pm)
-    - cron: '0 12 * * 2-5'
+    # Martes–Viernes 8:05 AM Chile (UTC-4) = 12:05 UTC (evitamos saturación del minuto 0)
+    - cron: '5 12 * * 2-5'
   workflow_dispatch:
 
 jobs:

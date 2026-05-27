@@ -1484,12 +1484,76 @@ function renderWeek() {
   // Summary
   const wt=tasks.filter(t=>t.date>=s0&&t.date<=s4);
   const dn=wt.filter(t=>t.status==='done').length, tot=wt.length, pct=tot>0?Math.round(dn/tot*100):0, ovd=wt.filter(isOverdue).length;
+
+  // Filtrar plazos (deadlines) pendientes en los próximos 7 días
+  const todayObj = new Date(today + 'T12:00:00');
+  const sevenDaysLater = new Date(todayObj);
+  sevenDaysLater.setDate(todayObj.getDate() + 7);
+  const sevenDaysLaterISO = toISO(sevenDaysLater);
+  
+  const upcomingDeadlines = tasks
+    .filter(t => t.deadline && t.status !== 'done' && t.deadline >= today && t.deadline <= sevenDaysLaterISO)
+    .sort((a, b) => a.deadline.localeCompare(b.deadline));
+    
+  let deadlinesHTML = '';
+  if (upcomingDeadlines.length > 0) {
+    deadlinesHTML = `
+      <div style="flex:1.2; min-width:260px; border-left: 1.5px solid var(--border); padding-left:24px; display:flex; flex-direction:column; gap:8px;">
+        <span class="sum-lbl" style="display:flex; align-items:center; gap:5px; color:var(--status-overdue)">
+          ⏰ PRÓXIMOS PLAZOS (7 DÍAS)
+        </span>
+        <div style="display:flex; flex-direction:column; gap:5px; max-height:85px; overflow-y:auto; padding-right:4px;">
+          ${upcomingDeadlines.map(t => {
+            const dlDate = new Date(t.deadline + 'T12:00:00');
+            const diffTime = dlDate - todayObj;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            let badgeText = '';
+            let badgeColor = 'var(--text-secondary)';
+            let badgeBg = 'var(--bg-elevated)';
+            
+            if (diffDays === 0) {
+              badgeText = 'Hoy';
+              badgeColor = '#FFFFFF';
+              badgeBg = 'var(--status-overdue)';
+            } else if (diffDays === 1) {
+              badgeText = 'Mañana';
+              badgeColor = 'var(--status-overdue)';
+              badgeBg = 'rgba(198,40,40,.09)';
+            } else {
+              badgeText = `En ${diffDays} d`;
+              badgeColor = 'var(--status-pending)';
+              badgeBg = 'rgba(178,89,0,.09)';
+            }
+            
+            return `
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:0.78rem; padding: 4px 6px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); background: var(--bg-surface);">
+                <span style="font-weight:700; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; color:var(--text-primary); flex:1;" title="${escH(t.title)}">${escH(t.title)}</span>
+                <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.64rem; font-weight:800; padding:1px 5px; border-radius:99px; border:1px solid ${badgeBg}; text-transform:uppercase; flex-shrink:0;">${badgeText}</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    deadlinesHTML = `
+      <div style="flex:1.2; min-width:260px; border-left: 1.5px solid var(--border); padding-left:24px; display:flex; flex-direction:column; justify-content:center; align-items:center; color:var(--text-secondary); text-align:center;">
+        <span class="sum-lbl" style="margin-bottom:4px;">⏰ PRÓXIMOS PLAZOS (7 DÍAS)</span>
+        <span style="font-size:0.78rem; font-weight:600; color:var(--status-done); display:flex; align-items:center; gap:4px;">✓ Sin plazos pendientes esta semana</span>
+      </div>
+    `;
+  }
+
   document.getElementById('week-sum').innerHTML=`
-    <div class="sum-item"><span class="sum-lbl">Total</span><span class="sum-val">${tot}</span></div>
-    <div class="sum-item"><span class="sum-lbl">Completadas</span><span class="sum-val" style="color:var(--status-done)">${dn}</span></div>
-    <div class="sum-item"><span class="sum-lbl">Pendientes</span><span class="sum-val" style="color:var(--status-pending)">${tot-dn}</span></div>
-    <div class="sum-item"><span class="sum-lbl">Vencidas</span><span class="sum-val" style="color:var(--status-overdue)">${ovd}</span></div>
-    <div class="sum-progress"><div class="sum-lbl">Progreso semanal — ${pct}%</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>`;
+    <div style="display:flex; flex:1.8; gap:20px; align-items:center; flex-wrap:wrap; min-width:280px;">
+      <div class="sum-item"><span class="sum-lbl">Total</span><span class="sum-val">${tot}</span></div>
+      <div class="sum-item"><span class="sum-lbl">Completadas</span><span class="sum-val" style="color:var(--status-done)">${dn}</span></div>
+      <div class="sum-item"><span class="sum-lbl">Pendientes</span><span class="sum-val" style="color:var(--status-pending)">${tot-dn}</span></div>
+      <div class="sum-item"><span class="sum-lbl">Vencidas</span><span class="sum-val" style="color:var(--status-overdue)">${ovd}</span></div>
+      <div class="sum-progress" style="flex:1; min-width:180px;"><div class="sum-lbl">Progreso semanal — ${pct}%</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>
+    </div>
+    ${deadlinesHTML}`;
 
   // Pulse chart (Carga Horaria)
   buildPulse(dates);
@@ -1942,7 +2006,8 @@ function downloadICS(task) {
   const dtStart=hasTime?`DTSTART:${d(task.date,task.time)}`:`DTSTART;VALUE=DATE:${d(task.date)}`;
   const dtEnd=hasTime?`DTEND:${endDate(task.date,task.time)}`:`DTEND;VALUE=DATE:${endDate(task.date)}`;
   const desc=[(task.notes||'').replace(/\n/g,'\\n'),task.participants?`Participantes: ${task.participants}`:'',`Categoría: ${task.cat}`,`Prioridad: ${task.priority}`].filter(Boolean).join('\\n');
-  const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//WeekPlanner//Dr. Julio Leyrer//ES\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nUID:${task.id}@weekplanner\r\nDTSTAMP:${new Date().toISOString().replace(/[-:.]/g,'').slice(0,15)}Z\r\n${dtStart}\r\n${dtEnd}\r\nSUMMARY:${task.title}\r\nDESCRIPTION:${desc}\r\nLOCATION:${task.location||''}\r\nCATEGORIES:${task.cat}\r\nSTATUS:CONFIRMED\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+  const alarm = hasTime ? `BEGIN:VALARM\r\nTRIGGER:-PT30M\r\nACTION:DISPLAY\r\nDESCRIPTION:Recordatorio de WeekPlanner: ${task.title}\r\nEND:VALARM\r\n` : '';
+  const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//WeekPlanner//Dr. Julio Leyrer//ES\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nUID:${task.id}@weekplanner\r\nDTSTAMP:${new Date().toISOString().replace(/[-:.]/g,'').slice(0,15)}Z\r\n${dtStart}\r\n${dtEnd}\r\nSUMMARY:${task.title}\r\nDESCRIPTION:${desc}\r\nLOCATION:${task.location||''}\r\nCATEGORIES:${task.cat}\r\nSTATUS:CONFIRMED\r\n${alarm}END:VEVENT\r\nEND:VCALENDAR`;
   const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download=`${task.title.replace(/[^\w\s]/g,'').slice(0,30).trim()}.ics`; a.click();
@@ -2251,7 +2316,7 @@ function renderTimeline() {
       });
     });
     
-    // Generar el HTML con posicionamiento proporcional
+    // Generar el HTML con posicionamiento proporcional y diseño adaptativo según la duración
     const eventsHTML = layoutEvents.map(ev => {
       const t = ev.task;
       const top = Math.max(ev.start - 480, 0); // 08:00 es top = 0px
@@ -2262,14 +2327,48 @@ function renderTimeline() {
       const colIndex = ev.colIndex;
       const totalCols = ev.totalCols || 1;
       
-      return `
-        <div class="tb-card${isOverlap ? ' overlap' : ''}${isOvd ? ' overdue' : ''}" 
-             data-cat="${t.cat}"
-             style="top:${top}px; height:${height}px; left: calc(6px + ${colIndex} * ((100% - 12px) / ${totalCols})); width: calc((100% - 12px) / ${totalCols});"
-             onclick="openModal(null, '${t.id}')">
+      let cardInner = '';
+      let padding = '8px 10px';
+      let gap = '3px';
+      
+      if (height <= 30) {
+        // Diseño ultra-compacto de una sola línea para 30 minutos o menos
+        padding = '3px 6px';
+        gap = '0px';
+        const subLabel = t.subcategory ? ` ▪ ${escH(t.subcategory)}` : '';
+        cardInner = `
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.68rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; height:100%;">
+            <span style="font-weight:700; color:var(--text-secondary); font-size:0.62rem; flex-shrink:0;">${t.time}</span>
+            <span style="font-weight:700; text-overflow:ellipsis; overflow:hidden;">${escH(t.title)}</span>
+            <span style="font-size:0.6rem; color:var(--text-muted); flex-shrink:0;">${subLabel}</span>
+          </div>
+        `;
+      } else if (height <= 60) {
+        // Diseño compacto de dos líneas para 60 minutos o menos
+        padding = '4px 8px';
+        gap = '1px';
+        const subLabel = t.subcategory ? ` ▪ <span style="font-weight:700; opacity:0.8">${escH(t.subcategory)}</span>` : '';
+        cardInner = `
+          <div class="tb-card-time" style="font-size:0.64rem; display:flex; align-items:center; gap:3px;">
+            🕐 ${t.time}${subLabel}
+          </div>
+          <div class="tb-card-title" style="font-size:0.75rem; font-weight:700; line-height:1.2; -webkit-line-clamp: 2;">${escH(t.title)}</div>
+        `;
+      } else {
+        // Diseño estándar para más de 60 minutos
+        cardInner = `
           <div class="tb-card-time">🕐 ${t.time} (${ev.duration}m)</div>
           <div class="tb-card-title">${escH(t.title)}</div>
           ${t.subcategory ? `<div class="tb-card-subcat">${escH(t.subcategory)}</div>` : ''}
+        `;
+      }
+      
+      return `
+        <div class="tb-card${isOverlap ? ' overlap' : ''}${isOvd ? ' overdue' : ''}" 
+             data-cat="${t.cat}"
+             style="top:${top}px; height:${height}px; padding:${padding}; gap:${gap}; left: calc(6px + ${colIndex} * ((100% - 12px) / ${totalCols})); width: calc((100% - 12px) / ${totalCols});"
+             onclick="openModal(null, '${t.id}')">
+          ${cardInner}
         </div>
       `;
     }).join('');

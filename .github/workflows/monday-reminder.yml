@@ -2,8 +2,8 @@ name: 📅 Recordatorio Lunes — Vista Semanal
 
 on:
   schedule:
-    # Lunes 8:00 AM Chile (UTC-4) = 12:00 UTC
-    - cron: '0 12 * * 1'
+    # Lunes 8:05 AM Chile (UTC-4) = 12:05 UTC (evitamos saturación del minuto 0)
+    - cron: '5 12 * * 1'
   workflow_dispatch:
 
 jobs:
