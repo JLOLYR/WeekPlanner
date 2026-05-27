@@ -280,5 +280,27 @@
     "addToCal": false,
     "createdAt": "2026-05-27T19:12:53.335Z",
     "updatedAt": "2026-05-27T19:13:41.280Z"
+  },
+  {
+    "id": "mpog2iypao7c",
+    "title": "Revisar pruebas Mecánica Industrial",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-05-27",
+    "time": "",
+    "duration": "",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-05-27T19:15:48.481Z",
+    "updatedAt": "2026-05-27T19:15:48.481Z"
   }
 ]
