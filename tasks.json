@@ -93,7 +93,7 @@
     "type": "evento",
     "date": "2026-05-26",
     "time": "10:50",
-    "duration": "60",
+    "duration": "120",
     "deadline": "",
     "recurrence": "none",
     "recurrenceStart": "",
@@ -104,7 +104,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-05-25T19:05:48.454Z",
-    "updatedAt": "2026-05-27T12:33:18.520Z"
+    "updatedAt": "2026-05-27T19:13:34.343Z"
   },
   {
     "id": "mplkulaxsqge",
