@@ -431,5 +431,27 @@
     "createdAt": "2026-05-27T19:34:19.531Z",
     "updatedAt": "2026-05-27T19:34:19.531Z",
     "recurrenceParent": "mpog5f1bynay"
+  },
+  {
+    "id": "mpogu82axdua",
+    "title": "Prueba #2 MSF",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-03",
+    "time": "08:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "Hidroneumática",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-05-27T19:37:20.722Z",
+    "updatedAt": "2026-05-27T19:37:20.722Z"
   }
 ]
