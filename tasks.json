@@ -286,7 +286,7 @@
     "title": "Revisar pruebas Mecánica Industrial",
     "cat": "Docencia",
     "subcategory": "Evaluación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-05-27",
     "time": "",
@@ -301,6 +301,6 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-05-27T19:15:48.481Z",
-    "updatedAt": "2026-05-27T19:15:48.481Z"
+    "updatedAt": "2026-05-27T19:16:33.196Z"
   }
 ]
