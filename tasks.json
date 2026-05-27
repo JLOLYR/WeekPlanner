@@ -20,7 +20,7 @@
     "id": "mplkcng3r2db",
     "title": "Reunión Proyecto Integrador",
     "cat": "Docencia",
-    "status": "pending",
+    "status": "done",
     "date": "2026-05-27",
     "time": "10:30",
     "deadline": "",
@@ -31,7 +31,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-25T18:52:20.787Z",
-    "updatedAt": "2026-05-25T21:40:12.086Z"
+    "updatedAt": "2026-05-27T19:19:54.757Z"
   },
   {
     "id": "mplkqc9sl35f",
@@ -132,7 +132,7 @@
     "id": "mplkwgp5k07l",
     "title": "Protocolo Impresora Hydrogel",
     "cat": "Investigación",
-    "status": "pending",
+    "status": "done",
     "date": "2026-05-27",
     "time": "11:30",
     "deadline": "2026-05-27",
@@ -143,7 +143,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-25T19:07:45.161Z",
-    "updatedAt": "2026-05-25T19:09:38.491Z"
+    "updatedAt": "2026-05-27T19:19:56.476Z"
   },
   {
     "id": "mplkxjzrff75",
