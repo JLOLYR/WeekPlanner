@@ -91,7 +91,7 @@
   },
   {
     "id": "mplktynardcf",
-    "title": "Clase Informe Mecánica de Sistema Fluidos",
+    "title": "Clase Mecánica de Sistema Fluidos",
     "cat": "Docencia",
     "subcategory": "Clase",
     "status": "done",
@@ -100,16 +100,16 @@
     "time": "10:50",
     "duration": "120",
     "deadline": "",
-    "recurrence": "none",
-    "recurrenceStart": "",
-    "recurrenceEnd": "",
-    "location": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-26",
+    "recurrenceEnd": "2026-07-12",
+    "location": "Sala Lab Materiales",
     "participants": "",
     "notes": "",
-    "priority": "high",
+    "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-25T19:05:48.454Z",
-    "updatedAt": "2026-05-27T19:13:34.343Z"
+    "updatedAt": "2026-05-27T19:38:15.698Z"
   },
   {
     "id": "mplkulaxsqge",
