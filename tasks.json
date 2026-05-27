@@ -226,5 +226,27 @@
     "addToCal": false,
     "createdAt": "2026-05-26T18:18:40.765Z",
     "updatedAt": "2026-05-26T21:12:23.836Z"
+  },
+  {
+    "id": "mpo1o8zrys9a",
+    "title": "Clase Mecánica de Sistemas Fluidos",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-05-27",
+    "time": "08:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-27",
+    "recurrenceEnd": "2026-07-12",
+    "location": "Hidroneumática",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-27T12:32:47.751Z",
+    "updatedAt": "2026-05-27T12:32:47.751Z"
   }
 ]
