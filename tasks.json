@@ -263,7 +263,7 @@
     "type": "evento",
     "date": "2026-05-29",
     "time": "08:15",
-    "duration": "60",
+    "duration": "90",
     "deadline": "",
     "recurrence": "weekly",
     "recurrenceStart": "2026-05-29",
@@ -274,6 +274,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-27T19:12:53.335Z",
-    "updatedAt": "2026-05-27T19:12:53.335Z"
+    "updatedAt": "2026-05-27T19:13:41.280Z"
   }
 ]
