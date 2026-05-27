@@ -253,5 +253,27 @@
     "addToCal": false,
     "createdAt": "2026-05-27T12:32:47.751Z",
     "updatedAt": "2026-05-27T15:13:23.082Z"
+  },
+  {
+    "id": "mpofyrtj8amn",
+    "title": "Reunión URP",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-05-29",
+    "time": "08:15",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-29",
+    "recurrenceEnd": "2026-12-30",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-27T19:12:53.335Z",
+    "updatedAt": "2026-05-27T19:12:53.335Z"
   }
 ]
