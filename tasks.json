@@ -290,11 +290,11 @@
     "recurrenceEnd": "2026-12-30",
     "location": "ZOOM",
     "participants": "",
-    "notes": "",
+    "notes": "https://us06web.zoom.us/j/86243029582?pwd=Y8YNFguFo2C4cv8OxyzmFdA9Po373e.1",
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-27T19:12:53.335Z",
-    "updatedAt": "2026-05-27T19:13:41.280Z"
+    "updatedAt": "2026-05-28T21:56:27.118Z"
   },
   {
     "id": "mpog2iypao7c",
@@ -453,5 +453,28 @@
     "addToCal": false,
     "createdAt": "2026-05-27T19:37:20.722Z",
     "updatedAt": "2026-05-27T19:37:20.722Z"
+  },
+  {
+    "id": "mppnwwq3663a",
+    "title": "Clase Mecánica de Sistema Fluidos",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-02",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-26",
+    "recurrenceEnd": "2026-07-12",
+    "location": "Sala Lab Materiales",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-28T15:43:09.483Z",
+    "updatedAt": "2026-05-28T15:43:09.483Z",
+    "recurrenceParent": "mplktynardcf"
   }
 ]
