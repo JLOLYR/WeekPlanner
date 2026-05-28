@@ -2,8 +2,9 @@ name: 📊 Estadísticas Semanales — Viernes 5pm
 
 on:
   schedule:
-    # Viernes 5:00 PM Chile (UTC-4) = 9:00 PM UTC = 21:00 UTC
-    - cron: '0 21 * * 5'
+    # Viernes 5:18 PM Chile (UTC-4) = 9:18 PM UTC = 21:18 UTC (minuto impar para evitar demoras)
+    # Force schedule sync: 2026-05-28
+    - cron: '18 21 * * 5'
   workflow_dispatch:
 
 jobs:

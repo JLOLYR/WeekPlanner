@@ -2,9 +2,10 @@ name: 📅 Resumen Mensual — Último Viernes del Mes
 
 on:
   schedule:
-    # Corre todos los viernes 5pm Chile (21:00 UTC)
+    # Corre todos los viernes 5:22 PM Chile (21:22 UTC - minuto impar para evitar demoras)
     # El script Python verifica si es el último viernes del mes
-    - cron: '0 21 * * 5'
+    # Force schedule sync: 2026-05-28
+    - cron: '22 21 * * 5'
   workflow_dispatch:
 
 jobs:
