@@ -485,7 +485,7 @@
     "status": "pending",
     "type": "evento",
     "date": "2026-05-29",
-    "time": "00:00",
+    "time": "12:00",
     "duration": "60",
     "deadline": "",
     "recurrence": "none",
@@ -497,6 +497,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-29T12:55:15.981Z",
-    "updatedAt": "2026-05-29T12:55:15.981Z"
+    "updatedAt": "2026-05-29T12:55:34.775Z"
   }
 ]
