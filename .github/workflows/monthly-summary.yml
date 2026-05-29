@@ -5,7 +5,7 @@ on:
     # Corre todos los viernes 5:22 PM Chile (21:22 UTC - minuto impar para evitar demoras)
     # El script Python verifica si es el último viernes del mes
     # Force schedule sync: 2026-05-28
-    - cron: '22 21 * * 5'
+    - cron: '22 18 * * 5'
   workflow_dispatch:
 
 jobs:
