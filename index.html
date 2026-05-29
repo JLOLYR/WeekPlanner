@@ -388,7 +388,8 @@
     .tc[data-cat="Administración"]::before { background: var(--cat-admin); }
     .tc[data-cat="Personal"]::before   { background: var(--cat-personal); }
     .tc:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
-    .tc.done { opacity: .52; }
+    .tc.done { opacity: .86; color: var(--text-muted); }
+    .tc.done .tc-title { text-decoration: line-through; }
     .tc.overdue { border-color: rgba(198,40,40,.25); background: rgba(198,40,40,.025); }
 
     .tc-row { display: flex; align-items: flex-start; gap: 9px; }
@@ -1401,46 +1402,236 @@ function chWeek(d) { d===0?weekOff=0:weekOff+=d; renderPage(); }
 // ══════════════════════════════════════════════
 //  WEEK PULSE (mini bar chart per day)
 // ══════════════════════════════════════════════
+let selectedPulseDayIndex = null;
+let currentPulseDates = [];
+let pulsePieInstance = null;
+let pulseBarInstance = null;
+
+function resetPulseChartSelection() {
+    selectedPulseDayIndex = null;
+    const btn = document.getElementById('pulse-reset-btn');
+    if (btn) btn.classList.add('hidden');
+    buildPulseCharts(currentPulseDates);
+}
+
+function selectPulseDay(index, dates) {
+    selectedPulseDayIndex = index;
+    const btn = document.getElementById('pulse-reset-btn');
+    if (btn) btn.classList.remove('hidden');
+    buildPulseCharts(dates);
+}
+
+function buildPulseCharts(dates) {
+    const today = todayISO();
+    const DAYS_FULL = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+    
+    // Calculate total hours per day
+    const dayHours = dates.map(d => {
+        const iso = toISO(d);
+        return tasks
+            .filter(t => t.date === iso && t.type !== 'entregable' && t.time)
+            .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+    });
+
+    const totalWeeklyHours = dayHours.reduce((a, b) => a + b, 0);
+
+    // Render Doughnut/Pie Chart
+    const pieCtx = document.getElementById('c-pulse-pie');
+    if (!pieCtx) return;
+    
+    if (pulsePieInstance) {
+        pulsePieInstance.destroy();
+    }
+
+    const dayColors = ['#005A9C', '#B21F1F', '#B25900', '#1A8F5A', '#8c52ff'];
+    const hoveredDayColors = dayColors.map(c => hexToRGBA(c, 0.8));
+
+    pulsePieInstance = new Chart(pieCtx, {
+        type: 'doughnut',
+        data: {
+            labels: DAYS_FULL,
+            datasets: [{
+                data: dayHours,
+                backgroundColor: dayColors,
+                borderColor: 'var(--border-subtle)',
+                borderWidth: 1.5,
+                hoverBackgroundColor: hoveredDayColors
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return ` ${context.label}: ${context.raw.toFixed(1)} hrs`;
+                        }
+                    }
+                }
+            },
+            onClick: (evt, activeElements) => {
+                if (activeElements.length > 0) {
+                    const index = activeElements[0].index;
+                    selectPulseDay(index, dates);
+                }
+            }
+        }
+    });
+
+    // Update Pie Center Text
+    const centerEl = document.getElementById('pulse-pie-center-text');
+    if (centerEl) {
+        centerEl.innerHTML = `
+            <span style="font-size: 8px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em; display:block;">Total Sem.</span>
+            <span style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-top: 1px; display:block;">${totalWeeklyHours.toFixed(1)}h</span>
+        `;
+    }
+
+    // Render Bar Chart
+    const barCtx = document.getElementById('c-pulse-bar');
+    if (!barCtx) return;
+
+    if (pulseBarInstance) {
+        pulseBarInstance.destroy();
+    }
+
+    const barTitleEl = document.getElementById('pulse-bar-title');
+    let barLabels = [];
+    let barData = [];
+    let barColors = [];
+
+    if (selectedPulseDayIndex === null) {
+        if (barTitleEl) barTitleEl.textContent = 'Carga Semanal por Categoría';
+        barLabels = CATS;
+        barData = CATS.map(c => {
+            return dates.map(d => {
+                const iso = toISO(d);
+                return tasks
+                    .filter(t => t.date === iso && t.cat === c && t.type !== 'entregable' && t.time)
+                    .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+            }).reduce((a, b) => a + b, 0);
+        });
+        barColors = CATS.map(c => CAT_COLORS[c] || '#b25900');
+    } else {
+        const dayName = DAYS_FULL[selectedPulseDayIndex];
+        if (barTitleEl) barTitleEl.textContent = `Carga del ${dayName} por Categoría`;
+        barLabels = CATS;
+        const selectedDayISO = toISO(dates[selectedPulseDayIndex]);
+        barData = CATS.map(c => {
+            return tasks
+                .filter(t => t.date === selectedDayISO && t.cat === c && t.type !== 'entregable' && t.time)
+                .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+        });
+        barColors = CATS.map(c => CAT_COLORS[c] || '#b25900');
+    }
+
+    pulseBarInstance = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: barLabels,
+            datasets: [{
+                label: 'Horas',
+                data: barData,
+                backgroundColor: barColors,
+                borderColor: 'var(--border-subtle)',
+                borderWidth: 1,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return ` ${context.label}: ${context.raw.toFixed(1)} hrs`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { color: 'var(--text-secondary)', font: { size: 9, weight: '600' } }
+                },
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: 'var(--text-muted)', font: { size: 8 } }
+                }
+            }
+        }
+    });
+}
+
 function buildPulse(dates) {
-  const today=todayISO();
-  const DAYS_S=['Lun','Mar','Mié','Jue','Vie'];
-  
-  // Calcular horas reales de eventos fijos para cada día
-  const dayHours = dates.map(d => {
-    const iso = toISO(d);
-    return tasks
-      .filter(t => t.date === iso && t.type !== 'entregable' && t.time)
-      .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
-  });
-  
-  const maxHours = Math.max(...dayHours, 8); // Base de 8 horas para escala visual
+    currentPulseDates = dates;
+    
+    // Calculate completed vs pending tasks for the week
+    const s0 = toISO(dates[0]), s4 = toISO(dates[4]);
+    const wt = tasks.filter(t => t.date >= s0 && t.date <= s4);
+    const dn = wt.filter(t => t.status === 'done').length;
+    const tot = wt.length;
 
-  const cols=dates.map((d,i)=>{
-    const iso=toISO(d);
-    const hrs = dayHours[i];
-    const barH=Math.max((hrs/maxHours)*100, hrs>0?12:4);
-    const isToday=iso===today;
-    
-    // Semáforo de carga
-    const clr=hrs>6?'var(--status-overdue)':hrs>=3?'var(--status-pending)':'var(--status-done)';
-    const textLoad = hrs>6?'Saturado':hrs>=3?'Moderado':hrs>0?'Ligero':'Libre';
-    
-    return `<div class="pulse-col${isToday?' is-today':''}">
-      <div class="pulse-bar-area">
-        <div class="pulse-bar-track" style="height:${barH}%" title="${textLoad}: ${hrs.toFixed(1)} hrs">
-          <div class="pulse-bar-fill" style="height:100%;background:${hrs>0?clr:'var(--text-muted)'}"></div>
+    document.getElementById('pulse-wrap').innerHTML = `
+        <div class="week-pulse-card" style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 18px 22px; margin-bottom: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                <div class="week-pulse-title" style="margin-bottom: 0; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted);">
+                    Carga Horaria y Actividades de la Semana
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;" id="pulse-stats-summary">
+                    <span class="badge" style="background: rgba(26,143,90,0.08); color: var(--status-done); padding: 3px 10px; border-radius: 99px; border: 1px solid rgba(26,143,90,0.18); font-weight: 800; font-size: 0.64rem;">Hechas: ${dn}</span>
+                    <span class="badge" style="background: rgba(178,89,0,0.08); color: var(--status-pending); padding: 3px 10px; border-radius: 99px; border: 1px solid rgba(178,89,0,0.18); font-weight: 800; font-size: 0.64rem;">Pendientes: ${tot - dn}</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5" style="display: grid; grid-template-columns: 1fr; gap: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                    <!-- Gráfico de Torta (Carga semanal por día) -->
+                    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
+                        <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">
+                            Distribución de Carga Horaria
+                        </div>
+                        <div style="height: 140px; position: relative; display: flex; align-items: center; justify-content: center;">
+                            <canvas id="c-pulse-pie" style="max-height: 145px;"></canvas>
+                            <div id="pulse-pie-center-text" class="absolute" style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; text-align: center; margin-top: 4px;">
+                                <!-- Will display total hours in center -->
+                            </div>
+                        </div>
+                        <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
+                            Presiona un día para ver su carga por categoría
+                        </div>
+                    </div>
+
+                    <!-- Gráfico de Barra (Actividades por día/desglose) -->
+                    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div id="pulse-bar-title" style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">
+                                Carga Semanal por Categoría
+                            </div>
+                            <button id="pulse-reset-btn" onclick="resetPulseChartSelection()" class="${selectedPulseDayIndex === null ? 'hidden' : ''}" style="color: var(--accent); border: 1.2px solid var(--accent); background: none; font-size: 0.64rem; font-weight: 800; padding: 2px 8px; border-radius: var(--radius-xs); cursor: pointer; transition: all 0.15s; outline: none; border-radius: 99px;">
+                                Mostrar semana
+                            </button>
+                        </div>
+                        <div style="height: 140px; position: relative;">
+                            <canvas id="c-pulse-bar" style="max-height: 145px;"></canvas>
+                        </div>
+                        <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
+                            Muestra la carga en horas asignada para cada categoría
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="pulse-day-name">${DAYS_S[i]}</div>
-      <div class="pulse-count" style="color:${hrs>0?clr:'var(--text-muted)'};font-size:0.68rem;white-space:nowrap">${hrs>0?hrs.toFixed(1)+'h':'—'}</div>
-    </div>`;
-  }).join('');
+    `;
 
-  document.getElementById('pulse-wrap').innerHTML=`
-    <div class="week-pulse-card">
-      <div class="week-pulse-title">Carga Horaria Diaria (Eventos Fijos)</div>
-      <div class="week-pulse">${cols}</div>
-    </div>`;
+    setTimeout(() => {
+        buildPulseCharts(dates);
+    }, 0);
 }
 
 // ══════════════════════════════════════════════
