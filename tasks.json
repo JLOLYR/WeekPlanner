@@ -438,11 +438,11 @@
     "cat": "Docencia",
     "subcategory": "Evaluación",
     "status": "pending",
-    "type": "evento",
+    "type": "entregable",
     "date": "2026-06-03",
-    "time": "08:30",
-    "duration": "120",
-    "deadline": "",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-06-02",
     "recurrence": "none",
     "recurrenceStart": "",
     "recurrenceEnd": "",
@@ -452,7 +452,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-05-27T19:37:20.722Z",
-    "updatedAt": "2026-05-27T19:37:20.722Z"
+    "updatedAt": "2026-05-29T19:55:39.901Z"
   },
   {
     "id": "mppnwwq3663a",
