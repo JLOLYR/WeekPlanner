@@ -4,7 +4,7 @@ on:
   schedule:
     # Martes–Viernes 8:13 AM Chile (UTC-4) = 12:13 UTC (minuto impar para evitar demoras)
     # Force schedule sync: 2026-05-28
-    - cron: '13 12 * * 2-5'
+    - cron: '13 08 * * 2-5'
   workflow_dispatch:
 
 jobs:
