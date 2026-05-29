@@ -155,7 +155,7 @@
     "title": "Resumen Congreso COCUZ",
     "cat": "Investigación",
     "subcategory": "",
-    "status": "progress",
+    "status": "done",
     "type": "entregable",
     "date": "2026-05-29",
     "time": "",
@@ -170,7 +170,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-05-25T19:08:36.087Z",
-    "updatedAt": "2026-05-27T20:16:54.053Z"
+    "updatedAt": "2026-05-29T19:44:27.863Z"
   },
   {
     "id": "mplr5f0te53o",
@@ -482,7 +482,7 @@
     "title": "Aletheia",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-05-29",
     "time": "12:00",
@@ -497,14 +497,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-29T12:55:15.981Z",
-    "updatedAt": "2026-05-29T12:55:34.775Z"
+    "updatedAt": "2026-05-29T19:44:28.848Z"
   },
   {
     "id": "mpr3xks0wma2",
     "title": "Reunión Aletheia",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-05-29",
     "time": "09:30",
@@ -519,6 +519,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-29T15:59:20.688Z",
-    "updatedAt": "2026-05-29T15:59:20.688Z"
+    "updatedAt": "2026-05-29T19:44:30.304Z"
   }
 ]
