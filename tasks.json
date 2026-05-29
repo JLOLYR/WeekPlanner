@@ -476,5 +476,27 @@
     "createdAt": "2026-05-28T15:43:09.483Z",
     "updatedAt": "2026-05-28T15:43:09.483Z",
     "recurrenceParent": "mplktynardcf"
+  },
+  {
+    "id": "mpqxcuml05v0",
+    "title": "Aletheia",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-05-29",
+    "time": "00:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-29T12:55:15.981Z",
+    "updatedAt": "2026-05-29T12:55:15.981Z"
   }
 ]
