@@ -579,14 +579,14 @@
     "deadline": "",
     "recurrence": "weekly",
     "recurrenceStart": "2026-06-01",
-    "recurrenceEnd": "",
+    "recurrenceEnd": "2026-12-12",
     "location": "",
     "participants": "",
     "notes": "",
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-29T19:47:42.810Z",
-    "updatedAt": "2026-05-29T19:47:42.810Z"
+    "updatedAt": "2026-05-29T19:48:40.467Z"
   },
   {
     "id": "mprc4cnd2bdr",
