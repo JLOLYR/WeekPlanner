@@ -498,5 +498,27 @@
     "addToCal": false,
     "createdAt": "2026-05-29T12:55:15.981Z",
     "updatedAt": "2026-05-29T12:55:34.775Z"
+  },
+  {
+    "id": "mpr3xks0wma2",
+    "title": "Reunión Aletheia",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-05-29",
+    "time": "09:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-29",
+    "recurrenceEnd": "2026-07-06",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-29T15:59:20.688Z",
+    "updatedAt": "2026-05-29T15:59:20.688Z"
   }
 ]
