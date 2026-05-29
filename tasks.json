@@ -279,7 +279,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-05-29",
     "time": "08:15",
@@ -294,7 +294,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-27T19:12:53.335Z",
-    "updatedAt": "2026-05-28T21:56:27.118Z"
+    "updatedAt": "2026-05-29T12:51:09.637Z"
   },
   {
     "id": "mpog2iypao7c",
