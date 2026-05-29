@@ -565,5 +565,27 @@
     "addToCal": false,
     "createdAt": "2026-05-29T19:46:26.498Z",
     "updatedAt": "2026-05-29T19:46:26.498Z"
+  },
+  {
+    "id": "mprc39eiy6vc",
+    "title": "Reunión L&F",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-01",
+    "time": "11:00",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-06-01",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-05-29T19:47:42.810Z",
+    "updatedAt": "2026-05-29T19:47:42.810Z"
   }
 ]
