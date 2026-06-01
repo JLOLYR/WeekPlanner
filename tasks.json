@@ -395,7 +395,7 @@
     "type": "evento",
     "date": "2026-06-05",
     "time": "08:15",
-    "duration": "90",
+    "duration": "60",
     "deadline": "",
     "recurrence": "weekly",
     "recurrenceStart": "2026-05-29",
@@ -406,8 +406,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-27T19:34:19.531Z",
-    "updatedAt": "2026-05-27T19:34:19.531Z",
-    "recurrenceParent": "mpofyrtj8amn"
+    "updatedAt": "2026-06-01T18:43:49.691Z"
   },
   {
     "id": "mpogqc97qlpy",
