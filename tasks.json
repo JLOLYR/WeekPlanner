@@ -640,7 +640,7 @@
     "title": "Horario Alumnos",
     "cat": "Docencia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-01",
     "time": "15:00",
@@ -655,7 +655,7 @@
     "priority": "low",
     "addToCal": false,
     "createdAt": "2026-06-01T18:42:48.892Z",
-    "updatedAt": "2026-06-01T18:43:17.501Z"
+    "updatedAt": "2026-06-01T21:26:59.218Z"
   },
   {
     "id": "mpvkilph5qqw",
