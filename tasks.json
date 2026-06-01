@@ -571,7 +571,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-01",
     "time": "11:00",
@@ -586,7 +586,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-29T19:47:42.810Z",
-    "updatedAt": "2026-05-29T19:48:40.467Z"
+    "updatedAt": "2026-06-01T18:40:05.740Z"
   },
   {
     "id": "mprc4cnd2bdr",
