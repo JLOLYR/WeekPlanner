@@ -641,17 +641,17 @@
     "type": "evento",
     "date": "2026-06-01",
     "time": "15:00",
-    "duration": "60",
+    "duration": "120",
     "deadline": "",
-    "recurrence": "none",
-    "recurrenceStart": "",
-    "recurrenceEnd": "",
-    "location": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-06-01",
+    "recurrenceEnd": "2026-07-12",
+    "location": "Oficina",
     "participants": "",
     "notes": "",
-    "priority": "medium",
+    "priority": "low",
     "addToCal": false,
     "createdAt": "2026-06-01T18:42:48.892Z",
-    "updatedAt": "2026-06-01T18:42:48.892Z"
+    "updatedAt": "2026-06-01T18:43:17.501Z"
   }
 ]
