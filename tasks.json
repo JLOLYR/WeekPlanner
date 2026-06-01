@@ -631,5 +631,27 @@
     "addToCal": false,
     "createdAt": "2026-05-29T20:28:04.086Z",
     "updatedAt": "2026-05-29T20:28:04.086Z"
+  },
+  {
+    "id": "mpvk3cu4x2jy",
+    "title": "Horario Alumnos",
+    "cat": "Docencia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-01",
+    "time": "15:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-01T18:42:48.892Z",
+    "updatedAt": "2026-06-01T18:42:48.892Z"
   }
 ]
