@@ -658,24 +658,6 @@
     "updatedAt": "2026-06-01T18:43:17.501Z"
   },
   {
-    "id": "mpvkilphbona",
-    "title": "Reunión Avance MecFlu",
-    "cat": "Docencia",
-    "status": "done",
-    "date": "2026-06-01",
-    "time": "08:30",
-    "deadline": "",
-    "recurrence": "weekly",
-    "location": "Oficina",
-    "participants": "",
-    "notes": "Reunión de avance de app mecánica de fluidos",
-    "priority": "low",
-    "addToCal": true,
-    "createdAt": "2026-06-01T18:54:40.229Z",
-    "updatedAt": "2026-06-01T18:54:56.771Z",
-    "recurrenceParent": "mplkcng3ew3c"
-  },
-  {
     "id": "mpvkilph5qqw",
     "title": "Reunión URP",
     "cat": "Investigación",
@@ -697,5 +679,23 @@
     "createdAt": "2026-06-01T18:54:40.229Z",
     "updatedAt": "2026-06-01T18:54:40.229Z",
     "recurrenceParent": "mpofyrtj8amn"
+  },
+  {
+    "id": "mpvkj72keqlw",
+    "title": "Reunión Avance MecFlu",
+    "cat": "Docencia",
+    "status": "pending",
+    "date": "2026-06-01",
+    "time": "08:30",
+    "deadline": "",
+    "recurrence": "weekly",
+    "location": "Oficina",
+    "participants": "",
+    "notes": "Reunión de avance de app mecánica de fluidos",
+    "priority": "low",
+    "addToCal": true,
+    "createdAt": "2026-06-01T18:55:07.916Z",
+    "updatedAt": "2026-06-01T18:55:07.916Z",
+    "recurrenceParent": "mplkcng3ew3c"
   }
 ]
