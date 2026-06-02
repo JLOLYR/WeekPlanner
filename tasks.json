@@ -440,7 +440,7 @@
     "title": "Prueba #2 MSF",
     "cat": "Docencia",
     "subcategory": "Evaluación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-06-03",
     "time": "",
@@ -455,7 +455,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-05-27T19:37:20.722Z",
-    "updatedAt": "2026-05-29T19:55:39.901Z"
+    "updatedAt": "2026-06-02T14:30:04.093Z"
   },
   {
     "id": "mppnwwq3663a",
