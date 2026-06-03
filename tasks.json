@@ -195,28 +195,6 @@
     "updatedAt": "2026-05-27T19:14:04.480Z"
   },
   {
-    "id": "mpmyhp3g25jr",
-    "title": "Reunión Avance MecFlu",
-    "cat": "Docencia",
-    "subcategory": "Reunión",
-    "status": "done",
-    "type": "evento",
-    "date": "2026-06-01",
-    "time": "08:30",
-    "duration": "60",
-    "deadline": "",
-    "recurrence": "weekly",
-    "recurrenceStart": "2026-06-01",
-    "recurrenceEnd": "",
-    "location": "Oficina",
-    "participants": "",
-    "notes": "Reunión de avance de app mecánica de fluidos",
-    "priority": "low",
-    "addToCal": false,
-    "createdAt": "2026-05-26T18:15:57.004Z",
-    "updatedAt": "2026-06-01T18:44:12.967Z"
-  },
-  {
     "id": "mpmyhp3gfw3w",
     "title": "Reunión UFRO-Explora J. Leiva",
     "cat": "Investigación",
