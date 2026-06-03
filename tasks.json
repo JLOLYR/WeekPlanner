@@ -349,7 +349,7 @@
     "title": "Clase Mecánica Industrial",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-02",
     "time": "14:30",
@@ -364,7 +364,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-27T19:34:19.531Z",
-    "updatedAt": "2026-05-27T19:34:19.531Z",
+    "updatedAt": "2026-06-03T12:36:52.227Z",
     "recurrenceParent": "mpmyl7gdbuu7"
   },
   {
@@ -372,7 +372,7 @@
     "title": "Clase Mecánica de Sistemas Fluidos",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-03",
     "time": "08:30",
@@ -387,7 +387,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-27T19:34:19.531Z",
-    "updatedAt": "2026-05-27T19:34:19.531Z",
+    "updatedAt": "2026-06-03T12:36:53.733Z",
     "recurrenceParent": "mpo1o8zrys9a"
   },
   {
