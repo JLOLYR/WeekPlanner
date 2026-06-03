@@ -680,24 +680,6 @@
     "updatedAt": "2026-06-03T12:39:25.566Z"
   },
   {
-    "id": "mpy1zh428tp4",
-    "title": "Reunión Avance MecFlu",
-    "cat": "Docencia",
-    "status": "pending",
-    "date": "2026-06-08",
-    "time": "08:30",
-    "deadline": "",
-    "recurrence": "weekly",
-    "location": "Oficina",
-    "participants": "",
-    "notes": "Reunión de avance de app mecánica de fluidos",
-    "priority": "low",
-    "addToCal": true,
-    "createdAt": "2026-06-03T12:39:13.250Z",
-    "updatedAt": "2026-06-03T12:39:13.250Z",
-    "recurrenceParent": "mplkcng3ew3c"
-  },
-  {
     "id": "mpy1zh421xi4",
     "title": "Clase Mecánica de Sistema Fluidos",
     "cat": "Docencia",
