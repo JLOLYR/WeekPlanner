@@ -557,7 +557,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-03",
     "time": "11:00",
@@ -572,7 +572,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-05-29T19:48:33.673Z",
-    "updatedAt": "2026-06-03T12:56:14.639Z"
+    "updatedAt": "2026-06-03T13:29:03.861Z"
   },
   {
     "id": "mprdj5o6312p",
