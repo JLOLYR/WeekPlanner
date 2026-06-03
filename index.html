@@ -2176,9 +2176,43 @@ function saveTask(e) {
   renderPage(); updateBadge();
 }
 function deleteTask() {
-  if(!editId||!confirm('¿Eliminar esta actividad?')) return;
-  tasks=tasks.filter(t=>t.id!==editId); saveTasks(); closeModal();
-  toast('ok','Actividad eliminada'); renderPage(); updateBadge();
+  if(!editId) return;
+  const t=tasks.find(x=>x.id===editId);
+  if(!t) return;
+  
+  const isInstance = !!t.recurrenceParent;
+  const hasSeries = (t.recurrence && t.recurrence !== 'none') || isInstance;
+  
+  if (hasSeries) {
+    const parentId = t.recurrenceParent || t.id;
+    const option = confirm(
+      'Esta actividad forma parte de una serie recurrente.\n\n' +
+      'Elige una opción:\n' +
+      '- Aceptar (OK): Eliminar TODA la serie de actividades recurrentes.\n' +
+      '- Cancelar (Cancel): Eliminar únicamente este evento seleccionado.'
+    );
+    
+    if (option) {
+      // Eliminar el padre y todos los hijos
+      tasks = tasks.filter(x => x.id !== parentId && x.recurrenceParent !== parentId);
+      toast('ok', 'Serie recurrente eliminada por completo ✓');
+    } else {
+      // Confirmar eliminación del evento individual
+      if (confirm('¿Eliminar únicamente este evento seleccionado?')) {
+        tasks = tasks.filter(x => x.id !== editId);
+        toast('ok', 'Actividad seleccionada eliminada ✓');
+      } else {
+        return; // Cancelar toda la operación
+      }
+    }
+  } else {
+    // Tarea normal no recurrente
+    if(!confirm('¿Eliminar esta actividad?')) return;
+    tasks=tasks.filter(x=>x.id!==editId);
+    toast('ok','Actividad eliminada');
+  }
+  
+  saveTasks(); closeModal(); renderPage(); updateBadge();
 }
 function toggleDone(id) {
   const t=tasks.find(x=>x.id===id); if(!t) return;
