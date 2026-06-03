@@ -697,5 +697,27 @@
     "createdAt": "2026-06-01T18:55:07.916Z",
     "updatedAt": "2026-06-01T21:27:02.505Z",
     "recurrenceParent": "mplkcng3ew3c"
+  },
+  {
+    "id": "mpy1y3ia91ez",
+    "title": "Defensa Rocio!",
+    "cat": "Docencia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-15",
+    "time": "10:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-03T12:38:08.962Z",
+    "updatedAt": "2026-06-03T12:38:08.962Z"
   }
 ]
