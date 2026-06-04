@@ -1128,5 +1128,27 @@
     "createdAt": "2026-06-03T12:39:14.138Z",
     "updatedAt": "2026-06-03T12:39:14.138Z",
     "recurrenceParent": "mpvk3cu4x2jy"
+  },
+  {
+    "id": "mpzw5d2azask",
+    "title": "Reunion Lucas Proyecto industrial",
+    "cat": "Docencia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-17",
+    "time": "16:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-06-04T19:31:22.594Z",
+    "updatedAt": "2026-06-04T19:31:22.594Z"
   }
 ]
