@@ -474,7 +474,7 @@
     "title": "Reunión DIM",
     "cat": "Docencia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-04",
     "time": "11:00",
@@ -489,7 +489,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-05-29T19:46:26.498Z",
-    "updatedAt": "2026-05-29T19:46:26.498Z"
+    "updatedAt": "2026-06-04T19:14:55.380Z"
   },
   {
     "id": "mprc39eiy6vc",
