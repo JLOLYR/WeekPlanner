@@ -1,22 +1,5 @@
 [
   {
-    "id": "mplkcng3ew3c",
-    "title": "Reunión Avance MecFlu",
-    "cat": "Docencia",
-    "status": "done",
-    "date": "2026-05-25",
-    "time": "08:30",
-    "deadline": "",
-    "recurrence": "weekly",
-    "location": "Oficina",
-    "participants": "",
-    "notes": "Reunión de avance de app mecánica de fluidos",
-    "priority": "low",
-    "addToCal": true,
-    "createdAt": "2026-05-25T18:52:20.787Z",
-    "updatedAt": "2026-05-27T19:39:36.826Z"
-  },
-  {
     "id": "mplkcng3r2db",
     "title": "Reunión Proyecto Integrador",
     "cat": "Docencia",
@@ -894,24 +877,6 @@
     "recurrenceParent": "mpvk3cu4x2jy"
   },
   {
-    "id": "mpy1zhsqv6kc",
-    "title": "Reunión Avance MecFlu",
-    "cat": "Docencia",
-    "status": "pending",
-    "date": "2026-06-15",
-    "time": "08:30",
-    "deadline": "",
-    "recurrence": "weekly",
-    "location": "Oficina",
-    "participants": "",
-    "notes": "Reunión de avance de app mecánica de fluidos",
-    "priority": "low",
-    "addToCal": true,
-    "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-03T12:39:14.138Z",
-    "recurrenceParent": "mplkcng3ew3c"
-  },
-  {
     "id": "mpy1zhsqvqjj",
     "title": "Clase Mecánica de Sistema Fluidos",
     "cat": "Docencia",
@@ -1163,23 +1128,5 @@
     "createdAt": "2026-06-03T12:39:14.138Z",
     "updatedAt": "2026-06-03T12:39:14.138Z",
     "recurrenceParent": "mpvk3cu4x2jy"
-  },
-  {
-    "id": "mpy2ja0o4fs1",
-    "title": "Reunión Avance MecFlu",
-    "cat": "Docencia",
-    "status": "done",
-    "date": "2026-06-01",
-    "time": "08:30",
-    "deadline": "",
-    "recurrence": "weekly",
-    "location": "Oficina",
-    "participants": "",
-    "notes": "Reunión de avance de app mecánica de fluidos",
-    "priority": "low",
-    "addToCal": true,
-    "createdAt": "2026-06-03T12:54:37.176Z",
-    "updatedAt": "2026-06-03T12:56:23.901Z",
-    "recurrenceParent": "mplkcng3ew3c"
   }
 ]
