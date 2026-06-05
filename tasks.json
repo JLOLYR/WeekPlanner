@@ -1150,5 +1150,27 @@
     "addToCal": false,
     "createdAt": "2026-06-04T19:31:22.594Z",
     "updatedAt": "2026-06-04T19:31:22.594Z"
+  },
+  {
+    "id": "mq10mmnbbprz",
+    "title": "Reunión Aletheia",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-11-05",
+    "time": "11:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-05T14:24:32.808Z",
+    "updatedAt": "2026-06-05T14:24:32.808Z"
   }
 ]
