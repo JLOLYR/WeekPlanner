@@ -789,7 +789,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-08",
     "time": "11:00",
@@ -804,7 +804,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:13.250Z",
-    "updatedAt": "2026-06-03T12:39:13.250Z",
+    "updatedAt": "2026-06-08T19:42:04.355Z",
     "recurrenceParent": "mprc39eiy6vc"
   },
   {
