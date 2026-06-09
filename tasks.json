@@ -1149,5 +1149,27 @@
     "createdAt": "2026-06-08T12:38:36.787Z",
     "updatedAt": "2026-06-08T12:38:49.424Z",
     "recurrenceParent": "mpvkj72keqlw"
+  },
+  {
+    "id": "mq6yepe0i5fx",
+    "title": "Preparar laboratorio 2",
+    "cat": "Docencia",
+    "subcategory": "Preparación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-06-09",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-10-06",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-06-09T18:09:00.936Z",
+    "updatedAt": "2026-06-09T18:09:00.936Z"
   }
 ]
