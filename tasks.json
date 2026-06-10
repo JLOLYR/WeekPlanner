@@ -1198,7 +1198,7 @@
     "title": "Reunión Aletheia",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-12",
     "time": "09:30",
@@ -1213,7 +1213,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-10T19:48:56.300Z",
-    "updatedAt": "2026-06-10T19:48:56.300Z",
+    "updatedAt": "2026-06-10T19:49:03.244Z",
     "recurrenceParent": "mpr3xks0wma2"
   }
 ]
