@@ -720,7 +720,7 @@
     "title": "Clase Mecánica Industrial",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-11",
     "time": "08:30",
@@ -735,7 +735,7 @@
     "priority": "medium",
     "addToCal": true,
     "createdAt": "2026-06-03T12:39:13.250Z",
-    "updatedAt": "2026-06-08T20:04:50.870Z",
+    "updatedAt": "2026-06-11T14:57:16.925Z",
     "recurrenceParent": "mpog5f1bynay"
   },
   {
