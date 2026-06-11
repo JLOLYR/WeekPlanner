@@ -1260,5 +1260,27 @@
     "addToCal": false,
     "createdAt": "2026-06-11T12:25:59.637Z",
     "updatedAt": "2026-06-11T12:25:59.637Z"
+  },
+  {
+    "id": "mq9z9278ylgo",
+    "title": "Reunion Página web",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-06-11",
+    "time": "",
+    "duration": "",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-11T20:55:55.748Z",
+    "updatedAt": "2026-06-11T20:55:55.748Z"
   }
 ]
