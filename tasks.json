@@ -1282,5 +1282,27 @@
     "addToCal": false,
     "createdAt": "2026-06-11T20:55:55.748Z",
     "updatedAt": "2026-06-12T12:26:44.219Z"
+  },
+  {
+    "id": "mqf6r80puc92",
+    "title": "Organización Semanal",
+    "cat": "Personal",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-15",
+    "time": "08:30",
+    "duration": "30",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-06-15",
+    "recurrenceEnd": "2026-07-20",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-06-15T12:24:51.289Z",
+    "updatedAt": "2026-06-15T12:24:51.289Z"
   }
 ]
