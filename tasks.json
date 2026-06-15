@@ -606,7 +606,7 @@
     "title": "Defensa Rocio!",
     "cat": "Investigación",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-15",
     "time": "10:00",
@@ -621,7 +621,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-03T12:38:08.962Z",
-    "updatedAt": "2026-06-15T12:54:54.023Z"
+    "updatedAt": "2026-06-15T14:44:08.306Z"
   },
   {
     "id": "mpy1zh421xi4",
