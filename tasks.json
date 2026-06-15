@@ -1221,7 +1221,7 @@
     "title": "Reunión Avance MecFlu",
     "cat": "Docencia",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-15",
     "time": "08:30",
@@ -1236,7 +1236,7 @@
     "priority": "low",
     "addToCal": true,
     "createdAt": "2026-06-10T19:49:09.708Z",
-    "updatedAt": "2026-06-10T19:49:09.708Z",
+    "updatedAt": "2026-06-15T12:23:41.495Z",
     "recurrenceParent": "mpvkj72keqlw"
   },
   {
