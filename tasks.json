@@ -604,8 +604,8 @@
   {
     "id": "mpy1y3ia91ez",
     "title": "Defensa Rocio!",
-    "cat": "Docencia",
-    "subcategory": "Reunión",
+    "cat": "Investigación",
+    "subcategory": "",
     "status": "pending",
     "type": "evento",
     "date": "2026-06-15",
@@ -621,7 +621,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-03T12:38:08.962Z",
-    "updatedAt": "2026-06-03T12:39:25.566Z"
+    "updatedAt": "2026-06-15T12:54:54.023Z"
   },
   {
     "id": "mpy1zh421xi4",
