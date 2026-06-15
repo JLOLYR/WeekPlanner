@@ -1304,5 +1304,27 @@
     "addToCal": false,
     "createdAt": "2026-06-15T12:24:51.289Z",
     "updatedAt": "2026-06-15T12:54:36.461Z"
+  },
+  {
+    "id": "mqfbre6a57zl",
+    "title": "Reunión Camilo Duarte",
+    "cat": "Personal",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-19",
+    "time": "18:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-06-15T14:44:57.346Z",
+    "updatedAt": "2026-06-15T14:44:57.346Z"
   }
 ]
