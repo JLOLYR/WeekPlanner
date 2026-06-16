@@ -1064,7 +1064,7 @@
     "title": "Horario Alumnos",
     "cat": "Docencia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-15",
     "time": "15:00",
@@ -1079,7 +1079,7 @@
     "priority": "low",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-03T12:39:14.138Z",
+    "updatedAt": "2026-06-16T12:33:54.672Z",
     "recurrenceParent": "mpvk3cu4x2jy"
   },
   {
