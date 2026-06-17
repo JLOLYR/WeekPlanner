@@ -1326,5 +1326,27 @@
     "addToCal": false,
     "createdAt": "2026-06-15T14:44:57.346Z",
     "updatedAt": "2026-06-15T14:44:57.346Z"
+  },
+  {
+    "id": "mqi62quf9ubu",
+    "title": "Correccion Pruebas Mecánica Industrial IIM259",
+    "cat": "Administración",
+    "subcategory": "",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-06-17",
+    "time": "",
+    "duration": "",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-06-17T14:29:07.815Z",
+    "updatedAt": "2026-06-17T14:29:07.815Z"
   }
 ]
