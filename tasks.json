@@ -926,7 +926,7 @@
     "title": "Clase Mecánica de Sistemas Fluidos",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-17",
     "time": "08:30",
@@ -941,7 +941,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-03T12:39:14.138Z",
+    "updatedAt": "2026-06-17T14:25:05.302Z",
     "recurrenceParent": "mpo1o8zrys9a"
   },
   {
