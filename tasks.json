@@ -857,7 +857,7 @@
     "title": "Clase Mecánica de Sistema Fluidos",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-16",
     "time": "10:50",
@@ -872,7 +872,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-03T12:39:14.138Z",
+    "updatedAt": "2026-06-17T14:25:02.374Z",
     "recurrenceParent": "mplktynardcf"
   },
   {
@@ -880,7 +880,7 @@
     "title": "Reunión UFRO-Explora J. Leiva",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-16",
     "time": "09:00",
@@ -895,7 +895,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-03T12:39:14.138Z",
+    "updatedAt": "2026-06-17T14:24:59.895Z",
     "recurrenceParent": "mplr5f0te53o"
   },
   {
@@ -903,7 +903,7 @@
     "title": "Clase Mecánica Industrial",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-16",
     "time": "14:30",
@@ -918,7 +918,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-03T12:39:14.138Z",
+    "updatedAt": "2026-06-17T14:25:01.327Z",
     "recurrenceParent": "mpmyl7gdbuu7"
   },
   {
