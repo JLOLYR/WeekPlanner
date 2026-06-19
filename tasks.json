@@ -1644,5 +1644,27 @@
     "addToCal": false,
     "createdAt": "2026-06-19T14:33:21.497Z",
     "updatedAt": "2026-06-19T14:33:23.713Z"
+  },
+  {
+    "id": "mql14yxmg7me",
+    "title": "Mitos",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-18",
+    "time": "19:30",
+    "duration": "180",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-19T14:34:12.058Z",
+    "updatedAt": "2026-06-19T14:34:12.058Z"
   }
 ]
