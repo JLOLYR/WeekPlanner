@@ -948,8 +948,8 @@
   {
     "id": "mpy1zhsqr4hk",
     "title": "Reunión Aletheia",
-    "cat": "Personal",
-    "subcategory": "Ocio",
+    "cat": "Aletheia",
+    "subcategory": "Reunión",
     "status": "done",
     "type": "evento",
     "date": "2026-06-19",
@@ -965,8 +965,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-19T14:15:00.245Z",
-    "recurrenceParent": "mpr3xks0wma2"
+    "updatedAt": "2026-06-19T14:35:16.532Z"
   },
   {
     "id": "mpy1zhsqdrs6",
@@ -1666,5 +1665,28 @@
     "addToCal": false,
     "createdAt": "2026-06-19T14:34:12.058Z",
     "updatedAt": "2026-06-19T14:34:12.058Z"
+  },
+  {
+    "id": "mql16coldtbi",
+    "title": "Reunión Aletheia",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-19",
+    "time": "09:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-29",
+    "recurrenceEnd": "2026-07-06",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-19T14:35:16.533Z",
+    "updatedAt": "2026-06-19T14:35:16.533Z",
+    "recurrenceParent": "mpr3xks0wma2"
   }
 ]
