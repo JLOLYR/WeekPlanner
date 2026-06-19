@@ -1352,8 +1352,8 @@
   {
     "id": "mqihvo4t6155",
     "title": "Reunion L&F",
-    "cat": "Administración",
-    "subcategory": "",
+    "cat": "L&F",
+    "subcategory": "Reunión",
     "status": "pending",
     "type": "evento",
     "date": "2026-06-19",
@@ -1369,7 +1369,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-17T19:59:33.101Z",
-    "updatedAt": "2026-06-18T14:52:52.674Z"
+    "updatedAt": "2026-06-19T12:43:24.649Z"
   },
   {
     "id": "mqjgtovn29fb",
