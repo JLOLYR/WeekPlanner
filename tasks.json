@@ -1399,7 +1399,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-06-22",
     "time": "11:00",
@@ -1414,7 +1414,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-18T12:17:47.315Z",
-    "updatedAt": "2026-06-18T12:17:47.315Z",
+    "updatedAt": "2026-06-19T20:14:21.734Z",
     "recurrenceParent": "mprc39eiy6vc"
   },
   {
