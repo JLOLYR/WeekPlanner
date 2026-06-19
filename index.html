@@ -49,6 +49,7 @@
       --status-progress: #0066CC;
       --status-done:     #1A8F5A;
       --status-overdue:  #C62828;
+      --status-cancelled:#7F8C8D;
 
       --radius-xs:  8px;
       --radius-sm:  12px;
@@ -390,6 +391,8 @@
     .tc:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
     .tc.done { opacity: .86; color: var(--text-muted); }
     .tc.done .tc-title { text-decoration: line-through; }
+    .tc.cancelled { opacity: .55; color: var(--text-muted); background: var(--bg-elevated); }
+    .tc.cancelled .tc-title { text-decoration: line-through; }
     .tc.overdue { border-color: rgba(198,40,40,.25); background: rgba(198,40,40,.025); }
 
     .tc-row { display: flex; align-items: flex-start; gap: 9px; }
@@ -401,11 +404,13 @@
     }
     .tc-chk:hover { border-color: var(--accent); background: var(--accent-soft); }
     .tc.done .tc-chk { background: var(--status-done); border-color: var(--status-done); }
+    .tc.cancelled .tc-chk { background: var(--status-cancelled); border-color: var(--status-cancelled); }
     .tc-title {
       font-size: .88rem; font-weight: 600; line-height: 1.35;
       flex: 1; color: var(--text-primary);
     }
     .tc.done .tc-title { text-decoration: line-through; color: var(--text-muted); }
+    .tc.cancelled .tc-title { text-decoration: line-through; color: var(--text-muted); }
     .tc-prio { font-size: .85rem; flex-shrink: 0; margin-top: 1px; line-height: 1; }
     .tc-tags {
       display: flex; gap: 5px; flex-wrap: wrap;
@@ -597,6 +602,13 @@
       border: 1px solid var(--border-subtle);
       transition: transform 0.15s, box-shadow 0.15s;
     }
+    .tb-card.cancelled {
+      opacity: .55; background: var(--bg-elevated) !important;
+      border-left-color: var(--status-cancelled) !important;
+    }
+    .tb-card.cancelled .tb-card-title {
+      text-decoration: line-through; color: var(--text-muted);
+    }
     .tb-card:hover {
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
@@ -771,6 +783,7 @@
     .spill-pending { background: rgba(178,89,0,.12);   color: var(--status-pending); }
     .spill-overdue { background: rgba(198,40,40,.12);  color: var(--status-overdue); }
     .spill-progress{ background: rgba(0,102,204,.12);  color: var(--status-progress); }
+    .spill-cancelled{ background: rgba(127,140,141,.12); color: var(--status-cancelled); }
 
     /* ══════════════════════════════════════════════
        MODAL
@@ -989,7 +1002,7 @@
         <div class="history-bar">
           <div class="search-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="search" id="all-q" placeholder="Buscar..." oninput="renderAll()"></div>
           <select id="all-cat" onchange="renderAll()"><option value="">Todas las categorías</option><option>Docencia</option><option>Investigación</option><option>Administración</option><option>Personal</option></select>
-          <select id="all-st" onchange="renderAll()"><option value="">Todos los estados</option><option value="pending">Pendiente</option><option value="progress">En progreso</option><option value="done">Completada</option><option value="overdue">Vencida</option></select>
+          <select id="all-st" onchange="renderAll()"><option value="">Todos los estados</option><option value="pending">Pendiente</option><option value="progress">En progreso</option><option value="done">Completada</option><option value="overdue">Vencida</option><option value="cancelled">Cancelada / No asistido</option></select>
         </div>
         <div id="all-wrap"></div>
       </section>
@@ -1012,7 +1025,7 @@
         <div class="history-bar">
           <div class="search-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="search" id="h-q" placeholder="Buscar..." oninput="renderHistory()"></div>
           <select id="h-cat" onchange="renderHistory()"><option value="">Todas las categorías</option><option>Docencia</option><option>Investigación</option><option>Administración</option><option>Personal</option></select>
-          <select id="h-st" onchange="renderHistory()"><option value="">Todos los estados</option><option value="done">Completadas</option><option value="pending">Pendientes</option><option value="overdue">Vencidas</option></select>
+          <select id="h-st" onchange="renderHistory()"><option value="">Todos los estados</option><option value="done">Completadas</option><option value="pending">Pendientes</option><option value="overdue">Vencidas</option><option value="cancelled">Cancelada / No asistido</option></select>
           <input type="month" id="h-mon" onchange="renderHistory()" style="width:145px">
         </div>
         <div id="h-wrap"></div>
@@ -1039,7 +1052,7 @@
       <div class="form-grid">
         <div class="fg full"><label>Título *</label><input type="text" id="f-title" placeholder="Ej. Clase Hidrodinámica — Grupo A" required></div>
         <div class="fg"><label>Tipo de Actividad</label><select id="f-type" onchange="toggleFormFields()"><option value="evento">📆 Compromiso Fijo (Evento)</option><option value="entregable">📋 Tarea Flexible (Entregable)</option></select></div>
-        <div class="fg"><label>Estado</label><select id="f-status"><option value="pending">Pendiente</option><option value="progress">En Progreso</option><option value="done">Completada</option></select></div>
+        <div class="fg"><label>Estado</label><select id="f-status"><option value="pending">Pendiente</option><option value="progress">En Progreso</option><option value="done">Completada</option><option value="cancelled">🚫 Cancelada / No asistido</option></select></div>
         <div class="fg"><label>Categoría *</label><select id="f-cat" required onchange="populateSubcategories()"><option value="">Seleccionar…</option><option>Docencia</option><option>Investigación</option><option>Administración</option><option>Personal</option></select></div>
         <div class="fg"><label>Subcategoría</label><select id="f-subcat"><option value="">Seleccionar…</option></select></div>
         <div class="fg"><label>Fecha *</label><input type="date" id="f-date" required></div>
@@ -1168,7 +1181,17 @@ function toISO(d)          { return d.toISOString().split('T')[0]; }
 function todayISO()        { return toISO(new Date()); }
 function fmtDate(iso)      { if(!iso) return '—'; const [y,m,d]=iso.split('-'); return `${d}/${m}/${y}`; }
 function fmtShort(iso)     { if(!iso) return ''; const [,m,d]=iso.split('-'); return `${d}/${m}`; }
-function isOverdue(t)      { if(t.status==='done') return false; const c=t.deadline||t.date; return c&&c<todayISO(); }
+function isOverdue(t)      { if(t.status==='done' || t.status==='cancelled') return false; const c=t.deadline||t.date; return c&&c<todayISO(); }
+function getCategoryType(cat) {
+  const c = (cat || '').trim().toLowerCase();
+  if (['personal', 'msn', 'r+c', 'aletheia'].includes(c)) {
+    return 'personal';
+  } else if (c === 'l&f' || c === 'landf') {
+    return 'laboral_indep';
+  } else {
+    return 'laboral_ufro';
+  }
+}
 function escH(s)           { return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 const PRIO_ORDER = {high:0,medium:1,low:2};
@@ -1425,6 +1448,12 @@ let pulsePieInstance = null;
 let pulseBarInstance = null;
 let pulseLineInstance = null;
 let pulseRadarInstance = null;
+let currentPieMode = 'cats';
+
+function setPieMode(mode) {
+    currentPieMode = mode;
+    renderWeek();
+}
 
 function resetPulseChartSelection() {
     selectedPulseDayIndex = null;
@@ -1454,11 +1483,11 @@ function buildPulseCharts(dates) {
     const today = todayISO();
     const DAYS_FULL = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
     
-    // Calculate total hours per day
+    // Calculate total hours per day (excluding cancelled)
     const dayHours = dates.map(d => {
         const iso = toISO(d);
         return tasks
-            .filter(t => t.date === iso && t.type !== 'entregable' && t.time)
+            .filter(t => t.date === iso && t.type !== 'entregable' && t.time && t.status !== 'cancelled')
             .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
     });
 
@@ -1472,12 +1501,135 @@ function buildPulseCharts(dates) {
         pulsePieInstance.destroy();
     }
 
-    const dayColors = ['#005A9C', '#B21F1F', '#B25900', '#1A8F5A', '#8c52ff'];
-    const hoveredDayColors = dayColors.map(c => hexToRGBA(c, 0.8));
+    let chartData = {};
+    let chartOptions = {};
 
-    pulsePieInstance = new Chart(pieCtx, {
-        type: 'doughnut',
-        data: {
+    const s0 = toISO(dates[0]), s4 = toISO(dates[4]);
+
+    if (currentPieMode === 'cats') {
+        const catHours = {};
+        CATS.forEach(c => catHours[c] = 0);
+        
+        const weekTasks = tasks.filter(t => t.date >= s0 && t.date <= s4 && t.status !== 'cancelled' && t.type !== 'entregable' && t.time);
+        const activeTasksForPie = selectedPulseDayIndex === null 
+            ? weekTasks 
+            : weekTasks.filter(t => t.date === toISO(dates[selectedPulseDayIndex]));
+            
+        activeTasksForPie.forEach(t => {
+            if (catHours[t.cat] !== undefined) {
+                catHours[t.cat] += (parseInt(t.duration) || 60) / 60;
+            }
+        });
+
+        let ufroHours = 0;
+        let lfHours = 0;
+        let personalHours = 0;
+        
+        const outerData = [];
+        const outerLabels = [];
+        const outerColors = [];
+        
+        CATS.forEach(c => {
+            const hrs = catHours[c] || 0;
+            if (hrs > 0) {
+                const type = getCategoryType(c);
+                if (type === 'personal') personalHours += hrs;
+                else if (type === 'laboral_indep') lfHours += hrs;
+                else ufroHours += hrs;
+                
+                outerData.push(hrs);
+                outerLabels.push(c);
+                outerColors.push(CAT_COLORS[c] || '#8E8E93');
+            }
+        });
+        
+        const innerData = [];
+        const innerLabels = [];
+        const innerColors = [];
+        
+        if (ufroHours > 0) {
+            innerData.push(ufroHours);
+            innerLabels.push('UFRO (Académico)');
+            innerColors.push('rgba(0, 102, 204, 0.85)');
+        }
+        if (lfHours > 0) {
+            innerData.push(lfHours);
+            innerLabels.push('L&F (Independiente)');
+            innerColors.push('rgba(230, 126, 34, 0.85)');
+        }
+        if (personalHours > 0) {
+            innerData.push(personalHours);
+            innerLabels.push('Personal');
+            innerColors.push('rgba(107, 63, 160, 0.85)');
+        }
+
+        chartData = {
+            labels: outerLabels,
+            datasets: [
+                {
+                    // Outer ring: Individual categories
+                    data: outerData,
+                    backgroundColor: outerColors,
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    hoverBackgroundColor: outerColors.map(c => hexToRGBA(c, 0.8)),
+                    borderRadius: 4,
+                    labels: outerLabels
+                },
+                {
+                    // Inner ring: High-level groups
+                    data: innerData,
+                    backgroundColor: innerColors,
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    hoverBackgroundColor: innerColors.map(c => hexToRGBA(c, 0.8)),
+                    borderRadius: 4,
+                    labels: innerLabels
+                }
+            ]
+        };
+        
+        chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '50%',
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const dataset = context.dataset;
+                            const idx = context.dataIndex;
+                            const label = dataset.labels ? dataset.labels[idx] : context.label;
+                            const val = context.raw;
+                            return ` ${label}: ${val.toFixed(1)} hrs`;
+                        }
+                    }
+                }
+            }
+        };
+
+        // Update Pie Center Text
+        const centerEl = document.getElementById('pulse-pie-center-text');
+        if (centerEl) {
+            centerEl.innerHTML = `
+                <span style="font-size: 8px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em; display:block; margin-bottom: 2px;">Distribución</span>
+                <span style="font-size: 0.64rem; font-weight: 800; color: var(--text-primary); line-height: 1.2; display:block;">
+                  ${ufroHours > 0 ? `UFRO: ${ufroHours.toFixed(1)}h<br>` : ''}
+                  ${lfHours > 0 ? `L&F: ${lfHours.toFixed(1)}h<br>` : ''}
+                  ${personalHours > 0 ? `Pers: ${personalHours.toFixed(1)}h` : ''}
+                </span>
+            `;
+        }
+    } else {
+        const dayColors = ['#005A9C', '#B21F1F', '#B25900', '#1A8F5A', '#8c52ff'];
+        const hoveredDayColors = dayColors.map(c => hexToRGBA(c, 0.8));
+
+        chartData = {
             labels: DAYS_FULL,
             datasets: [{
                 data: dayHours,
@@ -1487,8 +1639,9 @@ function buildPulseCharts(dates) {
                 hoverBackgroundColor: hoveredDayColors,
                 borderRadius: 6
             }]
-        },
-        options: {
+        };
+        
+        chartOptions = {
             responsive: true,
             maintainAspectRatio: false,
             cutout: '70%',
@@ -1512,17 +1665,23 @@ function buildPulseCharts(dates) {
                     selectPulseDay(index, dates);
                 }
             }
-        }
-    });
+        };
 
-    // Update Pie Center Text
-    const centerEl = document.getElementById('pulse-pie-center-text');
-    if (centerEl) {
-        centerEl.innerHTML = `
-            <span style="font-size: 8px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em; display:block;">Total Sem.</span>
-            <span style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-top: 1px; display:block;">${totalWeeklyHours.toFixed(1)}h</span>
-        `;
+        // Update Pie Center Text
+        const centerEl = document.getElementById('pulse-pie-center-text');
+        if (centerEl) {
+            centerEl.innerHTML = `
+                <span style="font-size: 8px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em; display:block;">Total Sem.</span>
+                <span style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-top: 1px; display:block;">${totalWeeklyHours.toFixed(1)}h</span>
+            `;
+        }
     }
+
+    pulsePieInstance = new Chart(pieCtx, {
+        type: 'doughnut',
+        data: chartData,
+        options: chartOptions
+    });
 
     // Render Bar Chart
     const barCtx = document.getElementById('c-pulse-bar');
@@ -1544,7 +1703,7 @@ function buildPulseCharts(dates) {
             return dates.map(d => {
                 const iso = toISO(d);
                 return tasks
-                    .filter(t => t.date === iso && t.cat === c && t.type !== 'entregable' && t.time)
+                    .filter(t => t.date === iso && t.cat === c && t.type !== 'entregable' && t.time && t.status !== 'cancelled')
                     .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
             }).reduce((a, b) => a + b, 0);
         });
@@ -1556,7 +1715,7 @@ function buildPulseCharts(dates) {
         const selectedDayISO = toISO(dates[selectedPulseDayIndex]);
         barData = CATS.map(c => {
             return tasks
-                .filter(t => t.date === selectedDayISO && t.cat === c && t.type !== 'entregable' && t.time)
+                .filter(t => t.date === selectedDayISO && t.cat === c && t.type !== 'entregable' && t.time && t.status !== 'cancelled')
                 .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
         });
         barColors = CATS.map(c => CAT_COLORS[c] || '#b25900');
@@ -1768,6 +1927,7 @@ function buildPulse(dates) {
     const s0 = toISO(dates[0]), s4 = toISO(dates[4]);
     const wt = tasks.filter(t => t.date >= s0 && t.date <= s4);
     const dn = wt.filter(t => t.status === 'done').length;
+    const cn = wt.filter(t => t.status === 'cancelled').length;
     const tot = wt.length;
 
     document.getElementById('pulse-wrap').innerHTML = `
@@ -1778,15 +1938,22 @@ function buildPulse(dates) {
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;" id="pulse-stats-summary">
                     <span class="badge" style="background: rgba(26,143,90,0.08); color: var(--status-done); padding: 3px 10px; border-radius: 99px; border: 1px solid rgba(26,143,90,0.18); font-weight: 800; font-size: 0.64rem;">Hechas: ${dn}</span>
-                    <span class="badge" style="background: rgba(178,89,0,0.08); color: var(--status-pending); padding: 3px 10px; border-radius: 99px; border: 1px solid rgba(178,89,0,0.18); font-weight: 800; font-size: 0.64rem;">Pendientes: ${tot - dn}</span>
+                    <span class="badge" style="background: rgba(178,89,0,0.08); color: var(--status-pending); padding: 3px 10px; border-radius: 99px; border: 1px solid rgba(178,89,0,0.18); font-weight: 800; font-size: 0.64rem;">Pendientes: ${tot - dn - cn}</span>
+                    ${cn > 0 ? `<span class="badge" style="background: rgba(127,140,141,0.08); color: var(--status-cancelled); padding: 3px 10px; border-radius: 99px; border: 1px solid rgba(127,140,141,0.18); font-weight: 800; font-size: 0.64rem;">Canceladas: ${cn}</span>` : ''}
                 </div>
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-                <!-- Gráfico de Torta (Carga semanal por día) -->
+                <!-- Gráfico de Torta (Carga semanal por día / categoría) -->
                 <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
-                    <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">
-                        Distribución de Carga Horaria
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">
+                            Distribución de Horas
+                        </div>
+                        <div style="display:flex; gap:2px; background:var(--bg-elevated); padding:2px; border-radius:99px;">
+                            <button id="btn-pie-cats" onclick="setPieMode('cats')" style="border:none; background:${currentPieMode==='cats'?'var(--bg-surface)':'transparent'}; color:${currentPieMode==='cats'?'var(--text-primary)':'var(--text-secondary)'}; font-size:0.58rem; font-weight:700; padding:2px 8px; border-radius:99px; cursor:pointer; transition:all 0.15s; outline:none; ${currentPieMode==='cats'?'box-shadow:var(--shadow-xs);':''}">Categorías</button>
+                            <button id="btn-pie-days" onclick="setPieMode('days')" style="border:none; background:${currentPieMode==='days'?'var(--bg-surface)':'transparent'}; color:${currentPieMode==='days'?'var(--text-primary)':'var(--text-secondary)'}; font-size:0.58rem; font-weight:700; padding:2px 8px; border-radius:99px; cursor:pointer; transition:all 0.15s; outline:none; ${currentPieMode==='days'?'box-shadow:var(--shadow-xs);':''}">Días</button>
+                        </div>
                     </div>
                     <div style="height: 140px; position: relative; display: flex; align-items: center; justify-content: center;">
                         <canvas id="c-pulse-pie" style="max-height: 145px;"></canvas>
@@ -1795,7 +1962,7 @@ function buildPulse(dates) {
                         </div>
                     </div>
                     <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
-                        Presiona un día para ver su carga por categoría
+                        ${currentPieMode==='cats'?'Muestra las horas en categorías y agrupaciones':'Presiona un día para ver su carga por categoría'}
                     </div>
                 </div>
 
@@ -1884,14 +2051,19 @@ function renderWeek() {
   document.getElementById('week-title').textContent=`Semana ${dates[0].toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'})}`;
 
   // Carryover
-  const co=tasks.filter(t=>t.date<s0&&t.status!=='done');
+  const co=tasks.filter(t=>t.date<s0&&t.status!=='done'&&t.status!=='cancelled');
   const cw=document.getElementById('carryover-wrap');
   document.getElementById('carryover-tasks').innerHTML=co.map(t=>`<div class="tc${t.type==='entregable'?' deliverable':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" style="min-width:180px;max-width:230px" draggable="true" ondragstart="handleDragStart(event, '${t.id}')">${tcInner(t)}</div>`).join('');
   cw.style.display=co.length?'':'none';
 
   // Summary
   const wt=tasks.filter(t=>t.date>=s0&&t.date<=s4);
-  const dn=wt.filter(t=>t.status==='done').length, tot=wt.length, pct=tot>0?Math.round(dn/tot*100):0, ovd=wt.filter(isOverdue).length;
+  const dn=wt.filter(t=>t.status==='done').length;
+  const cn=wt.filter(t=>t.status==='cancelled').length;
+  const tot=wt.length;
+  const activeTot=tot-cn;
+  const pct=activeTot>0?Math.round(dn/activeTot*100):0;
+  const ovd=wt.filter(isOverdue).length;
 
   // Filtrar plazos (deadlines) pendientes en los próximos 7 días
   const todayObj = new Date(today + 'T12:00:00');
@@ -1900,7 +2072,7 @@ function renderWeek() {
   const sevenDaysLaterISO = toISO(sevenDaysLater);
   
   const upcomingDeadlines = tasks
-    .filter(t => t.deadline && t.status !== 'done' && t.deadline >= today && t.deadline <= sevenDaysLaterISO)
+    .filter(t => t.deadline && t.status !== 'done' && t.status !== 'cancelled' && t.deadline >= today && t.deadline <= sevenDaysLaterISO)
     .sort((a, b) => a.deadline.localeCompare(b.deadline));
     
   let deadlinesHTML = '';
@@ -1957,8 +2129,9 @@ function renderWeek() {
     <div style="display:flex; flex:1.8; gap:20px; align-items:center; flex-wrap:wrap; min-width:280px;">
       <div class="sum-item"><span class="sum-lbl">Total</span><span class="sum-val">${tot}</span></div>
       <div class="sum-item"><span class="sum-lbl">Completadas</span><span class="sum-val" style="color:var(--status-done)">${dn}</span></div>
-      <div class="sum-item"><span class="sum-lbl">Pendientes</span><span class="sum-val" style="color:var(--status-pending)">${tot-dn}</span></div>
+      <div class="sum-item"><span class="sum-lbl">Pendientes</span><span class="sum-val" style="color:var(--status-pending)">${tot-dn-cn}</span></div>
       <div class="sum-item"><span class="sum-lbl">Vencidas</span><span class="sum-val" style="color:var(--status-overdue)">${ovd}</span></div>
+      ${cn > 0 ? `<div class="sum-item"><span class="sum-lbl">Canceladas</span><span class="sum-val" style="color:var(--status-cancelled)">${cn}</span></div>` : ''}
       <div class="sum-progress" style="flex:1; min-width:180px;"><div class="sum-lbl">Progreso semanal — ${pct}%</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>
     </div>
     ${deadlinesHTML}`;
@@ -1974,16 +2147,18 @@ function renderWeek() {
     const iso=toISO(d), isT=iso===today;
     const dayT=tasks.filter(t=>t.date===iso&&!hiddenCats.has(t.cat)).sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99'));
     const dn2=dayT.filter(t=>t.status==='done').length;
-    const pending=dayT.filter(t=>t.status!=='done'), done2=dayT.filter(t=>t.status==='done');
+    const pending=dayT.filter(t=>t.status!=='done'&&t.status!=='cancelled');
+    const done2=dayT.filter(t=>t.status==='done');
+    const cancelled2=dayT.filter(t=>t.status==='cancelled');
+    const activeDayTCount = dayT.length - cancelled2.length;
     
-    // Carga horaria real
+    // Carga horaria real (excluyendo canceladas)
     const dayHrs = dayT
-      .filter(t => t.type !== 'entregable' && t.time)
+      .filter(t => t.type !== 'entregable' && t.time && t.status !== 'cancelled')
       .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
       
     // Text de carga
     const loadClass = dayHrs>6?'load-heavy':dayHrs>=3?'load-moderate':'load-light';
-    const loadText = dayHrs>6?'🟢🟢🟢':dayHrs>=3?'🟢🟢':'🟢'; // visual blocks or text
     const loadLabel = dayHrs>6?'Saturado':dayHrs>=3?'Moderado':dayHrs>0?'Ligero':'Libre';
 
     return `<div class="day-col${isT?' today':''}">
@@ -1993,11 +2168,12 @@ function renderWeek() {
           <div class="day-date-num">${d.getDate()}</div>
           <span class="workload-badge ${loadClass}">${loadLabel} ${dayHrs>0 ? '('+dayHrs.toFixed(1)+'h)' : ''}</span>
         </div>
-        ${progressRing(dn2,dayT.length,dayHrs)}
+        ${progressRing(dn2,activeDayTCount,dayHrs)}
       </div>
       <div class="day-tasks" ondragover="event.preventDefault(); this.classList.add('drag-over');" ondragleave="this.classList.remove('drag-over');" ondrop="handleDrop(event, '${iso}'); this.classList.remove('drag-over');">
         ${pending.map(t=>tcCard(t)).join('')}
         ${done2.length?`<div style="height:1px;background:var(--border-subtle);margin:6px 0"></div>${done2.map(t=>tcCard(t)).join('')}`:''}
+        ${cancelled2.length?`<div style="height:1px;background:var(--border-subtle);margin:6px 0"></div>${cancelled2.map(t=>tcCard(t)).join('')}`:''}
         ${!dayT.length?`<div class="empty" style="padding:14px 8px"><p style="font-size:.75rem">Sin actividades</p></div>`:''}
         <button class="task-add-btn" onclick="openModal(null,null,'${iso}')">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -2037,19 +2213,25 @@ function getPrioBadge(prio) {
 
 function tcCard(t) {
   const isDeliv = t.type === 'entregable';
-  return `<div class="tc${t.status==='done'?' done':''}${isOverdue(t)?' overdue':''}${isDeliv ? ' deliverable':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" draggable="true" ondragstart="handleDragStart(event, '${t.id}')" ondragend="handleDragEnd(event)">${tcInner(t)}</div>`;
+  const statusClass = t.status === 'done' ? ' done' : (t.status === 'cancelled' ? ' cancelled' : '');
+  return `<div class="tc${statusClass}${isOverdue(t)?' overdue':''}${isDeliv ? ' deliverable':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" draggable="true" ondragstart="handleDragStart(event, '${t.id}')" ondragend="handleDragEnd(event)">${tcInner(t)}</div>`;
 }
 
 function tcInner(t) {
   const prio=t.priority||'medium';
   const done=t.status==='done';
+  const cancelled=t.status==='cancelled';
   const countdown = getDeadlineCountdown(t);
   
   return `<div class="tc-row">
-    <div class="tc-chk${done?' done':''}" onclick="event.stopPropagation();toggleDone('${t.id}')">
+    <div class="tc-chk${done?' done':''}${cancelled?' cancelled':''}" onclick="event.stopPropagation();toggleDone('${t.id}')" title="Marcar completada/pendiente">
       ${done?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="3,9 7,13 13,4"/></svg>':''}
+      ${cancelled?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>':''}
     </div>
-    <div class="tc-title">${escH(t.title)}</div>
+    <button class="tc-cancel-btn" onclick="event.stopPropagation();toggleCancel('${t.id}')" title="Cancelar / No asistir" style="background:none; border:none; padding:2px 3px; cursor:pointer; color:var(--text-muted); opacity:0.6; font-size:0.75rem; display:flex; align-items:center; justify-content:center; transition: opacity 0.15s, color 0.15s;" onmouseover="this.style.opacity='1'; this.style.color='var(--status-cancelled)'" onmouseout="this.style.opacity='0.6'; this.style.color='var(--text-muted)'">
+      🚫
+    </button>
+    <div class="tc-title" style="flex:1">${escH(t.title)}</div>
     <div class="tc-prio" style="margin-top:-2px">${getPrioBadge(prio)}</div>
   </div>
   <div class="tc-tags">
@@ -2111,11 +2293,11 @@ function renderCat(cat) {
 let charts={};
 function dChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function renderStats() {
-  const total=tasks.length,done=tasks.filter(t=>t.status==='done').length,ovd=tasks.filter(isOverdue).length,rate=total>0?Math.round(done/total*100):0;
+  const total=tasks.length,done=tasks.filter(t=>t.status==='done').length,cn_total=tasks.filter(t=>t.status==='cancelled').length,ovd=tasks.filter(isOverdue).length,activeTotal=total-cn_total,rate=activeTotal>0?Math.round(done/activeTotal*100):0;
   document.getElementById('stats-grid').innerHTML=`
     <div class="stat-card"><div class="stat-lbl">Total</div><div class="stat-val">${total}</div><div class="stat-sub">actividades registradas</div></div>
     <div class="stat-card"><div class="stat-lbl">Completadas</div><div class="stat-val" style="color:var(--status-done)">${done}</div><div class="stat-sub" style="color:var(--status-done)">↑ ${rate}% completado</div></div>
-    <div class="stat-card"><div class="stat-lbl">Pendientes</div><div class="stat-val" style="color:var(--status-pending)">${total-done}</div><div class="stat-sub">sin completar</div></div>
+    <div class="stat-card"><div class="stat-lbl">Pendientes</div><div class="stat-val" style="color:var(--status-pending)">${total-done-cn_total}</div><div class="stat-sub">sin completar</div></div>
     <div class="stat-card"><div class="stat-lbl">Vencidas</div><div class="stat-val" style="color:var(--status-overdue)">${ovd}</div><div class="stat-sub">${ovd>0?'⚠ requieren atención':'Sin vencidas ✓'}</div></div>`;
 
   // Renderizar rachas de investigación académica
@@ -2131,11 +2313,91 @@ function renderStats() {
   const gc='rgba(0,0,0,.06)',tc='#6E6E73';
   dChart('c-cat');
   
-  // Usar colores dinámicos de categorías
-  const catColors = CATS.map(c => CAT_COLORS[c] || '#8E8E93');
-  const catColorsTrans = catColors.map(color => hexToRGBA(color, 0.8));
+  let ufroTotal = 0;
+  let lfTotal = 0;
+  let personalTotal = 0;
   
-  charts['c-cat']=new Chart(document.getElementById('c-cat'),{type:'doughnut',data:{labels:CATS,datasets:[{data:CATS.map(c=>tasks.filter(t=>t.cat===c).length),backgroundColor:catColorsTrans,borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:tc,font:{size:12},boxWidth:12}}}}});
+  const outerData = [];
+  const outerLabels = [];
+  const outerColors = [];
+  
+  CATS.forEach(c => {
+      const count = tasks.filter(t => t.cat === c).length;
+      if (count > 0) {
+          const type = getCategoryType(c);
+          if (type === 'personal') personalTotal += count;
+          else if (type === 'laboral_indep') lfTotal += count;
+          else ufroTotal += count;
+          
+          outerData.push(count);
+          outerLabels.push(c);
+          outerColors.push(CAT_COLORS[c] || '#8E8E93');
+      }
+  });
+  
+  const innerData = [];
+  const innerLabels = [];
+  const innerColors = [];
+  
+  if (ufroTotal > 0) {
+      innerData.push(ufroTotal);
+      innerLabels.push('UFRO (Académico)');
+      innerColors.push('rgba(0, 102, 204, 0.85)');
+  }
+  if (lfTotal > 0) {
+      innerData.push(lfTotal);
+      innerLabels.push('L&F (Independiente)');
+      innerColors.push('rgba(230, 126, 34, 0.85)');
+  }
+  if (personalTotal > 0) {
+      innerData.push(personalTotal);
+      innerLabels.push('Personal');
+      innerColors.push('rgba(107, 63, 160, 0.85)');
+  }
+  
+  charts['c-cat'] = new Chart(document.getElementById('c-cat'), {
+      type: 'doughnut',
+      data: {
+          labels: outerLabels,
+          datasets: [
+              {
+                  data: outerData,
+                  backgroundColor: outerColors.map(color => hexToRGBA(color, 0.85)),
+                  borderColor: '#fff',
+                  borderWidth: 2,
+                  borderRadius: 4,
+                  labels: outerLabels
+              },
+              {
+                  data: innerData,
+                  backgroundColor: innerColors,
+                  borderColor: '#fff',
+                  borderWidth: 2,
+                  borderRadius: 4,
+                  labels: innerLabels
+              }
+          ]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '50%',
+          plugins: {
+              legend: { display: false },
+              tooltip: {
+                  callbacks: {
+                      label: function(context) {
+                          const dataset = context.dataset;
+                          const idx = context.dataIndex;
+                          const label = dataset.labels ? dataset.labels[idx] : context.label;
+                          const val = context.raw;
+                          return ` ${label}: ${val} tareas`;
+                      }
+                  }
+              }
+          }
+      }
+  });
 
   dChart('c-week');
   const wl=[],wd=[],wt=[];
@@ -2147,8 +2409,8 @@ function renderStats() {
   charts['c-rate']=new Chart(document.getElementById('c-rate'),{type:'line',data:{labels:wl,datasets:[{label:'% Completado',data:rates,borderColor:'rgba(0,102,204,.9)',backgroundColor:'rgba(0,102,204,.07)',fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'rgba(0,102,204,1)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,font:{size:12}}}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+'%'},min:0,max:100}}}});
 
   dChart('c-status');
-  const st={'Completadas':tasks.filter(t=>t.status==='done').length,'En Progreso':tasks.filter(t=>t.status==='progress').length,'Pendientes':tasks.filter(t=>t.status==='pending'&&!isOverdue(t)).length,'Vencidas':tasks.filter(isOverdue).length};
-  charts['c-status']=new Chart(document.getElementById('c-status'),{type:'pie',data:{labels:Object.keys(st),datasets:[{data:Object.values(st),backgroundColor:['rgba(26,143,90,.8)','rgba(0,102,204,.8)','rgba(178,89,0,.8)','rgba(198,40,40,.8)'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:tc,font:{size:12},boxWidth:12}}}}});
+  const st={'Completadas':tasks.filter(t=>t.status==='done').length,'En Progreso':tasks.filter(t=>t.status==='progress').length,'Pendientes':tasks.filter(t=>t.status==='pending'&&!isOverdue(t)).length,'Vencidas':tasks.filter(isOverdue).length,'Canceladas':tasks.filter(t=>t.status==='cancelled').length};
+  charts['c-status']=new Chart(document.getElementById('c-status'),{type:'pie',data:{labels:Object.keys(st),datasets:[{data:Object.values(st),backgroundColor:['rgba(26,143,90,.8)','rgba(0,102,204,.8)','rgba(178,89,0,.8)','rgba(198,40,40,.8)','rgba(127,140,141,.8)'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:tc,font:{size:12},boxWidth:12}}}}});
 
   // Dibujar gráfico de balance planificado vs real
   const chartsGrid = document.querySelector('.charts-grid');
@@ -2454,6 +2716,12 @@ function toggleDone(id) {
   saveTasks(); renderPage(); updateBadge();
   toast('ok',t.status==='done'?'¡Completada! ✓':'Marcada como pendiente');
 }
+function toggleCancel(id) {
+  const t=tasks.find(x=>x.id===id); if(!t) return;
+  t.status=t.status==='cancelled'?'pending':'cancelled'; t.updatedAt=new Date().toISOString();
+  saveTasks(); renderPage(); updateBadge();
+  toast('ok',t.status==='cancelled'?'Marcada como Cancelada ✓':'Marcada como pendiente');
+}
 
 // ══════════════════════════════════════════════
 //  ICS EXPORT
@@ -2476,7 +2744,7 @@ function downloadICS(task) {
 // ══════════════════════════════════════════════
 //  UTILS
 // ══════════════════════════════════════════════
-function spill(t){ if(isOverdue(t))return`<span class="spill spill-overdue">Vencida</span>`; const m={done:'spill-done',pending:'spill-pending',progress:'spill-progress'}; const l={done:'Completada',pending:'Pendiente',progress:'En Progreso'}; return`<span class="spill ${m[t.status]||'spill-pending'}">${l[t.status]||t.status}</span>`; }
+function spill(t){ if(isOverdue(t))return`<span class="spill spill-overdue">Vencida</span>`; const m={done:'spill-done',pending:'spill-pending',progress:'spill-progress',cancelled:'spill-cancelled'}; const l={done:'Completada',pending:'Pendiente',progress:'En Progreso',cancelled:'Cancelada'}; return`<span class="spill ${m[t.status]||'spill-pending'}">${l[t.status]||t.status}</span>`; }
 function PE(p){ return{high:'🔴 Alta',medium:'🟡 Media',low:'🟢 Baja'}[p]||'🟡 Media'; }
 function emptyState(m){ return`<div class="empty"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p>${m}</p></div>`; }
 function toast(type,msg){ const c=document.getElementById('toasts');const el=document.createElement('div');el.className=`toast ${type}`;el.innerHTML=`${type==='ok'?'✅':'❌'} ${msg}`;c.appendChild(el);setTimeout(()=>el.remove(),3100); }
@@ -2822,8 +3090,9 @@ function renderTimeline() {
         `;
       }
       
+      const statusClass = t.status === 'cancelled' ? ' cancelled' : '';
       return `
-        <div class="tb-card${isOverlap ? ' overlap' : ''}${isOvd ? ' overdue' : ''}" 
+        <div class="tb-card${isOverlap ? ' overlap' : ''}${isOvd ? ' overdue' : ''}${statusClass}" 
              data-cat="${t.cat}"
              style="top:${top}px; height:${height}px; padding:${padding}; gap:${gap}; left: calc(6px + ${colIndex} * ((100% - 12px) / ${totalCols})); width: calc((100% - 12px) / ${totalCols});"
              onclick="openModal(null, '${t.id}')">
@@ -2835,8 +3104,10 @@ function renderTimeline() {
     const delivHTML = deliverables.map(t => {
       const isOvd = isOverdue(t);
       const done = t.status === 'done';
+      const cancelled = t.status === 'cancelled';
+      const statusClass2 = done ? ' done' : (cancelled ? ' cancelled' : '');
       return `
-        <div class="tc deliverable${done ? ' done' : ''}${isOvd ? ' overdue' : ''}" 
+        <div class="tc deliverable${statusClass2}${isOvd ? ' overdue' : ''}" 
              data-cat="${t.cat}" 
              onclick="openModal(null, '${t.id}')">
           ${tcInner(t)}
