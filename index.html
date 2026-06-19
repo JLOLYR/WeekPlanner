@@ -1025,7 +1025,13 @@
               Cantidad total de tareas distribuidas en subcategorías y agrupaciones principales.
             </div>
           </div>
-          <div class="chart-card"><h3>Completadas por semana</h3><div class="chart-wrap"><canvas id="c-week"></canvas></div></div>
+          <div class="chart-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <h3>Completadas por semana</h3>
+            <div class="chart-wrap" style="position:relative; flex:1; min-height:200px;"><canvas id="c-week"></canvas></div>
+            <div style="font-size:0.64rem; color:var(--text-muted); text-align:center; margin-top:8px;">
+              Historial de actividades planificadas, completadas, vencidas, canceladas e inasistencias.
+            </div>
+          </div>
           <div class="chart-card"><h3>Tasa de completado</h3><div class="chart-wrap"><canvas id="c-rate"></canvas></div></div>
           <div class="chart-card"><h3>Distribución por estado</h3><div class="chart-wrap"><canvas id="c-status"></canvas></div></div>
         </div>
@@ -2548,6 +2554,7 @@ function renderStats() {
 
   dChart('c-week');
   const wl=[],wd=[],wt=[];
+  const w_cancelled=[], w_no_asisto=[], w_overdue=[];
   const ufroRates=[], lfRates=[], personalRates=[];
   for(let i=7;i>=0;i--){
     const ds=getWeekDates(-i),s=toISO(ds[0]),e=toISO(ds[4]);
@@ -2555,6 +2562,9 @@ function renderStats() {
     wl.push(i===0?'Esta':'-'+i);
     wt.push(wts.length);
     wd.push(wts.filter(t=>t.status==='done').length);
+    w_cancelled.push(wts.filter(t=>t.status==='cancelled').length);
+    w_no_asisto.push(wts.filter(t=>t.status==='no_asisto').length);
+    w_overdue.push(wts.filter(isOverdue).length);
     
     // Group-specific rates
     const ufroWeek = wts.filter(t => getCategoryType(t.cat) === 'laboral_ufro');
@@ -2569,7 +2579,67 @@ function renderStats() {
     lfRates.push(lfWeek.length > 0 ? Math.round(lfDone / lfWeek.length * 100) : 0);
     personalRates.push(personalWeek.length > 0 ? Math.round(personalDone / personalWeek.length * 100) : 0);
   }
-  charts['c-week']=new Chart(document.getElementById('c-week'),{type:'bar',data:{labels:wl,datasets:[{label:'Total',data:wt,backgroundColor:'rgba(0,102,204,.15)',borderColor:'rgba(0,102,204,.7)',borderWidth:1.5,borderRadius:5},{label:'Completadas',data:wd,backgroundColor:'rgba(26,143,90,.45)',borderColor:'rgba(26,143,90,.85)',borderWidth:1.5,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,font:{size:12}}}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc},beginAtZero:true}}}});
+  charts['c-week']=new Chart(document.getElementById('c-week'),{
+    type:'bar',
+    data:{
+      labels:wl,
+      datasets:[
+        {
+          label:'Total',
+          data:wt,
+          backgroundColor:'rgba(0,102,204,.15)',
+          borderColor:'rgba(0,102,204,.7)',
+          borderWidth:1.5,
+          borderRadius:5
+        },
+        {
+          label:'Completadas',
+          data:wd,
+          backgroundColor:'rgba(26,143,90,.45)',
+          borderColor:'rgba(26,143,90,.85)',
+          borderWidth:1.5,
+          borderRadius:5
+        },
+        {
+          label:'Vencidas',
+          data:w_overdue,
+          backgroundColor:'rgba(198,40,40,.45)',
+          borderColor:'rgba(198,40,40,.85)',
+          borderWidth:1.5,
+          borderRadius:5
+        },
+        {
+          label:'Canceladas',
+          data:w_cancelled,
+          backgroundColor:'rgba(127,140,141,.45)',
+          borderColor:'rgba(127,140,141,.85)',
+          borderWidth:1.5,
+          borderRadius:5
+        },
+        {
+          label:'No asistidas',
+          data:w_no_asisto,
+          backgroundColor:'rgba(230,126,34,.45)',
+          borderColor:'rgba(230,126,34,.85)',
+          borderWidth:1.5,
+          borderRadius:5
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          labels:{color:tc,font:{size:11},boxWidth:12}
+        }
+      },
+      scales:{
+        x:{grid:{color:gc},ticks:{color:tc}},
+        y:{grid:{color:gc},ticks:{color:tc},beginAtZero:true}
+      }
+    }
+  });
 
   dChart('c-rate');
   const rates=wt.map((t,i)=>t>0?Math.round(wd[i]/t*100):0);
