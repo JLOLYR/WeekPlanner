@@ -1619,5 +1619,27 @@
     "addToCal": false,
     "createdAt": "2026-06-19T14:36:28.872Z",
     "updatedAt": "2026-06-19T14:36:28.872Z"
+  },
+  {
+    "id": "mql9naeh5lfg",
+    "title": "Modulo Minor",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-25",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-06-25",
+    "recurrenceEnd": "2026-07-11",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-06-19T18:32:23.657Z",
+    "updatedAt": "2026-06-19T18:32:23.657Z"
   }
 ]
