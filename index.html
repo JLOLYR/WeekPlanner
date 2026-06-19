@@ -1371,7 +1371,28 @@ function go(page,el) {
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
   document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
-  const target=document.getElementById('page-'+page);
+  
+  let target=document.getElementById('page-'+page);
+  // Dynamically create category page section if it doesn't exist
+  if(!target && page.startsWith('cat-')) {
+    const catName = page.replace('cat-', '');
+    const varName = catName.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    const contentEl = document.getElementById('content');
+    if (contentEl) {
+      target = document.createElement('section');
+      target.id = 'page-' + page;
+      target.className = 'page-section';
+      target.innerHTML = `
+        <div class="sec-hdr">
+          <h2 style="color:var(--cat-${varName})">${catName}</h2>
+          <button class="btn btn-primary" onclick="openModal('${catName.replace(/'/g, "\\'")}')">+ Nueva</button>
+        </div>
+        <div id="wrap-cat-${catName.replace(/["']/g, '')}"></div>
+      `;
+      contentEl.appendChild(target);
+    }
+  }
+  
   if(target) target.classList.add('active');
   curPage=page;
   const titles={
@@ -1379,13 +1400,9 @@ function go(page,el) {
     timeline:'Línea de Tiempo Horaria',
     all:'Todas las Tareas',
     stats:'Estadísticas',
-    history:'Historial',
-    'cat-Docencia':'Docencia',
-    'cat-Investigación':'Investigación',
-    'cat-Administración':'Administración',
-    'cat-Personal':'Personal'
+    history:'Historial'
   };
-  document.getElementById('page-title').textContent=titles[page]||page;
+  document.getElementById('page-title').textContent=titles[page] || page.replace('cat-', '');
   renderPage();
 }
 function renderPage() {
