@@ -1985,5 +1985,27 @@
     "createdAt": "2026-06-19T18:47:18.183Z",
     "updatedAt": "2026-06-19T18:47:18.183Z",
     "recurrenceParent": "mql9naeh5lfg"
+  },
+  {
+    "id": "mqlda7e1qhdk",
+    "title": "Reunión L&F  - Carlos",
+    "cat": "L&F",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-22",
+    "time": "16:40",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-19T20:14:11.689Z",
+    "updatedAt": "2026-06-19T20:14:11.689Z"
   }
 ]
