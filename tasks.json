@@ -1558,7 +1558,7 @@
     "title": "Mitos",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-18",
     "time": "19:30",
@@ -1573,7 +1573,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T14:34:12.058Z",
-    "updatedAt": "2026-06-19T14:34:12.058Z"
+    "updatedAt": "2026-06-19T14:37:00.408Z"
   },
   {
     "id": "mql16v09odri",
