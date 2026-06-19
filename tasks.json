@@ -1622,5 +1622,27 @@
     "createdAt": "2026-06-19T14:17:00.430Z",
     "updatedAt": "2026-06-19T14:17:00.430Z",
     "recurrenceParent": "mpy1zhsqnur1"
+  },
+  {
+    "id": "mql13vx5785j",
+    "title": "Tenida 3ro",
+    "cat": "MSN",
+    "subcategory": "Tenida",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-17",
+    "time": "20:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-19T14:33:21.497Z",
+    "updatedAt": "2026-06-19T14:33:21.498Z"
   }
 ]
