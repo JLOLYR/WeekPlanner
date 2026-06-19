@@ -1239,7 +1239,7 @@
     "title": "Reunion L&F",
     "cat": "L&F",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-19",
     "time": "15:00",
@@ -1254,7 +1254,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-17T19:59:33.101Z",
-    "updatedAt": "2026-06-19T12:43:24.649Z"
+    "updatedAt": "2026-06-19T19:54:26.205Z"
   },
   {
     "id": "mqjgtovn29fb",
