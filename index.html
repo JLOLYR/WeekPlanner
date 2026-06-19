@@ -1465,8 +1465,8 @@ function buildPulseCharts(dates) {
             datasets: [{
                 data: dayHours,
                 backgroundColor: dayColors,
-                borderColor: 'var(--bg-surface)',
-                borderWidth: 3,
+                borderColor: 'transparent',
+                borderWidth: 0,
                 hoverBackgroundColor: hoveredDayColors,
                 borderRadius: 6
             }]
@@ -1553,8 +1553,8 @@ function buildPulseCharts(dates) {
                 label: 'Horas',
                 data: barData,
                 backgroundColor: barColors,
-                borderColor: 'var(--border-subtle)',
-                borderWidth: 1,
+                borderColor: 'transparent',
+                borderWidth: 0,
                 borderRadius: 4
             }]
         },
@@ -1600,6 +1600,13 @@ function buildPulseCharts(dates) {
         if (pulseLineInstance) {
             pulseLineInstance.destroy();
         }
+        
+        // Create premium gradient for line chart
+        const ctx2d = lineCtx.getContext('2d');
+        const grad = ctx2d.createLinearGradient(0, 0, 0, 140);
+        grad.addColorStop(0, hexToRGBA(CAT_COLORS['Docencia'] || '#0066cc', 0.25));
+        grad.addColorStop(1, hexToRGBA(CAT_COLORS['Docencia'] || '#0066cc', 0.0));
+
         pulseLineInstance = new Chart(lineCtx, {
             type: 'line',
             data: {
@@ -1608,13 +1615,15 @@ function buildPulseCharts(dates) {
                     label: 'Carga diaria',
                     data: dayHours,
                     borderColor: 'var(--accent)',
-                    backgroundColor: hexToRGBA(CAT_COLORS['Docencia'] || '#0066cc', 0.1),
-                    borderWidth: 2,
-                    tension: 0.35,
+                    backgroundColor: grad,
+                    borderWidth: 2.5,
+                    tension: 0.4,
                     fill: true,
                     pointRadius: 4,
                     pointHoverRadius: 6,
-                    pointBackgroundColor: 'var(--accent)'
+                    pointBackgroundColor: 'var(--accent)',
+                    pointBorderColor: 'transparent',
+                    pointBorderWidth: 0
                 }]
             },
             options: {
@@ -1674,16 +1683,23 @@ function buildPulseCharts(dates) {
                     {
                         label: 'Planificado (%)',
                         data: targetPercentages,
-                        backgroundColor: 'rgba(142, 142, 147, 0.08)',
-                        borderColor: 'rgba(142, 142, 147, 0.4)',
-                        borderWidth: 1.5
+                        backgroundColor: 'rgba(142, 142, 147, 0.05)',
+                        borderColor: 'rgba(142, 142, 147, 0.25)',
+                        borderWidth: 1.5,
+                        pointBackgroundColor: 'rgba(142, 142, 147, 0.5)',
+                        pointBorderColor: 'transparent',
+                        pointRadius: 2.5
                     },
                     {
                         label: 'Real (%)',
                         data: actualPercentages,
-                        backgroundColor: hexToRGBA(CAT_COLORS['Investigación'] || '#6b3fa0', 0.2),
+                        backgroundColor: hexToRGBA(CAT_COLORS['Investigación'] || '#6b3fa0', 0.25),
                         borderColor: CAT_COLORS['Investigación'] || '#6b3fa0',
-                        borderWidth: 2
+                        borderWidth: 2,
+                        pointBackgroundColor: CAT_COLORS['Investigación'] || '#6b3fa0',
+                        pointBorderColor: 'var(--bg-surface)',
+                        pointBorderWidth: 1.5,
+                        pointRadius: 4.5
                     }
                 ]
             },
@@ -1695,9 +1711,9 @@ function buildPulseCharts(dates) {
                 },
                 scales: {
                     r: {
-                        grid: { color: 'rgba(60,60,67,0.06)' },
-                        angleLines: { color: 'rgba(60,60,67,0.06)' },
-                        pointLabels: { color: 'var(--text-secondary)', font: { size: 8, weight: '700' } },
+                        grid: { color: 'rgba(142, 142, 147, 0.15)' },
+                        angleLines: { color: 'rgba(142, 142, 147, 0.15)' },
+                        pointLabels: { color: 'var(--text-secondary)', font: { size: 9, weight: '700' } },
                         ticks: { display: false }
                     }
                 }
