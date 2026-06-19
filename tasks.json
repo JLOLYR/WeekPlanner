@@ -1039,8 +1039,8 @@
   {
     "id": "mpy1zhsqnur1",
     "title": "Reunión L&F",
-    "cat": "Investigación",
-    "subcategory": "Reunión Proyecto",
+    "cat": "L&F",
+    "subcategory": "Reunión",
     "status": "done",
     "type": "evento",
     "date": "2026-06-17",
@@ -1056,8 +1056,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-03T12:39:14.138Z",
-    "updatedAt": "2026-06-17T19:18:43.246Z",
-    "recurrenceParent": "mprc4cnd2bdr"
+    "updatedAt": "2026-06-19T12:43:41.017Z"
   },
   {
     "id": "mpy1zhsqgfqd",
@@ -1668,5 +1667,28 @@
     "addToCal": false,
     "createdAt": "2026-06-18T12:18:21.193Z",
     "updatedAt": "2026-06-18T12:18:21.193Z"
+  },
+  {
+    "id": "mqkx6ue17y2j",
+    "title": "Reunión L&F",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-17",
+    "time": "11:00",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-06-03",
+    "recurrenceEnd": "2026-12-12",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-19T12:43:41.017Z",
+    "updatedAt": "2026-06-19T12:43:41.017Z",
+    "recurrenceParent": "mprc4cnd2bdr"
   }
 ]
