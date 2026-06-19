@@ -1628,7 +1628,7 @@
     "title": "Tenida 3ro",
     "cat": "MSN",
     "subcategory": "Tenida",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-17",
     "time": "20:00",
@@ -1643,6 +1643,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T14:33:21.497Z",
-    "updatedAt": "2026-06-19T14:33:21.498Z"
+    "updatedAt": "2026-06-19T14:33:23.713Z"
   }
 ]
