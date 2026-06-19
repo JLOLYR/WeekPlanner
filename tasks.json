@@ -1471,7 +1471,7 @@
     "status": "pending",
     "type": "evento",
     "date": "2026-06-22",
-    "time": "08:30",
+    "time": "08:20",
     "duration": "30",
     "deadline": "",
     "recurrence": "weekly",
@@ -1483,8 +1483,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-18T12:17:47.315Z",
-    "updatedAt": "2026-06-18T12:17:47.315Z",
-    "recurrenceParent": "mqf6r80puc92"
+    "updatedAt": "2026-06-19T18:47:13.931Z"
   },
   {
     "id": "mqjguf0pkeyr",
@@ -1641,5 +1640,28 @@
     "addToCal": false,
     "createdAt": "2026-06-19T18:32:23.657Z",
     "updatedAt": "2026-06-19T18:32:54.937Z"
+  },
+  {
+    "id": "mqla6dccydij",
+    "title": "Organización Semanal",
+    "cat": "Administración",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-22",
+    "time": "08:30",
+    "duration": "30",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-06-15",
+    "recurrenceEnd": "2026-07-20",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-06-19T18:47:13.932Z",
+    "updatedAt": "2026-06-19T18:47:13.932Z",
+    "recurrenceParent": "mqf6r80puc92"
   }
 ]
