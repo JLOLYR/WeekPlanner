@@ -1540,7 +1540,7 @@
     "type": "evento",
     "date": "2026-06-17",
     "time": "20:00",
-    "duration": "60",
+    "duration": "120",
     "deadline": "",
     "recurrence": "none",
     "recurrenceStart": "",
@@ -1551,7 +1551,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T14:33:21.497Z",
-    "updatedAt": "2026-06-19T14:33:23.713Z"
+    "updatedAt": "2026-06-19T14:36:37.897Z"
   },
   {
     "id": "mql14yxmg7me",
