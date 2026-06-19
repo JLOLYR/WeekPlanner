@@ -1017,7 +1017,14 @@
         <div class="sec-hdr"><h2>Estadísticas</h2></div>
         <div class="stats-grid" id="stats-grid"></div>
         <div class="charts-grid">
-          <div class="chart-card"><h3>Por Categoría</h3><div class="chart-wrap"><canvas id="c-cat"></canvas></div></div>
+          <div class="chart-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <h3>Por Categoría</h3>
+            <div class="chart-wrap" style="position:relative; flex:1; min-height:160px;"><canvas id="c-cat"></canvas></div>
+            <div id="c-cat-legend" style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; font-size:0.7rem; font-weight:700;"></div>
+            <div style="font-size:0.64rem; color:var(--text-muted); text-align:center; margin-top:8px;">
+              Cantidad total de tareas distribuidas en subcategorías y agrupaciones principales.
+            </div>
+          </div>
           <div class="chart-card"><h3>Completadas por semana</h3><div class="chart-wrap"><canvas id="c-week"></canvas></div></div>
           <div class="chart-card"><h3>Tasa de completado</h3><div class="chart-wrap"><canvas id="c-rate"></canvas></div></div>
           <div class="chart-card"><h3>Distribución por estado</h3><div class="chart-wrap"><canvas id="c-status"></canvas></div></div>
@@ -2443,6 +2450,58 @@ function renderStats() {
       innerColors.push('rgba(107, 63, 160, 0.85)');
   }
   
+  // Render legend dynamically below doughnut chart
+  const statsCatLegendEl = document.getElementById('c-cat-legend');
+  if (statsCatLegendEl) {
+      let legendHTML = '';
+      if (ufroTotal > 0) {
+          legendHTML += `
+            <div style="display:flex; flex-direction:column; gap:4px; padding:6px 10px; border-radius:8px; background:rgba(0,102,204,0.06); border:1px solid rgba(0,102,204,0.12); flex:1; min-width:110px;">
+              <span style="color:rgba(0,102,204,1); font-weight:800; font-size:0.72rem;">UFRO: ${ufroTotal}</span>
+              <div style="display:flex; flex-direction:column; gap:2px; font-size:0.64rem; font-weight:600; color:var(--text-secondary);">
+                ${ufroCats.map(item => `
+                  <div style="display:flex; align-items:center; gap:4px;">
+                    <span style="width:5px; height:5px; border-radius:50%; background:${item.color};"></span>
+                    <span>${item.label}: ${item.count}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+      }
+      if (lfTotal > 0) {
+          legendHTML += `
+            <div style="display:flex; flex-direction:column; gap:4px; padding:6px 10px; border-radius:8px; background:rgba(230,126,34,0.06); border:1px solid rgba(230,126,34,0.12); flex:1; min-width:110px;">
+              <span style="color:rgba(230,126,34,1); font-weight:800; font-size:0.72rem;">L&F: ${lfTotal}</span>
+              <div style="display:flex; flex-direction:column; gap:2px; font-size:0.64rem; font-weight:600; color:var(--text-secondary);">
+                ${lfCats.map(item => `
+                  <div style="display:flex; align-items:center; gap:4px;">
+                    <span style="width:5px; height:5px; border-radius:50%; background:${item.color};"></span>
+                    <span>${item.label}: ${item.count}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+      }
+      if (personalTotal > 0) {
+          legendHTML += `
+            <div style="display:flex; flex-direction:column; gap:4px; padding:6px 10px; border-radius:8px; background:rgba(107,63,160,0.06); border:1px solid rgba(107,63,160,0.12); flex:1; min-width:110px;">
+              <span style="color:rgba(107,63,160,1); font-weight:800; font-size:0.72rem;">Personal: ${personalTotal}</span>
+              <div style="display:flex; flex-direction:column; gap:2px; font-size:0.64rem; font-weight:600; color:var(--text-secondary);">
+                ${personalCats.map(item => `
+                  <div style="display:flex; align-items:center; gap:4px;">
+                    <span style="width:5px; height:5px; border-radius:50%; background:${item.color};"></span>
+                    <span>${item.label}: ${item.count}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+      }
+      statsCatLegendEl.innerHTML = legendHTML;
+  }
+  
   charts['c-cat'] = new Chart(document.getElementById('c-cat'), {
       type: 'doughnut',
       data: {
@@ -2489,12 +2548,91 @@ function renderStats() {
 
   dChart('c-week');
   const wl=[],wd=[],wt=[];
-  for(let i=7;i>=0;i--){const ds=getWeekDates(-i),s=toISO(ds[0]),e=toISO(ds[4]);const wts=tasks.filter(t=>t.date>=s&&t.date<=e);wl.push(i===0?'Esta':'-'+i);wt.push(wts.length);wd.push(wts.filter(t=>t.status==='done').length);}
+  const ufroRates=[], lfRates=[], personalRates=[];
+  for(let i=7;i>=0;i--){
+    const ds=getWeekDates(-i),s=toISO(ds[0]),e=toISO(ds[4]);
+    const wts=tasks.filter(t=>t.date>=s&&t.date<=e);
+    wl.push(i===0?'Esta':'-'+i);
+    wt.push(wts.length);
+    wd.push(wts.filter(t=>t.status==='done').length);
+    
+    // Group-specific rates
+    const ufroWeek = wts.filter(t => getCategoryType(t.cat) === 'laboral_ufro');
+    const lfWeek = wts.filter(t => getCategoryType(t.cat) === 'laboral_indep');
+    const personalWeek = wts.filter(t => getCategoryType(t.cat) === 'personal');
+    
+    const ufroDone = ufroWeek.filter(t => t.status === 'done').length;
+    const lfDone = lfWeek.filter(t => t.status === 'done').length;
+    const personalDone = personalWeek.filter(t => t.status === 'done').length;
+    
+    ufroRates.push(ufroWeek.length > 0 ? Math.round(ufroDone / ufroWeek.length * 100) : 0);
+    lfRates.push(lfWeek.length > 0 ? Math.round(lfDone / lfWeek.length * 100) : 0);
+    personalRates.push(personalWeek.length > 0 ? Math.round(personalDone / personalWeek.length * 100) : 0);
+  }
   charts['c-week']=new Chart(document.getElementById('c-week'),{type:'bar',data:{labels:wl,datasets:[{label:'Total',data:wt,backgroundColor:'rgba(0,102,204,.15)',borderColor:'rgba(0,102,204,.7)',borderWidth:1.5,borderRadius:5},{label:'Completadas',data:wd,backgroundColor:'rgba(26,143,90,.45)',borderColor:'rgba(26,143,90,.85)',borderWidth:1.5,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,font:{size:12}}}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc},beginAtZero:true}}}});
 
   dChart('c-rate');
   const rates=wt.map((t,i)=>t>0?Math.round(wd[i]/t*100):0);
-  charts['c-rate']=new Chart(document.getElementById('c-rate'),{type:'line',data:{labels:wl,datasets:[{label:'% Completado',data:rates,borderColor:'rgba(0,102,204,.9)',backgroundColor:'rgba(0,102,204,.07)',fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'rgba(0,102,204,1)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,font:{size:12}}}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+'%'},min:0,max:100}}}});
+  charts['c-rate']=new Chart(document.getElementById('c-rate'),{
+    type:'line',
+    data:{
+      labels:wl,
+      datasets:[
+        {
+          label:'General',
+          data:rates,
+          borderColor:'#7f8c8d',
+          backgroundColor:'transparent',
+          borderWidth:2,
+          borderDash:[5,5],
+          tension:.3,
+          pointRadius:3
+        },
+        {
+          label:'UFRO (Académico)',
+          data:ufroRates,
+          borderColor:'rgba(0, 102, 204, 0.95)',
+          backgroundColor:'transparent',
+          borderWidth:2,
+          tension:.3,
+          pointRadius:4
+        },
+        {
+          label:'L&F (Independiente)',
+          data:lfRates,
+          borderColor:'rgba(230, 126, 34, 0.95)',
+          backgroundColor:'transparent',
+          borderWidth:2,
+          tension:.3,
+          pointRadius:4
+        },
+        {
+          label:'Personal',
+          data:personalRates,
+          borderColor:'rgba(107, 63, 160, 0.95)',
+          backgroundColor:'transparent',
+          borderWidth:2,
+          tension:.3,
+          pointRadius:4
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          display:true,
+          position:'bottom',
+          labels:{color:tc,font:{size:11},boxWidth:12}
+        }
+      },
+      scales:{
+        x:{grid:{color:gc},ticks:{color:tc}},
+        y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+'%'},min:0,max:100}
+      }
+    }
+  });
 
   dChart('c-status');
   const st={'Completadas':tasks.filter(t=>t.status==='done').length,'En Progreso':tasks.filter(t=>t.status==='progress').length,'Pendientes':tasks.filter(t=>t.status==='pending'&&!isOverdue(t)).length,'Vencidas':tasks.filter(isOverdue).length,'Canceladas':tasks.filter(t=>t.status==='cancelled').length,'No asistidas':tasks.filter(t=>t.status==='no_asisto').length};
