@@ -1406,6 +1406,8 @@ let selectedPulseDayIndex = null;
 let currentPulseDates = [];
 let pulsePieInstance = null;
 let pulseBarInstance = null;
+let pulseLineInstance = null;
+let pulseRadarInstance = null;
 
 function resetPulseChartSelection() {
     selectedPulseDayIndex = null;
@@ -1419,6 +1421,16 @@ function selectPulseDay(index, dates) {
     const btn = document.getElementById('pulse-reset-btn');
     if (btn) btn.classList.remove('hidden');
     buildPulseCharts(dates);
+}
+
+function openDayTaskDetails(iso) {
+    const dayTasks = tasks.filter(t => t.date === iso && !hiddenCats.has(t.cat));
+    if (dayTasks.length > 0) {
+        // Open the modal for the first task or show modal details
+        openModal(null, dayTasks[0].id);
+    } else {
+        openModal(null, null, iso);
+    }
 }
 
 function buildPulseCharts(dates) {
@@ -1453,15 +1465,20 @@ function buildPulseCharts(dates) {
             datasets: [{
                 data: dayHours,
                 backgroundColor: dayColors,
-                borderColor: 'var(--border-subtle)',
-                borderWidth: 1.5,
-                hoverBackgroundColor: hoveredDayColors
+                borderColor: 'var(--bg-surface)',
+                borderWidth: 3,
+                hoverBackgroundColor: hoveredDayColors,
+                borderRadius: 6
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             cutout: '70%',
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
             plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -1563,9 +1580,130 @@ function buildPulseCharts(dates) {
                     grid: { color: 'rgba(255, 255, 255, 0.05)' },
                     ticks: { color: 'var(--text-muted)', font: { size: 8 } }
                 }
+            },
+            onClick: (evt, activeElements) => {
+                if (activeElements.length > 0) {
+                    const idx = activeElements[0].index;
+                    const catName = barLabels[idx];
+                    // Ir a la vista de categoría correspondiente
+                    const sidebarEl = Array.from(document.querySelectorAll('#sidebar-cats-container .nav-item'))
+                        .find(el => el.textContent.trim() === catName);
+                    go(`cat-${catName}`, sidebarEl);
+                }
             }
         }
     });
+
+    // Render Line Chart (Workload Trend)
+    const lineCtx = document.getElementById('c-pulse-line');
+    if (lineCtx) {
+        if (pulseLineInstance) {
+            pulseLineInstance.destroy();
+        }
+        pulseLineInstance = new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: DAYS_FULL.map((d, idx) => `${d} (${dayHours[idx].toFixed(1)}h)`),
+                datasets: [{
+                    label: 'Carga diaria',
+                    data: dayHours,
+                    borderColor: 'var(--accent)',
+                    backgroundColor: hexToRGBA(CAT_COLORS['Docencia'] || '#0066cc', 0.1),
+                    borderWidth: 2,
+                    tension: 0.35,
+                    fill: true,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: 'var(--accent)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: 'var(--text-secondary)', font: { size: 8, weight: '600' } }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: 'var(--text-muted)', font: { size: 8 } }
+                    }
+                },
+                onClick: (evt, activeElements) => {
+                    if (activeElements.length > 0) {
+                        const idx = activeElements[0].index;
+                        const iso = toISO(dates[idx]);
+                        openDayTaskDetails(iso);
+                    }
+                }
+            }
+        });
+    }
+
+    // Render Radar Chart (Planned Focus vs Actual Focus)
+    const radarCtx = document.getElementById('c-pulse-radar');
+    if (radarCtx) {
+        if (pulseRadarInstance) {
+            pulseRadarInstance.destroy();
+        }
+
+        const cfg = getCfg();
+        const targets = cfg.targets || { 'Docencia': 40, 'Investigación': 40, 'Administración': 10, 'Personal': 10 };
+        const totalDuration = tasks
+            .filter(t => dates.map(d => toISO(d)).includes(t.date) && t.status === 'done')
+            .reduce((sum, t) => sum + (t.type === 'evento' ? (parseInt(t.duration) || 60) : 60), 0) || 1;
+
+        const actualPercentages = CATS.map(c => {
+            const catHrs = tasks
+                .filter(t => dates.map(d => toISO(d)).includes(t.date) && t.cat === c && t.status === 'done')
+                .reduce((sum, t) => sum + (t.type === 'evento' ? (parseInt(t.duration) || 60) : 60), 0);
+            return Math.round((catHrs / totalDuration) * 100);
+        });
+
+        const targetPercentages = CATS.map(c => targets[c] !== undefined ? targets[c] : 25);
+
+        pulseRadarInstance = new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: CATS,
+                datasets: [
+                    {
+                        label: 'Planificado (%)',
+                        data: targetPercentages,
+                        backgroundColor: 'rgba(142, 142, 147, 0.08)',
+                        borderColor: 'rgba(142, 142, 147, 0.4)',
+                        borderWidth: 1.5
+                    },
+                    {
+                        label: 'Real (%)',
+                        data: actualPercentages,
+                        backgroundColor: hexToRGBA(CAT_COLORS['Investigación'] || '#6b3fa0', 0.2),
+                        borderColor: CAT_COLORS['Investigación'] || '#6b3fa0',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(60,60,67,0.06)' },
+                        angleLines: { color: 'rgba(60,60,67,0.06)' },
+                        pointLabels: { color: 'var(--text-secondary)', font: { size: 8, weight: '700' } },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+    }
 }
 
 function buildPulse(dates) {
@@ -1589,40 +1727,64 @@ function buildPulse(dates) {
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-5" style="display: grid; grid-template-columns: 1fr; gap: 15px;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-                    <!-- Gráfico de Torta (Carga semanal por día) -->
-                    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
-                        <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">
-                            Distribución de Carga Horaria
-                        </div>
-                        <div style="height: 140px; position: relative; display: flex; align-items: center; justify-content: center;">
-                            <canvas id="c-pulse-pie" style="max-height: 145px;"></canvas>
-                            <div id="pulse-pie-center-text" class="absolute" style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; text-align: center; margin-top: 4px;">
-                                <!-- Will display total hours in center -->
-                            </div>
-                        </div>
-                        <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
-                            Presiona un día para ver su carga por categoría
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                <!-- Gráfico de Torta (Carga semanal por día) -->
+                <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
+                    <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">
+                        Distribución de Carga Horaria
+                    </div>
+                    <div style="height: 140px; position: relative; display: flex; align-items: center; justify-content: center;">
+                        <canvas id="c-pulse-pie" style="max-height: 145px;"></canvas>
+                        <div id="pulse-pie-center-text" class="absolute" style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; text-align: center; margin-top: 4px;">
+                            <!-- Will display total hours in center -->
                         </div>
                     </div>
+                    <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
+                        Presiona un día para ver su carga por categoría
+                    </div>
+                </div>
 
-                    <!-- Gráfico de Barra (Actividades por día/desglose) -->
-                    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <div id="pulse-bar-title" style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">
-                                Carga Semanal por Categoría
-                            </div>
-                            <button id="pulse-reset-btn" onclick="resetPulseChartSelection()" class="${selectedPulseDayIndex === null ? 'hidden' : ''}" style="color: var(--accent); border: 1.2px solid var(--accent); background: none; font-size: 0.64rem; font-weight: 800; padding: 2px 8px; border-radius: var(--radius-xs); cursor: pointer; transition: all 0.15s; outline: none; border-radius: 99px;">
-                                Mostrar semana
-                            </button>
+                <!-- Gráfico de Barra (Actividades por día/desglose) -->
+                <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div id="pulse-bar-title" style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">
+                            Carga Semanal por Categoría
                         </div>
-                        <div style="height: 140px; position: relative;">
-                            <canvas id="c-pulse-bar" style="max-height: 145px;"></canvas>
-                        </div>
-                        <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
-                            Muestra la carga en horas asignada para cada categoría
-                        </div>
+                        <button id="pulse-reset-btn" onclick="resetPulseChartSelection()" class="${selectedPulseDayIndex === null ? 'hidden' : ''}" style="color: var(--accent); border: 1.2px solid var(--accent); background: none; font-size: 0.64rem; font-weight: 800; padding: 2px 8px; border-radius: var(--radius-xs); cursor: pointer; transition: all 0.15s; outline: none; border-radius: 99px;">
+                            Mostrar semana
+                        </button>
+                    </div>
+                    <div style="height: 140px; position: relative;">
+                        <canvas id="c-pulse-bar" style="max-height: 145px;"></canvas>
+                    </div>
+                    <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
+                        Presiona una barra para abrir sus actividades
+                    </div>
+                </div>
+
+                <!-- Gráfico de Línea (Tendencia de carga semanal) -->
+                <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
+                    <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">
+                        Tendencia de Carga Diaria
+                    </div>
+                    <div style="height: 140px; position: relative;">
+                        <canvas id="c-pulse-line" style="max-height: 145px;"></canvas>
+                    </div>
+                    <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
+                        Línea de tiempo del estrés semanal en horas
+                    </div>
+                </div>
+
+                <!-- Gráfico de Radar (Distribución real vs planificada) -->
+                <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-xs);">
+                    <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">
+                        Radar de Balance vs Planificado
+                    </div>
+                    <div style="height: 140px; position: relative;">
+                        <canvas id="c-pulse-radar" style="max-height: 145px;"></canvas>
+                    </div>
+                    <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
+                        Comparación porcentual de la semana
                     </div>
                 </div>
             </div>
