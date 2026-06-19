@@ -1229,7 +1229,7 @@ function initCategories() {
   let cssText = '';
   CATS.forEach(c => {
     const rawColor = CAT_COLORS[c] || '#8E8E93';
-    const varName = c.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    const varName = c.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
     const softColor = hexToRGBA(rawColor, 0.1);
     const borderSoft = hexToRGBA(rawColor, 0.22);
     
@@ -1239,7 +1239,7 @@ function initCategories() {
         --cat-${varName}-soft: ${softColor};
         --cat-${varName}-border: ${borderSoft};
       }
-      .tag-${c} { background: var(--cat-${varName}-soft) !important; color: var(--cat-${varName}) !important; }
+      .tag-${c.replace(/\s+/g, '-').replace(/[^\w-]/g, '')} { background: var(--cat-${varName}-soft) !important; color: var(--cat-${varName}) !important; }
       .tc[data-cat="${c}"]::before { background: var(--cat-${varName}) !important; }
       .tb-card[data-cat="${c}"] { border-left-color: var(--cat-${varName}) !important; background: var(--cat-${varName}-soft) !important; }
     `;
@@ -2603,7 +2603,7 @@ function renderSidebarCategories() {
   
   container.innerHTML = CATS.map(c => {
     const rawColor = CAT_COLORS[c] || '#8E8E93';
-    const varName = c.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    const varName = c.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
     let svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>';
     if (c === 'Docencia') {
       svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
