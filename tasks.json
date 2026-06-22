@@ -1468,7 +1468,7 @@
     "title": "Reunión Curso Eólica",
     "cat": "Docencia",
     "subcategory": "Preparación",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-22",
     "time": "12:00",
@@ -1483,7 +1483,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-18T12:18:21.193Z",
-    "updatedAt": "2026-06-18T12:18:21.193Z"
+    "updatedAt": "2026-06-22T18:36:03.778Z"
   },
   {
     "id": "mql0iuxal3dw",
