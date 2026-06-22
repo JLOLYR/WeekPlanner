@@ -1944,7 +1944,7 @@
     "title": "Cámara Maestros",
     "cat": "MSN",
     "subcategory": "Cámara",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-22",
     "time": "20:00",
@@ -1959,7 +1959,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-22T12:32:59.318Z",
-    "updatedAt": "2026-06-22T12:32:59.318Z"
+    "updatedAt": "2026-06-22T13:33:48.145Z"
   },
   {
     "id": "mqp8n7cf61ud",
