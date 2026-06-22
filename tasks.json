@@ -1961,5 +1961,27 @@
     "addToCal": false,
     "createdAt": "2026-06-22T12:32:59.318Z",
     "updatedAt": "2026-06-22T12:32:59.318Z"
+  },
+  {
+    "id": "mqp8n7cf61ud",
+    "title": "Redacción Review Electrohidrodinámica",
+    "cat": "Investigación",
+    "subcategory": "Redacción Paper",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-06-26",
+    "time": "",
+    "duration": "",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-22T13:15:24.783Z",
+    "updatedAt": "2026-06-22T13:15:24.783Z"
   }
 ]
