@@ -2049,5 +2049,27 @@
     "addToCal": false,
     "createdAt": "2026-06-22T13:32:04.317Z",
     "updatedAt": "2026-06-22T13:32:04.317Z"
+  },
+  {
+    "id": "mqpkkyvlnnje",
+    "title": "Reunión Cesar",
+    "cat": "Apps Astral",
+    "subcategory": "Reunión Técnica",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-06-22",
+    "time": "18:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-06-22T18:49:35.890Z",
+    "updatedAt": "2026-06-22T18:49:35.890Z"
   }
 ]
