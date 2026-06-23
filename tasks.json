@@ -1262,7 +1262,7 @@
     "title": "Reunión UFRO-Explora J. Leiva",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-23",
     "time": "09:00",
@@ -1277,7 +1277,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-18T12:17:47.315Z",
-    "updatedAt": "2026-06-18T12:17:47.315Z",
+    "updatedAt": "2026-06-23T14:10:38.651Z",
     "recurrenceParent": "mplr5f0te53o"
   },
   {
