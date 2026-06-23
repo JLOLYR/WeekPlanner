@@ -1400,7 +1400,7 @@
     "title": "Horario Alumnos",
     "cat": "Docencia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-22",
     "time": "15:00",
@@ -1415,7 +1415,7 @@
     "priority": "low",
     "addToCal": false,
     "createdAt": "2026-06-18T12:17:47.315Z",
-    "updatedAt": "2026-06-18T12:17:47.315Z",
+    "updatedAt": "2026-06-23T12:22:11.064Z",
     "recurrenceParent": "mpvk3cu4x2jy"
   },
   {
@@ -2055,7 +2055,7 @@
     "title": "Reunión Cesar",
     "cat": "Apps Astral",
     "subcategory": "Reunión Técnica",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-22",
     "time": "18:00",
@@ -2070,6 +2070,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-22T18:49:35.890Z",
-    "updatedAt": "2026-06-22T18:49:35.890Z"
+    "updatedAt": "2026-06-23T12:22:12.412Z"
   }
 ]
