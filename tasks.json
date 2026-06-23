@@ -1922,7 +1922,7 @@
     "title": "Reunión L&F  - Carlos",
     "cat": "L&F",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-22",
     "time": "16:40",
@@ -1937,14 +1937,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T20:14:11.689Z",
-    "updatedAt": "2026-06-19T20:14:11.689Z"
+    "updatedAt": "2026-06-23T12:22:16.766Z"
   },
   {
     "id": "mqp74n9274ze",
     "title": "Cámara 3ro",
     "cat": "MSN",
     "subcategory": "Cámara",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-22",
     "time": "20:00",
@@ -1959,7 +1959,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-22T12:32:59.318Z",
-    "updatedAt": "2026-06-22T18:47:42.847Z"
+    "updatedAt": "2026-06-23T12:22:14.582Z"
   },
   {
     "id": "mqp8n7cf61ud",
