@@ -1032,7 +1032,13 @@
               Historial de actividades planificadas, completadas, vencidas, canceladas e inasistencias.
             </div>
           </div>
-          <div class="chart-card"><h3>Tasa de completado</h3><div class="chart-wrap"><canvas id="c-rate"></canvas></div></div>
+          <div class="chart-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <h3>Dedicación Semanal (Horas)</h3>
+            <div class="chart-wrap" style="position:relative; flex:1; min-height:200px;"><canvas id="c-rate"></canvas></div>
+            <div style="font-size:0.64rem; color:var(--text-muted); text-align:center; margin-top:8px;">
+              Evolución de las horas invertidas por semana en cada agrupación principal.
+            </div>
+          </div>
           <div class="chart-card"><h3>Distribución por estado</h3><div class="chart-wrap"><canvas id="c-status"></canvas></div></div>
         </div>
       </section>
@@ -2555,7 +2561,7 @@ function renderStats() {
   dChart('c-week');
   const wl=[],wd=[],wt=[];
   const w_cancelled=[], w_no_asisto=[], w_overdue=[];
-  const ufroRates=[], lfRates=[], personalRates=[];
+  const ufroHours=[], lfHours=[], personalHours=[], totalHours=[];
   for(let i=7;i>=0;i--){
     const ds=getWeekDates(-i),s=toISO(ds[0]),e=toISO(ds[4]);
     const wts=tasks.filter(t=>t.date>=s&&t.date<=e);
@@ -2566,18 +2572,21 @@ function renderStats() {
     w_no_asisto.push(wts.filter(t=>t.status==='no_asisto').length);
     w_overdue.push(wts.filter(isOverdue).length);
     
-    // Group-specific rates
-    const ufroWeek = wts.filter(t => getCategoryType(t.cat) === 'laboral_ufro');
-    const lfWeek = wts.filter(t => getCategoryType(t.cat) === 'laboral_indep');
-    const personalWeek = wts.filter(t => getCategoryType(t.cat) === 'personal');
+    // Group-specific hours (excluding cancelled and deliverables)
+    const validTasks = wts.filter(t => t.type !== 'entregable' && t.time && t.status !== 'cancelled');
+    const ufroWeek = validTasks.filter(t => getCategoryType(t.cat) === 'laboral_ufro');
+    const lfWeek = validTasks.filter(t => getCategoryType(t.cat) === 'laboral_indep');
+    const personalWeek = validTasks.filter(t => getCategoryType(t.cat) === 'personal');
     
-    const ufroDone = ufroWeek.filter(t => t.status === 'done').length;
-    const lfDone = lfWeek.filter(t => t.status === 'done').length;
-    const personalDone = personalWeek.filter(t => t.status === 'done').length;
+    const ufroH = ufroWeek.reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+    const lfH = lfWeek.reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+    const personalH = personalWeek.reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+    const totalH = validTasks.reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
     
-    ufroRates.push(ufroWeek.length > 0 ? Math.round(ufroDone / ufroWeek.length * 100) : 0);
-    lfRates.push(lfWeek.length > 0 ? Math.round(lfDone / lfWeek.length * 100) : 0);
-    personalRates.push(personalWeek.length > 0 ? Math.round(personalDone / personalWeek.length * 100) : 0);
+    ufroHours.push(Number(ufroH.toFixed(1)));
+    lfHours.push(Number(lfH.toFixed(1)));
+    personalHours.push(Number(personalH.toFixed(1)));
+    totalHours.push(Number(totalH.toFixed(1)));
   }
   charts['c-week']=new Chart(document.getElementById('c-week'),{
     type:'bar',
@@ -2642,15 +2651,14 @@ function renderStats() {
   });
 
   dChart('c-rate');
-  const rates=wt.map((t,i)=>t>0?Math.round(wd[i]/t*100):0);
   charts['c-rate']=new Chart(document.getElementById('c-rate'),{
     type:'line',
     data:{
       labels:wl,
       datasets:[
         {
-          label:'General',
-          data:rates,
+          label:'Total',
+          data:totalHours,
           borderColor:'#7f8c8d',
           backgroundColor:'transparent',
           borderWidth:2,
@@ -2660,7 +2668,7 @@ function renderStats() {
         },
         {
           label:'UFRO (Académico)',
-          data:ufroRates,
+          data:ufroHours,
           borderColor:'rgba(0, 102, 204, 0.95)',
           backgroundColor:'transparent',
           borderWidth:2,
@@ -2669,7 +2677,7 @@ function renderStats() {
         },
         {
           label:'L&F (Independiente)',
-          data:lfRates,
+          data:lfHours,
           borderColor:'rgba(230, 126, 34, 0.95)',
           backgroundColor:'transparent',
           borderWidth:2,
@@ -2678,7 +2686,7 @@ function renderStats() {
         },
         {
           label:'Personal',
-          data:personalRates,
+          data:personalHours,
           borderColor:'rgba(107, 63, 160, 0.95)',
           backgroundColor:'transparent',
           borderWidth:2,
@@ -2703,11 +2711,18 @@ function renderStats() {
           display:true,
           position:'bottom',
           labels:{color:tc,font:{size:11},boxWidth:12}
+        },
+        tooltip:{
+          callbacks:{
+            label:function(context) {
+              return ` ${context.dataset.label}: ${context.raw.toFixed(1)} hrs`;
+            }
+          }
         }
       },
       scales:{
         x:{grid:{color:gc},ticks:{color:tc}},
-        y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+'%'},min:0,max:100}
+        y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+' hrs'},beginAtZero:true}
       }
     }
   });
