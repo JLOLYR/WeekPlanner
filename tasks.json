@@ -1579,7 +1579,7 @@
     "title": "Tenida 1ro",
     "cat": "MSN",
     "subcategory": "Tenida",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-06-24",
     "time": "20:00",
@@ -1594,7 +1594,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T14:36:28.872Z",
-    "updatedAt": "2026-06-19T14:36:28.872Z"
+    "updatedAt": "2026-06-24T12:25:07.813Z"
   },
   {
     "id": "mql9naeh5lfg",
