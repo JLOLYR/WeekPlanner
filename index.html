@@ -2715,14 +2715,16 @@ function renderStats() {
         tooltip:{
           callbacks:{
             label:function(context) {
-              return ` ${context.dataset.label}: ${context.raw.toFixed(1)} hrs`;
+              const val = context.raw;
+              const formattedVal = (typeof val === 'number' && !isNaN(val)) ? val.toFixed(1) : '0';
+              return ` ${context.dataset.label}: ${formattedVal} hrs`;
             }
           }
         }
       },
       scales:{
         x:{grid:{color:gc},ticks:{color:tc}},
-        y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+' hrs'},beginAtZero:true}
+        y:{grid:{color:gc},ticks:{color:tc,callback:function(value){ return typeof value === 'number' ? value.toFixed(0) + ' hrs' : value + ' hrs'; }},beginAtZero:true}
       }
     }
   });
