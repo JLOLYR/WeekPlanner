@@ -2561,7 +2561,7 @@ function renderStats() {
   dChart('c-week');
   const wl=[],wd=[],wt=[];
   const w_cancelled=[], w_no_asisto=[], w_overdue=[];
-  const ufroHours=[], lfHours=[], personalHours=[], totalHours=[];
+  const ufroHours=[], lfHours=[], personalHours=[], weeklyTotalHours=[];
   for(let i=7;i>=0;i--){
     const ds=getWeekDates(-i),s=toISO(ds[0]),e=toISO(ds[4]);
     const wts=tasks.filter(t=>t.date>=s&&t.date<=e);
@@ -2586,7 +2586,7 @@ function renderStats() {
     ufroHours.push(Number(ufroH.toFixed(1)));
     lfHours.push(Number(lfH.toFixed(1)));
     personalHours.push(Number(personalH.toFixed(1)));
-    totalHours.push(Number(totalH.toFixed(1)));
+    weeklyTotalHours.push(Number(totalH.toFixed(1)));
   }
   charts['c-week']=new Chart(document.getElementById('c-week'),{
     type:'bar',
@@ -2658,7 +2658,7 @@ function renderStats() {
       datasets:[
         {
           label:'Total',
-          data:totalHours,
+          data:weeklyTotalHours,
           borderColor:'#7f8c8d',
           backgroundColor:'transparent',
           borderWidth:2,
