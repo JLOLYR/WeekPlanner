@@ -1601,7 +1601,7 @@
     "title": "Modulo Minor Eólica",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-25",
     "time": "10:50",
@@ -1616,7 +1616,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-19T18:32:23.657Z",
-    "updatedAt": "2026-06-25T12:24:43.000Z"
+    "updatedAt": "2026-06-25T16:28:48.880Z"
   },
   {
     "id": "mqla6gmemvcp",
