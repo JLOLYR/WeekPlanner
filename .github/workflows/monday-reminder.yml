@@ -57,7 +57,7 @@ jobs:
               'Personal':       ('#ECFDF5', '#047857', '#065F46'),
           }
           PRIO_LABELS = {'high':'▲ Alta','medium':'▲ Media','low':'▼ Baja'}
-          STATUS_LABELS = {'done':'Completada','progress':'En Progreso','pending':'Pendiente'}
+          STATUS_LABELS = {'done':'Completada','progress':'En Progreso','pending':'Pendiente','cancelled':'❌ Cancelada','no_asisto':'🚫 No asistido'}
 
           # ── Filtrar tareas ────────────────────────────────────
           week_tasks = [t for t in tasks

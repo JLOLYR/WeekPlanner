@@ -60,7 +60,7 @@ jobs:
           }
           PRIO_ORDER = {'high': 0, 'medium': 1, 'low': 2}
           PRIO_LABELS = {'high':'▲ Alta','medium':'▲ Media','low':'▼ Baja'}
-          STATUS_LABELS = {'done':'Completada','progress':'En Progreso','pending':'Pendiente'}
+          STATUS_LABELS = {'done':'Completada','progress':'En Progreso','pending':'Pendiente','cancelled':'❌ Cancelada','no_asisto':'🚫 No asistido'}
 
           def fmt_date(iso):
               if not iso: return '—'
