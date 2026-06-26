@@ -1515,6 +1515,13 @@ function buildPulseCharts(dates) {
             .filter(t => t.date === iso && t.type !== 'entregable' && t.time && t.status !== 'cancelled' && t.status !== 'no_asisto')
             .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
     });
+
+    const plannedDayHoursAll = dates.map(d => {
+        const iso = toISO(d);
+        return tasks
+            .filter(t => t.date === iso && t.type !== 'entregable' && t.time)
+            .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+    });
     
     const actualDayHours = dates.map(d => {
         const iso = toISO(d);
@@ -1523,8 +1530,22 @@ function buildPulseCharts(dates) {
             .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
     });
 
-    const totalWeeklyHours = plannedDayHours.reduce((a, b) => a + b, 0);
+    const totalWeeklyHours = plannedDayHoursAll.reduce((a, b) => a + b, 0);
     const totalWeeklyHoursActual = actualDayHours.reduce((a, b) => a + b, 0);
+
+    // Calculate planned and actual number of activities per day
+    const plannedDayActs = dates.map(d => {
+        const iso = toISO(d);
+        return tasks.filter(t => t.date === iso).length;
+    });
+    
+    const actualDayActs = dates.map(d => {
+        const iso = toISO(d);
+        return tasks.filter(t => t.date === iso && t.status === 'done').length;
+    });
+
+    const totalWeeklyActs = plannedDayActs.reduce((a, b) => a + b, 0);
+    const totalWeeklyActsActual = actualDayActs.reduce((a, b) => a + b, 0);
 
     // Render Doughnut/Pie Chart
     const pieCtx = document.getElementById('c-pulse-pie');
@@ -1870,11 +1891,11 @@ function buildPulseCharts(dates) {
         pulseLineInstance = new Chart(lineCtx, {
             type: 'line',
             data: {
-                labels: DAYS_FULL.map((d, idx) => `${d} (${actualDayHours[idx].toFixed(1)}h / ${plannedDayHours[idx].toFixed(1)}h)`),
+                labels: DAYS_FULL.map((d, idx) => `${d} (${actualDayActs[idx]} / ${plannedDayActs[idx]} act)`),
                 datasets: [
                     {
                         label: 'Planificado',
-                        data: plannedDayHours,
+                        data: plannedDayActs,
                         borderColor: '#7f8c8d',
                         backgroundColor: 'transparent',
                         borderWidth: 2,
@@ -1885,7 +1906,7 @@ function buildPulseCharts(dates) {
                     },
                     {
                         label: 'Realizado',
-                        data: actualDayHours,
+                        data: actualDayActs,
                         borderColor: 'var(--accent)',
                         backgroundColor: grad,
                         borderWidth: 2.5,
@@ -1916,7 +1937,12 @@ function buildPulseCharts(dates) {
                     },
                     y: {
                         grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: 'var(--text-muted)', font: { size: 8 } }
+                        ticks: { 
+                            color: 'var(--text-muted)', 
+                            font: { size: 8 },
+                            stepSize: 1
+                        },
+                        beginAtZero: true
                     }
                 },
                 onClick: (evt, activeElements) => {
@@ -1929,10 +1955,10 @@ function buildPulseCharts(dates) {
             }
         });
 
-        // Set caption for workload trend chart
+        // Set caption for workload trend chart showing both count and hours
         const captionEl = document.getElementById('pulse-line-caption');
         if (captionEl) {
-            captionEl.innerHTML = `Semanal: <strong>${totalWeeklyHoursActual.toFixed(1)}h</strong> realizadas de <strong>${totalWeeklyHours.toFixed(1)}h</strong> planificadas`;
+            captionEl.innerHTML = `Semanal: <strong>${totalWeeklyActsActual}</strong> de <strong>${totalWeeklyActs}</strong> actividades realizadas (${totalWeeklyHoursActual.toFixed(1)}h / ${totalWeeklyHours.toFixed(1)}h)`;
         }
     }
 
