@@ -740,7 +740,7 @@
     /* ══════════════════════════════════════════════
        STATS
     ══════════════════════════════════════════════ */
-    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 22px; }
     .stat-card {
       background: var(--bg-surface); border-radius: var(--radius-md);
       padding: 20px 22px; box-shadow: var(--shadow-sm);
@@ -1508,15 +1508,23 @@ function buildPulseCharts(dates) {
     const today = todayISO();
     const DAYS_FULL = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
     
-    // Calculate total hours per day (excluding cancelled)
-    const dayHours = dates.map(d => {
+    // Calculate planned and actual hours per day
+    const plannedDayHours = dates.map(d => {
         const iso = toISO(d);
         return tasks
-            .filter(t => t.date === iso && t.type !== 'entregable' && t.time && t.status !== 'cancelled')
+            .filter(t => t.date === iso && t.type !== 'entregable' && t.time && t.status !== 'cancelled' && t.status !== 'no_asisto')
+            .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
+    });
+    
+    const actualDayHours = dates.map(d => {
+        const iso = toISO(d);
+        return tasks
+            .filter(t => t.date === iso && t.type !== 'entregable' && t.time && t.status === 'done')
             .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
     });
 
-    const totalWeeklyHours = dayHours.reduce((a, b) => a + b, 0);
+    const totalWeeklyHours = plannedDayHours.reduce((a, b) => a + b, 0);
+    const totalWeeklyHoursActual = actualDayHours.reduce((a, b) => a + b, 0);
 
     // Render Doughnut/Pie Chart
     const pieCtx = document.getElementById('c-pulse-pie');
@@ -1535,7 +1543,7 @@ function buildPulseCharts(dates) {
         const catHours = {};
         CATS.forEach(c => catHours[c] = 0);
         
-        const weekTasks = tasks.filter(t => t.date >= s0 && t.date <= s4 && t.status !== 'cancelled' && t.type !== 'entregable' && t.time);
+        const weekTasks = tasks.filter(t => t.date >= s0 && t.date <= s4 && t.status !== 'cancelled' && t.status !== 'no_asisto' && t.type !== 'entregable' && t.time);
         const activeTasksForPie = selectedPulseDayIndex === null 
             ? weekTasks 
             : weekTasks.filter(t => t.date === toISO(dates[selectedPulseDayIndex]));
@@ -1704,7 +1712,7 @@ function buildPulseCharts(dates) {
         chartData = {
             labels: DAYS_FULL,
             datasets: [{
-                data: dayHours,
+                data: plannedDayHours,
                 backgroundColor: dayColors,
                 borderColor: 'transparent',
                 borderWidth: 0,
@@ -1779,7 +1787,7 @@ function buildPulseCharts(dates) {
             return dates.map(d => {
                 const iso = toISO(d);
                 return tasks
-                    .filter(t => t.date === iso && t.cat === c && t.type !== 'entregable' && t.time && t.status !== 'cancelled')
+                    .filter(t => t.date === iso && t.cat === c && t.type !== 'entregable' && t.time && t.status !== 'cancelled' && t.status !== 'no_asisto')
                     .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
             }).reduce((a, b) => a + b, 0);
         });
@@ -1791,7 +1799,7 @@ function buildPulseCharts(dates) {
         const selectedDayISO = toISO(dates[selectedPulseDayIndex]);
         barData = CATS.map(c => {
             return tasks
-                .filter(t => t.date === selectedDayISO && t.cat === c && t.type !== 'entregable' && t.time && t.status !== 'cancelled')
+                .filter(t => t.date === selectedDayISO && t.cat === c && t.type !== 'entregable' && t.time && t.status !== 'cancelled' && t.status !== 'no_asisto')
                 .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
         });
         barColors = CATS.map(c => CAT_COLORS[c] || '#b25900');
@@ -1862,27 +1870,44 @@ function buildPulseCharts(dates) {
         pulseLineInstance = new Chart(lineCtx, {
             type: 'line',
             data: {
-                labels: DAYS_FULL.map((d, idx) => `${d} (${dayHours[idx].toFixed(1)}h)`),
-                datasets: [{
-                    label: 'Carga diaria',
-                    data: dayHours,
-                    borderColor: 'var(--accent)',
-                    backgroundColor: grad,
-                    borderWidth: 2.5,
-                    tension: 0.4,
-                    fill: true,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBackgroundColor: 'var(--accent)',
-                    pointBorderColor: 'transparent',
-                    pointBorderWidth: 0
-                }]
+                labels: DAYS_FULL.map((d, idx) => `${d} (${actualDayHours[idx].toFixed(1)}h / ${plannedDayHours[idx].toFixed(1)}h)`),
+                datasets: [
+                    {
+                        label: 'Planificado',
+                        data: plannedDayHours,
+                        borderColor: '#7f8c8d',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        borderDash: [4, 4],
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 3
+                    },
+                    {
+                        label: 'Realizado',
+                        data: actualDayHours,
+                        borderColor: 'var(--accent)',
+                        backgroundColor: grad,
+                        borderWidth: 2.5,
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: 'var(--accent)',
+                        pointBorderColor: 'transparent',
+                        pointBorderWidth: 0
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: false }
+                    legend: { 
+                        display: true, 
+                        position: 'top',
+                        labels: { boxWidth: 10, font: { size: 9 } }
+                    }
                 },
                 scales: {
                     x: {
@@ -1903,6 +1928,12 @@ function buildPulseCharts(dates) {
                 }
             }
         });
+
+        // Set caption for workload trend chart
+        const captionEl = document.getElementById('pulse-line-caption');
+        if (captionEl) {
+            captionEl.innerHTML = `Semanal: <strong>${totalWeeklyHoursActual.toFixed(1)}h</strong> realizadas de <strong>${totalWeeklyHours.toFixed(1)}h</strong> planificadas`;
+        }
     }
 
     // Render Radar Chart (Planned Focus vs Actual Focus)
@@ -2071,7 +2102,7 @@ function buildPulse(dates) {
                     <div style="height: 140px; position: relative;">
                         <canvas id="c-pulse-line" style="max-height: 145px;"></canvas>
                     </div>
-                    <div style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
+                    <div id="pulse-line-caption" style="font-size: 0.64rem; text-align: center; color: var(--text-muted); margin-top: 8px;">
                         Línea de tiempo del estrés semanal en horas
                     </div>
                 </div>
@@ -2130,7 +2161,7 @@ function renderWeek() {
   document.getElementById('week-title').textContent=`Semana ${dates[0].toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'})}`;
 
   // Carryover
-  const co=tasks.filter(t=>t.date<s0&&t.status!=='done'&&t.status!=='cancelled');
+  const co=tasks.filter(t=>t.date<s0&&t.status!=='done'&&t.status!=='cancelled'&&t.status!=='no_asisto');
   const cw=document.getElementById('carryover-wrap');
   document.getElementById('carryover-tasks').innerHTML=co.map(t=>`<div class="tc${t.type==='entregable'?' deliverable':''}" data-cat="${t.cat}" onclick="openModal(null,'${t.id}')" style="min-width:180px;max-width:230px" draggable="true" ondragstart="handleDragStart(event, '${t.id}')">${tcInner(t)}</div>`).join('');
   cw.style.display=co.length?'':'none';
@@ -2138,7 +2169,7 @@ function renderWeek() {
   // Summary
   const wt=tasks.filter(t=>t.date>=s0&&t.date<=s4);
   const dn=wt.filter(t=>t.status==='done').length;
-  const cn=wt.filter(t=>t.status==='cancelled').length;
+  const cn=wt.filter(t=>t.status==='cancelled'||t.status==='no_asisto').length;
   const tot=wt.length;
   const activeTot=tot-cn;
   const pct=activeTot>0?Math.round(dn/activeTot*100):0;
@@ -2210,7 +2241,7 @@ function renderWeek() {
       <div class="sum-item"><span class="sum-lbl">Completadas</span><span class="sum-val" style="color:var(--status-done)">${dn}</span></div>
       <div class="sum-item"><span class="sum-lbl">Pendientes</span><span class="sum-val" style="color:var(--status-pending)">${tot-dn-cn}</span></div>
       <div class="sum-item"><span class="sum-lbl">Vencidas</span><span class="sum-val" style="color:var(--status-overdue)">${ovd}</span></div>
-      ${cn > 0 ? `<div class="sum-item"><span class="sum-lbl">Canceladas</span><span class="sum-val" style="color:var(--status-cancelled)">${cn}</span></div>` : ''}
+      ${cn > 0 ? `<div class="sum-item"><span class="sum-lbl">Canceladas/No asis.</span><span class="sum-val" style="color:var(--status-cancelled)">${cn}</span></div>` : ''}
       <div class="sum-progress" style="flex:1; min-width:180px;"><div class="sum-lbl">Progreso semanal — ${pct}%</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>
     </div>
     ${deadlinesHTML}`;
@@ -2226,13 +2257,13 @@ function renderWeek() {
     const iso=toISO(d), isT=iso===today;
     const dayT=tasks.filter(t=>t.date===iso&&!hiddenCats.has(t.cat)).sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99'));
     const dn2=dayT.filter(t=>t.status==='done').length;
-    const pending=dayT.filter(t=>t.status!=='done'&&t.status!=='cancelled');
+    const pending=dayT.filter(t=>t.status!=='done'&&t.status!=='cancelled'&&t.status!=='no_asisto');
     const done2=dayT.filter(t=>t.status==='done');
-    const cancelled2=dayT.filter(t=>t.status==='cancelled');
+    const cancelled2=dayT.filter(t=>t.status==='cancelled'||t.status==='no_asisto');
     const activeDayTCount = dayT.length - cancelled2.length;
     
     const dayHrs = dayT
-      .filter(t => t.type !== 'entregable' && t.time && t.status !== 'cancelled')
+      .filter(t => t.type !== 'entregable' && t.time && t.status !== 'cancelled' && t.status !== 'no_asisto')
       .reduce((sum, t) => sum + (parseInt(t.duration) || 60) / 60, 0);
       
     // Text de carga
@@ -2373,11 +2404,25 @@ let charts={};
 function dChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function renderStats() {
   const total=tasks.length,done=tasks.filter(t=>t.status==='done').length,cn_total=tasks.filter(t=>t.status==='cancelled' || t.status==='no_asisto').length,ovd=tasks.filter(isOverdue).length,activeTotal=total-cn_total,rate=activeTotal>0?Math.round(done/activeTotal*100):0;
+  const cnRateOverall = total > 0 ? Math.round(cn_total / total * 100) : 0;
+  
+  const catCancelRates = CATS.map(c => {
+      const catTasks = tasks.filter(t => t.cat === c);
+      const catCancel = catTasks.filter(t => t.status === 'cancelled' || t.status === 'no_asisto').length;
+      const rate = catTasks.length > 0 ? Math.round(catCancel / catTasks.length * 100) : 0;
+      return { cat: c, rate: rate, count: catCancel };
+  }).filter(item => item.count > 0);
+  
+  const catCancelText = catCancelRates.length > 0 
+      ? catCancelRates.map(item => `${item.cat}: ${item.rate}%`).join(', ') 
+      : 'Sin cancelaciones';
+
   document.getElementById('stats-grid').innerHTML=`
     <div class="stat-card"><div class="stat-lbl">Total</div><div class="stat-val">${total}</div><div class="stat-sub">actividades registradas</div></div>
     <div class="stat-card"><div class="stat-lbl">Completadas</div><div class="stat-val" style="color:var(--status-done)">${done}</div><div class="stat-sub" style="color:var(--status-done)">↑ ${rate}% completado</div></div>
     <div class="stat-card"><div class="stat-lbl">Pendientes</div><div class="stat-val" style="color:var(--status-pending)">${total-done-cn_total}</div><div class="stat-sub">sin completar</div></div>
-    <div class="stat-card"><div class="stat-lbl">Vencidas</div><div class="stat-val" style="color:var(--status-overdue)">${ovd}</div><div class="stat-sub">${ovd>0?'⚠ requieren atención':'Sin vencidas ✓'}</div></div>`;
+    <div class="stat-card"><div class="stat-lbl">Vencidas</div><div class="stat-val" style="color:var(--status-overdue)">${ovd}</div><div class="stat-sub">${ovd>0?'⚠ requieren atención':'Sin vencidas ✓'}</div></div>
+    <div class="stat-card"><div class="stat-lbl">Cancelaciones</div><div class="stat-val" style="color:var(--status-cancelled)">${cn_total}</div><div class="stat-sub" title="${catCancelText}">${cnRateOverall}% del total (${catCancelText})</div></div>`;
 
   // Renderizar rachas de investigación académica
   let streaksEl = document.getElementById('streaks-wrap');
@@ -2572,8 +2617,8 @@ function renderStats() {
     w_no_asisto.push(wts.filter(t=>t.status==='no_asisto').length);
     w_overdue.push(wts.filter(isOverdue).length);
     
-    // Group-specific hours (excluding cancelled and deliverables)
-    const validTasks = wts.filter(t => t.type !== 'entregable' && t.time && t.status !== 'cancelled');
+    // Group-specific hours (only completed and non-deliverables)
+    const validTasks = wts.filter(t => t.type !== 'entregable' && t.time && t.status === 'done');
     const ufroWeek = validTasks.filter(t => getCategoryType(t.cat) === 'laboral_ufro');
     const lfWeek = validTasks.filter(t => getCategoryType(t.cat) === 'laboral_indep');
     const personalWeek = validTasks.filter(t => getCategoryType(t.cat) === 'personal');
