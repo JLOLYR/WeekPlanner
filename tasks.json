@@ -1761,7 +1761,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-29",
     "time": "11:00",
@@ -1776,7 +1776,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-06-19T18:47:18.183Z",
+    "updatedAt": "2026-06-30T12:29:43.817Z",
     "recurrenceParent": "mprc39eiy6vc"
   },
   {
@@ -1807,7 +1807,7 @@
     "title": "Reunión Avance MecFlu",
     "cat": "Docencia",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-29",
     "time": "08:30",
@@ -1822,7 +1822,7 @@
     "priority": "low",
     "addToCal": true,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-06-19T18:47:18.183Z",
+    "updatedAt": "2026-06-30T12:29:42.889Z",
     "recurrenceParent": "mpvkj72keqlw"
   },
   {
@@ -1876,7 +1876,7 @@
     "title": "Organización Semanal",
     "cat": "Administración",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-06-29",
     "time": "08:20",
@@ -1891,7 +1891,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-06-19T18:47:18.183Z",
+    "updatedAt": "2026-06-30T12:29:41.697Z",
     "recurrenceParent": "mqjgtovn6u6e"
   },
   {
