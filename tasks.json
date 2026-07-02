@@ -2053,7 +2053,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-03",
     "time": "08:15",
@@ -2068,7 +2068,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-02T12:26:47.437Z",
-    "updatedAt": "2026-07-02T12:26:47.437Z",
+    "updatedAt": "2026-07-02T16:50:50.795Z",
     "recurrenceParent": "mpogqc97mj4i"
   },
   {
