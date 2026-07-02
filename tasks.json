@@ -1715,7 +1715,7 @@
     "title": "Clase Mecánica Industrial",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-02",
     "time": "08:30",
@@ -1730,7 +1730,7 @@
     "priority": "medium",
     "addToCal": true,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-06-19T18:47:18.183Z",
+    "updatedAt": "2026-07-02T12:26:38.300Z",
     "recurrenceParent": "mpog5f1bynay"
   },
   {
@@ -1738,7 +1738,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-07-03",
     "time": "08:15",
@@ -1753,7 +1753,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-06-19T18:47:18.183Z",
+    "updatedAt": "2026-07-02T12:26:39.450Z",
     "recurrenceParent": "mpogqc97mj4i"
   },
   {
