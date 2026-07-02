@@ -1875,7 +1875,7 @@
     "title": "Modulo Minor",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-02",
     "time": "10:50",
@@ -1890,7 +1890,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-06-19T18:47:18.183Z",
+    "updatedAt": "2026-07-02T14:43:44.237Z",
     "recurrenceParent": "mql9naeh5lfg"
   },
   {
