@@ -43,7 +43,7 @@ jobs:
               return f"{d}/{m}/{y}"
 
           def is_overdue(t):
-              if t.get('status') == 'done': return False
+              if t.get('status') in ('done', 'cancelled', 'no_asisto'): return False
               check = t.get('deadline') or t.get('date', '')
               return check and check < today.isoformat()
 
@@ -64,14 +64,14 @@ jobs:
           remaining = [t for t in tasks
                        if t.get('date','') > today.isoformat()
                        and t.get('date','') <= friday.isoformat()
-                       and t.get('status') != 'done']
+                       and t.get('status') not in ('done', 'cancelled', 'no_asisto')]
           remaining.sort(key=lambda t: (t.get('date',''), t.get('time') or '99:99'))
 
           # Próximos deadlines (próximos 5 días)
           deadline_limit = (today + datetime.timedelta(days=5)).isoformat()
           upcoming_dl = [t for t in tasks
                          if t.get('deadline','') and today.isoformat() < t.get('deadline','') <= deadline_limit
-                         and t.get('status') != 'done']
+                         and t.get('status') not in ('done', 'cancelled', 'no_asisto')]
           upcoming_dl.sort(key=lambda t: t.get('deadline',''))
 
           overdue_tasks = [t for t in tasks if is_overdue(t)]
@@ -130,15 +130,17 @@ jobs:
                 <tbody>{''.join(task_row(t, show_date) for t in task_list)}</tbody>
               </table>"""
 
-          # Progress del día
-          today_done = len([t for t in today_tasks if t.get('status')=='done'])
-          today_total = len(today_tasks)
+           # Progress del día
+           today_active = [t for t in today_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+           today_done = len([t for t in today_active if t.get('status')=='done'])
+           today_total = len(today_active)
 
-          # Week progress
-          week_tasks = [t for t in tasks if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
-          week_done = len([t for t in week_tasks if t.get('status')=='done'])
-          week_total = len(week_tasks)
-          week_pct = round(week_done/week_total*100) if week_total > 0 else 0
+           # Week progress
+           week_tasks = [t for t in tasks if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
+           week_active = [t for t in week_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+           week_done = len([t for t in week_active if t.get('status')=='done'])
+           week_total = len(week_active)
+           week_pct = round(week_done/week_total*100) if week_total > 0 else 0
 
           overdue_block = ''
           if overdue_tasks:

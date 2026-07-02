@@ -68,17 +68,18 @@ jobs:
               return f"{d}/{m}/{y}"
 
           def is_overdue(t):
-              if t.get('status') == 'done': return False
+              if t.get('status') in ('done', 'cancelled', 'no_asisto'): return False
               check = t.get('deadline') or t.get('date','')
               return check and check < today.isoformat()
 
           # ── Tareas del mes ─────────────────────────────────────
           month_tasks = [t for t in tasks if t.get('date','').startswith(month_prefix)]
           done_tasks  = [t for t in month_tasks if t.get('status') == 'done']
-          pending_tasks = [t for t in month_tasks if t.get('status') != 'done']
+          pending_tasks = [t for t in month_tasks if t.get('status') not in ('done', 'cancelled', 'no_asisto')]
           overdue_tasks = [t for t in tasks if is_overdue(t)]
 
-          total = len(month_tasks)
+          month_active = [t for t in month_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+          total = len(month_active)
           done_count = len(done_tasks)
           pct = round(done_count/total*100) if total > 0 else 0
 
@@ -90,8 +91,10 @@ jobs:
               week_end = d + datetime.timedelta(days=4)
               wt = [t for t in month_tasks if d.isoformat() <= t.get('date','') <= week_end.isoformat()]
               if wt:
-                  wd = len([t for t in wt if t.get('status')=='done'])
-                  week_stats.append({'label': f"{d.strftime('%d/%m')}–{week_end.strftime('%d/%m')}", 'total': len(wt), 'done': wd})
+                  wt_active = [t for t in wt if t.get('status') not in ('cancelled', 'no_asisto')]
+                  wd = len([t for t in wt_active if t.get('status')=='done'])
+                  w_total = len(wt_active)
+                  week_stats.append({'label': f"{d.strftime('%d/%m')}–{week_end.strftime('%d/%m')}", 'total': w_total, 'done': wd})
               d += datetime.timedelta(weeks=1)
               if d.month > current_month and d.year >= current_year:
                   break
@@ -102,8 +105,9 @@ jobs:
               bg, clr, dark, light = colors
               cat_tasks = [t for t in month_tasks if t.get('cat') == cat]
               if not cat_tasks: continue
-              cat_done = len([t for t in cat_tasks if t.get('status')=='done'])
-              cat_total = len(cat_tasks)
+              cat_active = [t for t in cat_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+              cat_done = len([t for t in cat_active if t.get('status')=='done'])
+              cat_total = len(cat_active)
               cat_pct = round(cat_done/cat_total*100) if cat_total > 0 else 0
               cat_blocks += f"""
               <div style="margin-bottom:14px">

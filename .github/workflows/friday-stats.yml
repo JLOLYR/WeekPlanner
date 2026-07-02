@@ -51,7 +51,7 @@ jobs:
               return f"{d}/{m}/{y}"
 
           def is_overdue(t):
-              if t.get('status') == 'done': return False
+              if t.get('status') in ('done', 'cancelled', 'no_asisto'): return False
               check = t.get('deadline') or t.get('date', '')
               return check and check < today.isoformat()
 
@@ -59,18 +59,20 @@ jobs:
           week_tasks = [t for t in tasks
                         if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
           done_tasks    = [t for t in week_tasks if t.get('status') == 'done']
-          pending_tasks = [t for t in week_tasks if t.get('status') != 'done']
+          pending_tasks = [t for t in week_tasks if t.get('status') not in ('done', 'cancelled', 'no_asisto')]
           overdue_tasks = [t for t in tasks if is_overdue(t)]
-          total = len(week_tasks)
-          done_count = len(done_tasks)
-          pct = round(done_count/total*100) if total > 0 else 0
+          
+          week_active   = [t for t in week_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+          total         = len(week_active)
+          done_count    = len(done_tasks)
+          pct           = round(done_count/total*100) if total > 0 else 0
 
           # ── Próximos deadlines (semana siguiente) ─────────────
           next_monday = friday + datetime.timedelta(days=3)
           next_friday = next_monday + datetime.timedelta(days=4)
           upcoming_dl = [t for t in tasks
                          if t.get('deadline','') and next_monday.isoformat() <= t.get('deadline','') <= next_friday.isoformat()
-                         and t.get('status') != 'done']
+                         and t.get('status') not in ('done', 'cancelled', 'no_asisto')]
           upcoming_dl.sort(key=lambda t: (t.get('deadline',''), PRIO_ORDER.get(t.get('priority','medium'),1)))
 
           # Ordenar pendientes por prioridad y fecha
@@ -139,8 +141,9 @@ jobs:
               bg, clr, dark, light = colors
               cat_tasks = [t for t in week_tasks if t.get('cat') == cat]
               if not cat_tasks: continue
-              cat_done = len([t for t in cat_tasks if t.get('status')=='done'])
-              cat_total = len(cat_tasks)
+              cat_active = [t for t in cat_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+              cat_done = len([t for t in cat_active if t.get('status')=='done'])
+              cat_total = len(cat_active)
               cat_pct = round(cat_done/cat_total*100) if cat_total > 0 else 0
               cat_blocks += f"""
               <div style="margin-bottom:14px">

@@ -45,7 +45,7 @@ jobs:
               return f"{d}/{m}/{y}"
 
           def is_overdue(t):
-              if t.get('status') == 'done': return False
+              if t.get('status') in ('done', 'cancelled', 'no_asisto'): return False
               check = t.get('deadline') or t.get('date', '')
               return check and check < today.isoformat()
 
@@ -63,13 +63,14 @@ jobs:
           week_tasks = [t for t in tasks
                         if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
           today_tasks = [t for t in week_tasks if t.get('date') == today.isoformat()]
-          pending_week = [t for t in week_tasks if t.get('status') != 'done']
+          pending_week = [t for t in week_tasks if t.get('status') not in ('done', 'cancelled', 'no_asisto')]
 
           week_tasks.sort(key=lambda t: (t.get('date',''), PRIO_ORDER.get(t.get('priority','medium'),1)))
           today_tasks.sort(key=lambda t: (t.get('time') or '99:99', PRIO_ORDER.get(t.get('priority','medium'),1)))
 
-          done_count = len([t for t in week_tasks if t.get('status')=='done'])
-          total_count = len(week_tasks)
+          week_active = [t for t in week_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+          done_count = len([t for t in week_active if t.get('status')=='done'])
+          total_count = len(week_active)
           pct = round(done_count/total_count*100) if total_count > 0 else 0
 
           # ── Generar HTML de tabla de tareas ──────────────────

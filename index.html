@@ -3050,6 +3050,7 @@ function saveTask(e) {
     recurrence: recur,
     recurrenceStart: recur !== 'none' ? document.getElementById('f-recur-start').value : '',
     recurrenceEnd: recur !== 'none' ? document.getElementById('f-recur-end').value : '',
+    recurrenceParent: editId ? (tasks.find(t=>t.id===editId)?.recurrenceParent || null) : null,
     location:document.getElementById('f-loc').value.trim(), 
     participants:document.getElementById('f-parts').value.trim(),
     notes:document.getElementById('f-notes').value.trim(), 
