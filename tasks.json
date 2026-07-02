@@ -1738,7 +1738,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "no_asisto",
+    "status": "pending",
     "type": "evento",
     "date": "2026-07-03",
     "time": "08:15",
@@ -1753,8 +1753,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-07-02T12:26:39.450Z",
-    "recurrenceParent": "mpogqc97mj4i"
+    "updatedAt": "2026-07-02T12:26:47.436Z"
   },
   {
     "id": "mqla6gmfo4vu",
@@ -2071,5 +2070,28 @@
     "addToCal": false,
     "createdAt": "2026-06-22T18:49:35.890Z",
     "updatedAt": "2026-06-23T12:22:12.412Z"
+  },
+  {
+    "id": "mr3hb6z1j1mh",
+    "title": "Reunión URP",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-03",
+    "time": "08:15",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-29",
+    "recurrenceEnd": "2026-12-30",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-02T12:26:47.437Z",
+    "updatedAt": "2026-07-02T12:26:47.437Z",
+    "recurrenceParent": "mpogqc97mj4i"
   }
 ]
