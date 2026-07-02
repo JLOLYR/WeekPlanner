@@ -2076,7 +2076,7 @@
     "title": "Reunión Aletheia",
     "cat": "Aletheia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-07-03",
     "time": "09:30",
@@ -2091,7 +2091,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-02T12:27:08.667Z",
-    "updatedAt": "2026-07-02T12:27:08.667Z",
+    "updatedAt": "2026-07-02T12:27:16.985Z",
     "recurrenceParent": "mpy1zhsqr4hk"
   }
 ]
