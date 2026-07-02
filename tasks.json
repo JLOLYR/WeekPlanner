@@ -1822,8 +1822,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-06-19T18:47:18.183Z",
-    "updatedAt": "2026-07-02T12:27:05.106Z",
-    "recurrenceParent": "mpy1zhsqr4hk"
+    "updatedAt": "2026-07-02T12:27:08.667Z"
   },
   {
     "id": "mqla6gmfem4m",
@@ -2071,5 +2070,28 @@
     "createdAt": "2026-07-02T12:26:47.437Z",
     "updatedAt": "2026-07-02T12:26:47.437Z",
     "recurrenceParent": "mpogqc97mj4i"
+  },
+  {
+    "id": "mr3hbncrd4ew",
+    "title": "Reunión Aletheia",
+    "cat": "Aletheia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-03",
+    "time": "09:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-05-29",
+    "recurrenceEnd": "2026-07-06",
+    "location": "ZOOM",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-02T12:27:08.667Z",
+    "updatedAt": "2026-07-02T12:27:08.667Z",
+    "recurrenceParent": "mpy1zhsqr4hk"
   }
 ]
