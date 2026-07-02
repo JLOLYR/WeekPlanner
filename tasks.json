@@ -2072,11 +2072,11 @@
     "recurrenceParent": "mpogqc97mj4i"
   },
   {
-    "id": "mr3hbncrd4ew",
+    "id": "mr3m76dqnv95",
     "title": "Reunión Aletheia",
     "cat": "Aletheia",
     "subcategory": "Reunión",
-    "status": "done",
+    "status": "pending",
     "type": "evento",
     "date": "2026-07-03",
     "time": "09:30",
@@ -2090,8 +2090,8 @@
     "notes": "",
     "priority": "medium",
     "addToCal": false,
-    "createdAt": "2026-07-02T12:27:08.667Z",
-    "updatedAt": "2026-07-02T14:43:22.509Z",
+    "createdAt": "2026-07-02T14:43:38.126Z",
+    "updatedAt": "2026-07-02T14:43:38.126Z",
     "recurrenceParent": "mpy1zhsqr4hk"
   }
 ]
