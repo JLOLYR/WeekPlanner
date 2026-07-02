@@ -2392,5 +2392,28 @@
     "addToCal": false,
     "createdAt": "2026-07-02T16:46:41.885Z",
     "updatedAt": "2026-07-02T16:46:41.885Z"
+  },
+  {
+    "id": "mr3qmitizyiq",
+    "title": "Reunión termofluidos",
+    "cat": "Administración",
+    "subcategory": "Reunión Depto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-10",
+    "time": "15:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-07-02T16:47:32.550Z",
+    "updatedAt": "2026-07-02T16:47:32.550Z"
   }
 ]
