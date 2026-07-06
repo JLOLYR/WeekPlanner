@@ -2188,5 +2188,28 @@
     "addToCal": false,
     "createdAt": "2026-07-06T20:50:30.936Z",
     "updatedAt": "2026-07-06T20:50:30.936Z"
+  },
+  {
+    "id": "mr9r5oclotzt",
+    "title": "e-mail par URP DATOS",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-07-06",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-07-10",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-06T21:49:03.237Z",
+    "updatedAt": "2026-07-06T21:49:03.237Z"
   }
 ]
