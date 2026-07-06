@@ -2485,5 +2485,28 @@
     "createdAt": "2026-07-02T21:11:49.917Z",
     "updatedAt": "2026-07-02T21:11:49.917Z",
     "recurrenceParent": "mqjgtovn6u6e"
+  },
+  {
+    "id": "mr9p2e8osf6z",
+    "title": "Tenida 2do",
+    "cat": "MSN",
+    "subcategory": "Tenida",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-08",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-06T20:50:30.936Z",
+    "updatedAt": "2026-07-06T20:50:30.936Z"
   }
 ]
