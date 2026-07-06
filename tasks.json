@@ -2169,7 +2169,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-06",
     "time": "11:00",
@@ -2184,7 +2184,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-02T16:46:10.477Z",
-    "updatedAt": "2026-07-02T16:46:10.477Z",
+    "updatedAt": "2026-07-06T19:26:54.979Z",
     "recurrenceParent": "mprc39eiy6vc"
   },
   {
@@ -2307,7 +2307,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-06",
     "time": "15:00",
@@ -2323,7 +2323,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-07-02T16:46:41.885Z",
-    "updatedAt": "2026-07-02T16:46:41.885Z"
+    "updatedAt": "2026-07-06T19:26:56.849Z"
   },
   {
     "id": "mr3qmitizyiq",
