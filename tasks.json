@@ -2196,7 +2196,7 @@
     "subcategory": "Reunión Proyecto",
     "status": "pending",
     "type": "entregable",
-    "date": "2026-07-06",
+    "date": "2026-07-08",
     "time": "",
     "duration": "",
     "deadline": "2026-07-10",
@@ -2210,6 +2210,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-06T21:49:03.237Z",
-    "updatedAt": "2026-07-06T21:49:03.237Z"
+    "updatedAt": "2026-07-06T21:49:14.048Z"
   }
 ]
