@@ -2208,7 +2208,7 @@ function renderWeek() {
   const sevenDaysLaterISO = toISO(sevenDaysLater);
   
   const upcomingDeadlines = tasks
-    .filter(t => t.deadline && t.status !== 'done' && t.status !== 'cancelled' && t.status !== 'no_asisto' && t.deadline >= today && t.deadline <= sevenDaysLaterISO)
+    .filter(t => t.deadline && t.deadline >= today && t.deadline <= sevenDaysLaterISO)
     .sort((a, b) => a.deadline.localeCompare(b.deadline));
     
   let deadlinesHTML = '';
@@ -2242,10 +2242,28 @@ function renderWeek() {
               badgeBg = 'rgba(178,89,0,.09)';
             }
             
+            const isDone = t.status === 'done';
+            const isC = t.status === 'cancelled' || t.status === 'no_asisto';
+            const statusClass = isDone ? ' done' : (isC ? ' cancelled' : '');
+            const titleStyle = (isDone || isC) ? 'text-decoration: line-through; opacity: 0.65;' : '';
+            
             return `
-              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:0.78rem; padding: 4px 6px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); background: var(--bg-surface);">
-                <span style="font-weight:700; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; color:var(--text-primary); flex:1;" title="${escH(t.title)}">${escH(t.title)}</span>
-                <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.64rem; font-weight:800; padding:1px 5px; border-radius:99px; border:1px solid ${badgeBg}; text-transform:uppercase; flex-shrink:0;">${badgeText}</span>
+              <div onclick="openModal(null,'${t.id}')" style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:0.78rem; padding: 5px 8px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); background: var(--bg-surface); cursor:pointer; transition: background 0.15s;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='var(--bg-surface)'">
+                <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+                  <!-- Checkbox -->
+                  <div class="tc-chk${statusClass}" onclick="event.stopPropagation();toggleDone('${t.id}')" title="Marcar completada/pendiente" style="margin:0; width:14px; height:14px; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                    ${isDone?'<svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><polyline points="3,9 7,13 13,4"/></svg>':''}
+                    ${isC?'<svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>':''}
+                  </div>
+                  <span style="font-weight:700; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; color:var(--text-primary); ${titleStyle} flex:1;" title="${escH(t.title)}">${escH(t.title)}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+                  <span style="font-size:0.68rem; color:var(--text-secondary); font-weight:600;">${fmtShort(t.deadline)}</span>
+                  <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.64rem; font-weight:800; padding:1px 5px; border-radius:99px; border:1px solid ${badgeBg}; text-transform:uppercase; flex-shrink:0;">${badgeText}</span>
+                  <button onclick="event.stopPropagation();toggleCancel('${t.id}')" title="Cancelar / Restaurar" style="background:none; border:none; cursor:pointer; color:var(--text-muted); opacity:0.6; display:flex; align-items:center; padding:2px;" onmouseover="this.style.opacity='1'; this.style.color='var(--status-cancelled)'" onmouseout="this.style.opacity='0.6'; this.style.color='var(--text-muted)'">
+                    🚫
+                  </button>
+                </div>
               </div>
             `;
           }).join('')}
@@ -2443,12 +2461,20 @@ function renderStats() {
       ? catCancelRates.map(item => `${item.cat}: ${item.rate}%`).join(', ') 
       : 'Sin cancelaciones';
 
+  const tasksWithDeadlines = tasks.filter(t => t.deadline);
+  const totalDl = tasksWithDeadlines.length;
+  const doneDl = tasksWithDeadlines.filter(t => t.status === 'done').length;
+  const cnDl = tasksWithDeadlines.filter(t => t.status === 'cancelled' || t.status === 'no_asisto').length;
+  const activeDl = totalDl - cnDl;
+  const dlRate = activeDl > 0 ? Math.round(doneDl / activeDl * 100) : 0;
+
   document.getElementById('stats-grid').innerHTML=`
     <div class="stat-card"><div class="stat-lbl">Total</div><div class="stat-val">${total}</div><div class="stat-sub">actividades registradas</div></div>
     <div class="stat-card"><div class="stat-lbl">Completadas</div><div class="stat-val" style="color:var(--status-done)">${done}</div><div class="stat-sub" style="color:var(--status-done)">↑ ${rate}% completado</div></div>
     <div class="stat-card"><div class="stat-lbl">Pendientes</div><div class="stat-val" style="color:var(--status-pending)">${total-done-cn_total}</div><div class="stat-sub">sin completar</div></div>
     <div class="stat-card"><div class="stat-lbl">Vencidas</div><div class="stat-val" style="color:var(--status-overdue)">${ovd}</div><div class="stat-sub">${ovd>0?'⚠ requieren atención':'Sin vencidas ✓'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Cancelaciones</div><div class="stat-val" style="color:var(--status-cancelled)">${cn_total}</div><div class="stat-sub" title="${catCancelText}">${cnRateOverall}% del total (${catCancelText})</div></div>`;
+    <div class="stat-card"><div class="stat-lbl">Cancelaciones</div><div class="stat-val" style="color:var(--status-cancelled)">${cn_total}</div><div class="stat-sub" title="${catCancelText}">${cnRateOverall}% del total (${catCancelText})</div></div>
+    <div class="stat-card"><div class="stat-lbl">Entregables</div><div class="stat-val" style="color:var(--accent)">${doneDl}/${totalDl}</div><div class="stat-sub">Cumplimiento: ${dlRate}% (${cnDl} cancelados)</div></div>`;
 
   // Renderizar rachas de investigación académica
   let streaksEl = document.getElementById('streaks-wrap');
