@@ -408,8 +408,9 @@
       transition: all .18s; cursor: pointer;
     }
     .tc-chk:hover { border-color: var(--accent); background: var(--accent-soft); }
-    .tc.done .tc-chk { background: var(--status-done); border-color: var(--status-done); }
-    .tc.cancelled .tc-chk, .tc.no_asisto .tc-chk { background: var(--status-cancelled); border-color: var(--status-cancelled); }
+    .tc-chk.done, .tc.done .tc-chk { background: #9cee33; border-color: #9cee33; }
+    .tc-chk.done svg, .tc.done .tc-chk svg { stroke: #111827 !important; }
+    .tc-chk.cancelled, .tc.cancelled .tc-chk, .tc.no_asisto .tc-chk { background: var(--status-cancelled); border-color: var(--status-cancelled); }
     .tc-title {
       font-size: .88rem; font-weight: 600; line-height: 1.35;
       flex: 1; color: var(--text-primary);
