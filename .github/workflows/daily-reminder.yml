@@ -130,17 +130,17 @@ jobs:
                 <tbody>{''.join(task_row(t, show_date) for t in task_list)}</tbody>
               </table>"""
 
-           # Progress del día
-           today_active = [t for t in today_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
-           today_done = len([t for t in today_active if t.get('status')=='done'])
-           today_total = len(today_active)
+          # Progress del día
+          today_active = [t for t in today_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+          today_done = len([t for t in today_active if t.get('status')=='done'])
+          today_total = len(today_active)
 
-           # Week progress
-           week_tasks = [t for t in tasks if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
-           week_active = [t for t in week_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
-           week_done = len([t for t in week_active if t.get('status')=='done'])
-           week_total = len(week_active)
-           week_pct = round(week_done/week_total*100) if week_total > 0 else 0
+          # Week progress
+          week_tasks = [t for t in tasks if monday.isoformat() <= t.get('date','') <= friday.isoformat()]
+          week_active = [t for t in week_tasks if t.get('status') not in ('cancelled', 'no_asisto')]
+          week_done = len([t for t in week_active if t.get('status')=='done'])
+          week_total = len(week_active)
+          week_pct = round(week_done/week_total*100) if week_total > 0 else 0
 
           overdue_block = ''
           if overdue_tasks:
