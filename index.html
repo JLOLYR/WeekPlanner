@@ -2209,7 +2209,12 @@ function renderWeek() {
   
   const upcomingDeadlines = tasks
     .filter(t => t.deadline && t.deadline >= s0 && t.deadline <= s6)
-    .sort((a, b) => a.deadline.localeCompare(b.deadline));
+    .sort((a, b) => {
+      const aDone = a.status === 'done' || a.status === 'cancelled' || a.status === 'no_asisto';
+      const bDone = b.status === 'done' || b.status === 'cancelled' || b.status === 'no_asisto';
+      if (aDone !== bDone) return aDone ? 1 : -1;
+      return a.deadline.localeCompare(b.deadline);
+    });
     
   let deadlinesHTML = '';
   if (upcomingDeadlines.length > 0) {
@@ -2218,7 +2223,7 @@ function renderWeek() {
         <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
           📅 Entregables y Plazos de la Semana
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
           ${upcomingDeadlines.map(t => {
             const dlDate = new Date(t.deadline + 'T12:00:00');
             const diffTime = dlDate - todayObj;
