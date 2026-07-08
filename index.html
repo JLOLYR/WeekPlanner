@@ -970,7 +970,6 @@
     </header>
 
     <div id="content">
-
       <!-- WEEK PAGE -->
       <section id="page-week" class="page-section active">
         <div class="week-nav">
@@ -980,6 +979,7 @@
           <button class="week-nav-btn" onclick="chWeek(1)">Siguiente →</button>
         </div>
         <div class="summary-card" id="week-sum"></div>
+        <div id="week-deadlines-wrap"></div>
         <div id="pulse-wrap"></div>
         <div id="carryover-wrap" style="display:none" class="carryover-wrap">
           <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.18-5.41"/></svg> Pendientes de semanas anteriores</h3>
@@ -988,7 +988,6 @@
         <div class="cat-legend" id="cat-legend"></div>
         <div class="week-grid" id="week-grid"></div>
       </section>
-
       <!-- TIMELINE (TIME-BLOCKING) PAGE -->
       <section id="page-timeline" class="page-section">
         <div class="week-nav">
@@ -2202,24 +2201,24 @@ function renderWeek() {
   const pct=activeTot>0?Math.round(dn/activeTot*100):0;
   const ovd=wt.filter(isOverdue).length;
 
-  // Filtrar plazos (deadlines) pendientes en los próximos 7 días
+  // Filtrar plazos (deadlines) de la semana seleccionada (Lunes a Domingo)
   const todayObj = new Date(today + 'T12:00:00');
-  const sevenDaysLater = new Date(todayObj);
-  sevenDaysLater.setDate(todayObj.getDate() + 7);
-  const sevenDaysLaterISO = toISO(sevenDaysLater);
+  const sun = new Date(dates[0]);
+  sun.setDate(dates[0].getDate() + 6);
+  const s6 = toISO(sun);
   
   const upcomingDeadlines = tasks
-    .filter(t => t.deadline && t.deadline >= today && t.deadline <= sevenDaysLaterISO)
+    .filter(t => t.deadline && t.deadline >= s0 && t.deadline <= s6)
     .sort((a, b) => a.deadline.localeCompare(b.deadline));
     
   let deadlinesHTML = '';
   if (upcomingDeadlines.length > 0) {
     deadlinesHTML = `
-      <div style="flex:1.2; min-width:260px; border-left: 1.5px solid var(--border); padding-left:24px; display:flex; flex-direction:column; gap:8px;">
-        <span class="sum-lbl" style="display:flex; align-items:center; gap:5px; color:var(--status-overdue)">
-          ⏰ PRÓXIMOS PLAZOS (7 DÍAS)
-        </span>
-        <div style="display:flex; flex-direction:column; gap:5px; max-height:85px; overflow-y:auto; padding-right:4px;">
+      <div class="week-pulse-card" style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 18px 22px; margin-bottom: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle);">
+        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+          📅 Entregables y Plazos de la Semana
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;">
           ${upcomingDeadlines.map(t => {
             const dlDate = new Date(t.deadline + 'T12:00:00');
             const diffTime = dlDate - todayObj;
@@ -2237,6 +2236,10 @@ function renderWeek() {
               badgeText = 'Mañana';
               badgeColor = 'var(--status-overdue)';
               badgeBg = 'rgba(198,40,40,.09)';
+            } else if (diffDays < 0) {
+              badgeText = 'Vencido';
+              badgeColor = '#FFFFFF';
+              badgeBg = 'var(--status-overdue)';
             } else {
               badgeText = `En ${diffDays} d`;
               badgeColor = 'var(--status-pending)';
@@ -2249,7 +2252,7 @@ function renderWeek() {
             const titleStyle = (isDone || isC) ? 'text-decoration: line-through; opacity: 0.65;' : '';
             
             return `
-              <div onclick="openModal(null,'${t.id}')" style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:0.78rem; padding: 5px 8px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); background: var(--bg-surface); cursor:pointer; transition: background 0.15s;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='var(--bg-surface)'">
+              <div onclick="openModal(null,'${t.id}')" style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:0.78rem; padding: 6px 10px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); background: var(--bg-surface); cursor:pointer; transition: background 0.15s;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='var(--bg-surface)'">
                 <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
                   <!-- Checkbox -->
                   <div class="tc-chk${statusClass}" onclick="event.stopPropagation();toggleDone('${t.id}')" title="Marcar completada/pendiente" style="margin:0; width:14px; height:14px; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
@@ -2271,25 +2274,18 @@ function renderWeek() {
         </div>
       </div>
     `;
-  } else {
-    deadlinesHTML = `
-      <div style="flex:1.2; min-width:260px; border-left: 1.5px solid var(--border); padding-left:24px; display:flex; flex-direction:column; justify-content:center; align-items:center; color:var(--text-secondary); text-align:center;">
-        <span class="sum-lbl" style="margin-bottom:4px;">⏰ PRÓXIMOS PLAZOS (7 DÍAS)</span>
-        <span style="font-size:0.78rem; font-weight:600; color:var(--status-done); display:flex; align-items:center; gap:4px;">✓ Sin plazos pendientes esta semana</span>
-      </div>
-    `;
   }
+  document.getElementById('week-deadlines-wrap').innerHTML = deadlinesHTML;
 
   document.getElementById('week-sum').innerHTML=`
-    <div style="display:flex; flex:1.8; gap:20px; align-items:center; flex-wrap:wrap; min-width:280px;">
+    <div style="display:flex; flex:1; gap:20px; align-items:center; flex-wrap:wrap; min-width:280px; width:100%;">
       <div class="sum-item"><span class="sum-lbl">Total</span><span class="sum-val">${tot}</span></div>
       <div class="sum-item"><span class="sum-lbl">Completadas</span><span class="sum-val" style="color:var(--status-done)">${dn}</span></div>
       <div class="sum-item"><span class="sum-lbl">Pendientes</span><span class="sum-val" style="color:var(--status-pending)">${tot-dn-cn}</span></div>
       <div class="sum-item"><span class="sum-lbl">Vencidas</span><span class="sum-val" style="color:var(--status-overdue)">${ovd}</span></div>
       ${cn > 0 ? `<div class="sum-item"><span class="sum-lbl">Canceladas/No asis.</span><span class="sum-val" style="color:var(--status-cancelled)">${cn}</span></div>` : ''}
       <div class="sum-progress" style="flex:1; min-width:180px;"><div class="sum-lbl">Progreso semanal — ${pct}%</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>
-    </div>
-    ${deadlinesHTML}`;
+    </div>`;
 
   // Pulse chart (Carga Horaria)
   buildPulse(dates);
