@@ -2234,5 +2234,28 @@
     "addToCal": false,
     "createdAt": "2026-07-08T12:46:24.126Z",
     "updatedAt": "2026-07-08T12:46:24.126Z"
+  },
+  {
+    "id": "mrc2o5iai8v2",
+    "title": "Preparación Trabajo Eólica",
+    "cat": "Docencia",
+    "subcategory": "Preparación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-07-08",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-07-09",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-08T12:46:53.410Z",
+    "updatedAt": "2026-07-08T12:46:53.410Z"
   }
 ]
