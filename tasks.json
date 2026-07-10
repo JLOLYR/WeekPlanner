@@ -2010,7 +2010,7 @@
     "title": "Reunión termofluidos",
     "cat": "Administración",
     "subcategory": "Reunión Depto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-10",
     "time": "15:30",
@@ -2026,7 +2026,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-07-02T16:47:32.550Z",
-    "updatedAt": "2026-07-02T16:47:32.550Z"
+    "updatedAt": "2026-07-10T21:26:04.643Z"
   },
   {
     "id": "mr402efxzd31",
