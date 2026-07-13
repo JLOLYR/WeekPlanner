@@ -2213,5 +2213,28 @@
     "addToCal": false,
     "createdAt": "2026-07-13T14:15:58.482Z",
     "updatedAt": "2026-07-13T14:15:58.482Z"
+  },
+  {
+    "id": "mrjbsyu4luef",
+    "title": "Presentación Eólica",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-14",
+    "time": "08:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-13T14:36:57.820Z",
+    "updatedAt": "2026-07-13T14:36:57.820Z"
   }
 ]
