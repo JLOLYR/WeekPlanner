@@ -2259,5 +2259,28 @@
     "addToCal": false,
     "createdAt": "2026-07-13T14:37:24.516Z",
     "updatedAt": "2026-07-13T14:37:24.516Z"
+  },
+  {
+    "id": "mrjm7bm393w8",
+    "title": "Cerrar Actas",
+    "cat": "Docencia",
+    "subcategory": "",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-07-13",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-07-15",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-13T19:28:03.723Z",
+    "updatedAt": "2026-07-13T19:28:03.723Z"
   }
 ]
