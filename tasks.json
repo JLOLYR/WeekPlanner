@@ -2236,5 +2236,28 @@
     "addToCal": false,
     "createdAt": "2026-07-13T14:36:57.820Z",
     "updatedAt": "2026-07-13T14:36:57.820Z"
+  },
+  {
+    "id": "mrjbtjfol6yc",
+    "title": "Presentación IPT",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-14",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-13T14:37:24.516Z",
+    "updatedAt": "2026-07-13T14:37:24.516Z"
   }
 ]
