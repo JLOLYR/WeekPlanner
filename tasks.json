@@ -2259,5 +2259,28 @@
     "addToCal": false,
     "createdAt": "2026-07-13T14:37:24.516Z",
     "updatedAt": "2026-07-13T14:37:24.516Z"
+  },
+  {
+    "id": "mrjkw4m2z4yx",
+    "title": "Cierre de actas",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-07-15",
+    "time": "",
+    "duration": "",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-13T18:51:21.818Z",
+    "updatedAt": "2026-07-13T18:51:21.818Z"
   }
 ]
