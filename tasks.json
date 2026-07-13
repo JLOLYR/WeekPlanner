@@ -2099,5 +2099,28 @@
     "addToCal": false,
     "createdAt": "2026-07-13T19:28:03.723Z",
     "updatedAt": "2026-07-13T19:28:03.723Z"
+  },
+  {
+    "id": "mrjnhbnwgoz6",
+    "title": "Basquet",
+    "cat": "Personal",
+    "subcategory": "Deporte",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-14",
+    "time": "21:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-13T20:03:49.964Z",
+    "updatedAt": "2026-07-13T20:03:49.964Z"
   }
 ]
