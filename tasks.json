@@ -2167,5 +2167,28 @@
     "createdAt": "2026-07-13T13:02:07.327Z",
     "updatedAt": "2026-07-13T13:02:07.327Z",
     "recurrenceParent": "mqjgtovn6u6e"
+  },
+  {
+    "id": "mrjb1jkts6qo",
+    "title": "Cámara 3ro",
+    "cat": "MSN",
+    "subcategory": "Cámara",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-13",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-13T14:15:38.333Z",
+    "updatedAt": "2026-07-13T14:15:38.333Z"
   }
 ]
