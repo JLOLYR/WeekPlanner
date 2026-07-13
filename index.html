@@ -2216,70 +2216,74 @@ function renderWeek() {
       return a.deadline.localeCompare(b.deadline);
     });
     
-  let deadlinesHTML = '';
-  if (upcomingDeadlines.length > 0) {
-    deadlinesHTML = `
-      <div class="week-pulse-card" style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 18px 22px; margin-bottom: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle);">
-        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-          📅 Entregables y Plazos de la Semana
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          ${upcomingDeadlines.map(t => {
-            const dlDate = new Date(t.deadline + 'T12:00:00');
-            const diffTime = dlDate - todayObj;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            let badgeText = '';
-            let badgeColor = 'var(--text-secondary)';
-            let badgeBg = 'var(--bg-elevated)';
-            
-            if (diffDays === 0) {
-              badgeText = 'Hoy';
-              badgeColor = '#FFFFFF';
-              badgeBg = 'var(--status-overdue)';
-            } else if (diffDays === 1) {
-              badgeText = 'Mañana';
-              badgeColor = 'var(--status-overdue)';
-              badgeBg = 'rgba(198,40,40,.09)';
-            } else if (diffDays < 0) {
-              badgeText = 'Vencido';
-              badgeColor = '#FFFFFF';
-              badgeBg = 'var(--status-overdue)';
-            } else {
-              badgeText = `En ${diffDays} d`;
-              badgeColor = 'var(--status-pending)';
-              badgeBg = 'rgba(178,89,0,.09)';
-            }
-            
-            const isDone = t.status === 'done';
-            const isC = t.status === 'cancelled' || t.status === 'no_asisto';
-            const statusClass = isDone ? ' done' : (isC ? ' cancelled' : '');
-            const titleStyle = (isDone || isC) ? 'text-decoration: line-through; opacity: 0.65;' : '';
-            
-            return `
-              <div onclick="openModal(null,'${t.id}')" style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:0.78rem; padding: 6px 10px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); background: var(--bg-surface); cursor:pointer; transition: background 0.15s;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='var(--bg-surface)'">
-                <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
-                  <!-- Checkbox -->
-                  <div class="tc-chk${statusClass}" onclick="event.stopPropagation();toggleDone('${t.id}')" title="Marcar completada/pendiente" style="margin:0; width:14px; height:14px; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
-                    ${isDone?'<svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><polyline points="3,9 7,13 13,4"/></svg>':''}
-                    ${isC?'<svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>':''}
-                  </div>
-                  <span style="font-weight:700; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; color:var(--text-primary); ${titleStyle} flex:1;" title="${escH(t.title)}">${escH(t.title)}</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
-                  <span style="font-size:0.68rem; color:var(--text-secondary); font-weight:600;">${fmtShort(t.deadline)}</span>
-                  <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.64rem; font-weight:800; padding:1px 5px; border-radius:99px; border:1px solid ${badgeBg}; text-transform:uppercase; flex-shrink:0;">${badgeText}</span>
-                  <button onclick="event.stopPropagation();toggleCancel('${t.id}')" title="Cancelar / Restaurar" style="background:none; border:none; cursor:pointer; color:var(--text-muted); opacity:0.6; display:flex; align-items:center; padding:2px;" onmouseover="this.style.opacity='1'; this.style.color='var(--status-cancelled)'" onmouseout="this.style.opacity='0.6'; this.style.color='var(--text-muted)'">
-                    🚫
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
+  const deadlinesHTML = `
+    <div class="week-pulse-card" style="background: var(--bg-surface); border-radius: var(--radius-md); padding: 18px 22px; margin-bottom: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle);">
+      <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
+        <span style="display: flex; align-items: center; gap: 6px;">📅 Entregables y Plazos de la Semana</span>
+        <button onclick="openModal(null, null, '${s0}', 'entregable')" style="font-size: 0.68rem; padding: 3px 10px; border-radius: var(--radius-xs); display: flex; align-items: center; gap: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); cursor: pointer; transition: all 0.15s; font-weight: 700; color: var(--text-primary); outline: none;" onmouseover="this.style.background='var(--bg-elevated)';" onmouseout="this.style.background='var(--bg-surface)';" title="Agregar entregable para esta semana">
+          + Agregar Tarea
+        </button>
       </div>
-    `;
-  }
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        ${upcomingDeadlines.length > 0 ? upcomingDeadlines.map(t => {
+          const dlDate = new Date(t.deadline + 'T12:00:00');
+          const diffTime = dlDate - todayObj;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          
+          let badgeText = '';
+          let badgeColor = 'var(--text-secondary)';
+          let badgeBg = 'var(--bg-elevated)';
+          
+          if (diffDays === 0) {
+            badgeText = 'Hoy';
+            badgeColor = '#FFFFFF';
+            badgeBg = 'var(--status-overdue)';
+          } else if (diffDays === 1) {
+            badgeText = 'Mañana';
+            badgeColor = 'var(--status-overdue)';
+            badgeBg = 'rgba(198,40,40,.09)';
+          } else if (diffDays < 0) {
+            badgeText = 'Vencido';
+            badgeColor = '#FFFFFF';
+            badgeBg = 'var(--status-overdue)';
+          } else {
+            badgeText = `En ${diffDays} d`;
+            badgeColor = 'var(--status-pending)';
+            badgeBg = 'rgba(178,89,0,.09)';
+          }
+          
+          const isDone = t.status === 'done';
+          const isC = t.status === 'cancelled' || t.status === 'no_asisto';
+          const statusClass = isDone ? ' done' : (isC ? ' cancelled' : '');
+          const titleStyle = (isDone || isC) ? 'text-decoration: line-through; opacity: 0.65;' : '';
+          
+          return `
+            <div onclick="openModal(null,'${t.id}')" style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:0.78rem; padding: 6px 10px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); background: var(--bg-surface); cursor:pointer; transition: background 0.15s;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='var(--bg-surface)'">
+              <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+                <!-- Checkbox -->
+                <div class="tc-chk${statusClass}" onclick="event.stopPropagation();toggleDone('${t.id}')" title="Marcar completada/pendiente" style="margin:0; width:14px; height:14px; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                  ${isDone?'<svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><polyline points="3,9 7,13 13,4"/></svg>':''}
+                  ${isC?'<svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>':''}
+                </div>
+                <span style="font-weight:700; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; color:var(--text-primary); ${titleStyle} flex:1;" title="${escH(t.title)}">${escH(t.title)}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+                <span style="font-size:0.68rem; color:var(--text-secondary); font-weight:600;">${fmtShort(t.deadline)}</span>
+                <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.64rem; font-weight:800; padding:1px 5px; border-radius:99px; border:1px solid ${badgeBg}; text-transform:uppercase; flex-shrink:0;">${badgeText}</span>
+                <button onclick="event.stopPropagation();toggleCancel('${t.id}')" title="Cancelar / Restaurar" style="background:none; border:none; cursor:pointer; color:var(--text-muted); opacity:0.6; display:flex; align-items:center; padding:2px;" onmouseover="this.style.opacity='1'; this.style.color='var(--status-cancelled)'" onmouseout="this.style.opacity='0.6'; this.style.color='var(--text-muted)'">
+                  🚫
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('') : `
+          <div style="text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 16px 0; font-weight: 600;">
+            Sin entregables o plazos registrados para esta semana
+          </div>
+        `}
+      </div>
+    </div>
+  `;
   document.getElementById('week-deadlines-wrap').innerHTML = deadlinesHTML;
 
   document.getElementById('week-sum').innerHTML=`
@@ -2998,7 +3002,7 @@ function toggleFormFields() {
 }
 
 let editId=null;
-function openModal(presetCat=null,taskId=null,presetDate=null) {
+function openModal(presetCat=null,taskId=null,presetDate=null,presetType=null) {
   editId=taskId; 
   document.getElementById('task-form').reset();
   
@@ -3038,7 +3042,10 @@ function openModal(presetCat=null,taskId=null,presetDate=null) {
     document.getElementById('del-btn').style.display='none';
     document.getElementById('no-asisto-btn').style.display='none';
     document.getElementById('f-date').value=presetDate||todayISO();
-    document.getElementById('f-type').value='evento';
+    document.getElementById('f-type').value=presetType||'evento';
+    if(presetType === 'entregable') {
+      document.getElementById('f-deadline').value=presetDate||todayISO();
+    }
     if(presetCat) {
       document.getElementById('f-cat').value=presetCat;
     }
