@@ -2168,5 +2168,28 @@
     "addToCal": false,
     "createdAt": "2026-07-14T14:51:27.075Z",
     "updatedAt": "2026-07-14T14:51:27.075Z"
+  },
+  {
+    "id": "mrl52tlf0eju",
+    "title": "Prueba Recuperativa",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-14",
+    "time": "14:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-14T21:04:12.627Z",
+    "updatedAt": "2026-07-14T21:04:12.627Z"
   }
 ]
