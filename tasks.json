@@ -2174,7 +2174,7 @@
     "title": "Prueba Recuperativa",
     "cat": "Docencia",
     "subcategory": "Evaluación",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-14",
     "time": "14:30",
@@ -2190,6 +2190,29 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-14T21:04:12.627Z",
-    "updatedAt": "2026-07-14T21:04:12.627Z"
+    "updatedAt": "2026-07-14T21:04:15.049Z"
+  },
+  {
+    "id": "mrl53iarhaje",
+    "title": "Revisar Pruebas",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "done",
+    "type": "entregable",
+    "date": "2026-07-13",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-07-13",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-14T21:04:44.644Z",
+    "updatedAt": "2026-07-14T21:04:46.617Z"
   }
 ]
