@@ -1760,7 +1760,7 @@
     "title": "Reunión L&F",
     "cat": "L&F",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-15",
     "time": "11:00",
@@ -1775,7 +1775,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-02T21:11:49.917Z",
-    "updatedAt": "2026-07-02T21:11:49.917Z",
+    "updatedAt": "2026-07-15T19:33:26.326Z",
     "recurrenceParent": "mpy1zhsqnur1"
   },
   {
@@ -2220,7 +2220,7 @@
     "title": "Reunión Aletheia",
     "cat": "Aletheia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-15",
     "time": "15:00",
@@ -2236,6 +2236,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-15T13:35:37.613Z",
-    "updatedAt": "2026-07-15T13:35:37.613Z"
+    "updatedAt": "2026-07-15T19:33:27.795Z"
   }
 ]
