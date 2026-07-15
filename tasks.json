@@ -2214,5 +2214,28 @@
     "addToCal": false,
     "createdAt": "2026-07-14T21:04:44.644Z",
     "updatedAt": "2026-07-14T21:04:46.617Z"
+  },
+  {
+    "id": "mrm4hsi5cn5w",
+    "title": "Reunión Aletheia",
+    "cat": "Aletheia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-15",
+    "time": "15:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-15T13:35:37.613Z",
+    "updatedAt": "2026-07-15T13:35:37.613Z"
   }
 ]
