@@ -2375,5 +2375,28 @@
     "addToCal": false,
     "createdAt": "2026-07-20T12:38:10.082Z",
     "updatedAt": "2026-07-20T12:38:10.082Z"
+  },
+  {
+    "id": "mrt7nxpubl3v",
+    "title": "Paper- Orientación",
+    "cat": "Investigación",
+    "subcategory": "Redacción Paper",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-07-20",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-07-24",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-20T12:38:46.386Z",
+    "updatedAt": "2026-07-20T12:38:46.386Z"
   }
 ]
