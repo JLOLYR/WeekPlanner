@@ -2237,5 +2237,28 @@
     "addToCal": false,
     "createdAt": "2026-07-15T13:35:37.613Z",
     "updatedAt": "2026-07-15T19:33:27.795Z"
+  },
+  {
+    "id": "mrt7ddbm60k7",
+    "title": "Reunión L&F - Emi",
+    "cat": "L&F",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-20",
+    "time": "18:30",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-20T12:30:33.394Z",
+    "updatedAt": "2026-07-20T12:30:33.394Z"
   }
 ]
