@@ -2519,7 +2519,7 @@
     "title": "Reporte URP",
     "cat": "Investigación",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-07-20",
     "time": "",
@@ -2535,6 +2535,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-20T12:43:24.191Z",
-    "updatedAt": "2026-07-20T12:43:24.191Z"
+    "updatedAt": "2026-07-20T14:49:32.665Z"
   }
 ]
