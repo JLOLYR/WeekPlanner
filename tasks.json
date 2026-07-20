@@ -2082,7 +2082,7 @@
     "title": "Cerrar Actas",
     "cat": "Docencia",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-07-13",
     "time": "",
@@ -2098,7 +2098,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-13T19:28:03.723Z",
-    "updatedAt": "2026-07-13T19:28:03.723Z"
+    "updatedAt": "2026-07-20T12:29:01.931Z"
   },
   {
     "id": "mrjnhbnwgoz6",
