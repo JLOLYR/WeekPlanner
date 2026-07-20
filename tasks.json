@@ -2283,5 +2283,28 @@
     "addToCal": false,
     "createdAt": "2026-07-20T12:34:58.611Z",
     "updatedAt": "2026-07-20T12:34:58.611Z"
+  },
+  {
+    "id": "mrt7jr3kf6hn",
+    "title": "Correción examen",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-07-21",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-07-23",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-07-20T12:35:31.184Z",
+    "updatedAt": "2026-07-20T12:35:31.184Z"
   }
 ]
