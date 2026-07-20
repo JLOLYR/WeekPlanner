@@ -2306,5 +2306,28 @@
     "addToCal": false,
     "createdAt": "2026-07-20T12:35:31.184Z",
     "updatedAt": "2026-07-20T12:35:31.184Z"
+  },
+  {
+    "id": "mrt7kkjta9f3",
+    "title": "Baquet",
+    "cat": "Personal",
+    "subcategory": "Deporte",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-21",
+    "time": "21:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-20T12:36:09.353Z",
+    "updatedAt": "2026-07-20T12:36:09.353Z"
   }
 ]
