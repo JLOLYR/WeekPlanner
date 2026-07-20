@@ -2496,7 +2496,7 @@
     "title": "Responder a Porton Eléctrico",
     "cat": "Personal",
     "subcategory": "Trámites",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-07-20",
     "time": "",
@@ -2512,7 +2512,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-20T12:42:25.863Z",
-    "updatedAt": "2026-07-20T12:42:25.863Z"
+    "updatedAt": "2026-07-20T14:05:55.862Z"
   },
   {
     "id": "mrt7tw2nqlwh",
