@@ -2260,5 +2260,28 @@
     "addToCal": false,
     "createdAt": "2026-07-20T12:30:33.394Z",
     "updatedAt": "2026-07-20T12:30:33.394Z"
+  },
+  {
+    "id": "mrt7j1yra8r6",
+    "title": "Examen IIM251 y IIM259",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-21",
+    "time": "14:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "high",
+    "addToCal": false,
+    "createdAt": "2026-07-20T12:34:58.611Z",
+    "updatedAt": "2026-07-20T12:34:58.611Z"
   }
 ]
