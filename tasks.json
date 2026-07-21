@@ -2289,7 +2289,7 @@
     "title": "Correción examen",
     "cat": "Docencia",
     "subcategory": "Evaluación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-07-21",
     "time": "",
@@ -2305,7 +2305,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-07-20T12:35:31.184Z",
-    "updatedAt": "2026-07-20T12:35:31.184Z"
+    "updatedAt": "2026-07-21T21:04:30.754Z"
   },
   {
     "id": "mrt7kkjta9f3",
