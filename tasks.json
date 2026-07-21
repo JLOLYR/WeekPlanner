@@ -2266,7 +2266,7 @@
     "title": "Examen IIM251 y IIM259",
     "cat": "Docencia",
     "subcategory": "Evaluación",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-21",
     "time": "14:30",
@@ -2282,7 +2282,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-07-20T12:34:58.611Z",
-    "updatedAt": "2026-07-20T12:34:58.611Z"
+    "updatedAt": "2026-07-21T20:51:23.229Z"
   },
   {
     "id": "mrt7jr3kf6hn",
