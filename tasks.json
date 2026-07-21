@@ -2243,7 +2243,7 @@
     "title": "Reunión L&F - Emi",
     "cat": "L&F",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-20",
     "time": "18:30",
@@ -2259,7 +2259,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-20T12:30:33.394Z",
-    "updatedAt": "2026-07-20T12:30:33.394Z"
+    "updatedAt": "2026-07-21T14:00:44.498Z"
   },
   {
     "id": "mrt7j1yra8r6",
