@@ -2565,7 +2565,7 @@
     "title": "Tenida 1ro",
     "cat": "MSN",
     "subcategory": "Tenida",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-07-22",
     "time": "20:00",
@@ -2581,7 +2581,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-21T14:31:49.544Z",
-    "updatedAt": "2026-07-21T14:31:49.544Z"
+    "updatedAt": "2026-07-22T21:11:30.731Z"
   },
   {
     "id": "mrv5ilv6q96m",
