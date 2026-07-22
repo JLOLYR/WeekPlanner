@@ -2335,7 +2335,7 @@
     "title": "Cerrar Acta Examen",
     "cat": "Docencia",
     "subcategory": "Evaluación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-07-24",
     "time": "",
@@ -2351,7 +2351,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-07-20T12:36:41.281Z",
-    "updatedAt": "2026-07-20T12:36:41.281Z"
+    "updatedAt": "2026-07-22T21:11:39.098Z"
   },
   {
     "id": "mrt7n5penuyl",
