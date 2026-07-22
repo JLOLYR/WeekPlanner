@@ -2588,7 +2588,7 @@
     "title": "Despedida Madaf",
     "cat": "Administración",
     "subcategory": "Reunión Depto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-22",
     "time": "11:00",
@@ -2604,7 +2604,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-21T21:14:10.866Z",
-    "updatedAt": "2026-07-21T21:14:10.866Z"
+    "updatedAt": "2026-07-22T21:01:16.542Z"
   },
   {
     "id": "mrw4w1sndcxg",
