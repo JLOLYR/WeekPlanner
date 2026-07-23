@@ -2542,7 +2542,7 @@
     "title": "Convocación R+C",
     "cat": "R+C",
     "subcategory": "Convocación miembros",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-23",
     "time": "20:00",
@@ -2558,7 +2558,7 @@
     "priority": "high",
     "addToCal": false,
     "createdAt": "2026-07-21T12:54:58.596Z",
-    "updatedAt": "2026-07-21T12:54:58.596Z"
+    "updatedAt": "2026-07-23T21:21:40.139Z"
   },
   {
     "id": "mrur56aw38cn",
