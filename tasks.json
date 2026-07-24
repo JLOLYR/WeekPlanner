@@ -2450,7 +2450,7 @@
     "title": "Paper - Sim Flujo corte",
     "cat": "Investigación",
     "subcategory": "Simulación",
-    "status": "pending",
+    "status": "cancelled",
     "type": "entregable",
     "date": "2026-07-20",
     "time": "",
@@ -2466,7 +2466,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-20T12:40:00.947Z",
-    "updatedAt": "2026-07-20T12:40:00.947Z"
+    "updatedAt": "2026-07-24T21:16:31.035Z"
   },
   {
     "id": "mrt7s1wv33xg",
