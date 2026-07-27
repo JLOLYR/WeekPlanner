@@ -2634,7 +2634,7 @@
     "title": "Reunión UFRO-Explora J. Leiva",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-28",
     "time": "09:00",
@@ -2649,7 +2649,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-24T16:50:19.861Z",
-    "updatedAt": "2026-07-24T16:50:19.861Z",
+    "updatedAt": "2026-07-27T13:40:23.178Z",
     "recurrenceParent": "mplr5f0te53o"
   },
   {
@@ -2657,7 +2657,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-27",
     "time": "11:00",
@@ -2672,7 +2672,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-24T16:50:19.861Z",
-    "updatedAt": "2026-07-24T16:50:19.861Z",
+    "updatedAt": "2026-07-27T13:40:21.346Z",
     "recurrenceParent": "mprc39eiy6vc"
   },
   {
@@ -2680,7 +2680,7 @@
     "title": "Reunión L&F",
     "cat": "L&F",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-29",
     "time": "11:00",
@@ -2695,7 +2695,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-24T16:50:19.861Z",
-    "updatedAt": "2026-07-24T16:50:19.861Z",
+    "updatedAt": "2026-07-27T13:40:24.566Z",
     "recurrenceParent": "mpy1zhsqnur1"
   },
   {
