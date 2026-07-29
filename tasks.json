@@ -2766,5 +2766,28 @@
     "createdAt": "2026-07-24T16:50:21.588Z",
     "updatedAt": "2026-07-24T16:50:21.588Z",
     "recurrenceParent": "mpy1zhsqnur1"
+  },
+  {
+    "id": "ms63g5mir486",
+    "title": "Basquet",
+    "cat": "Personal",
+    "subcategory": "Deporte",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-07-28",
+    "time": "21:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-07-29T13:01:45.211Z",
+    "updatedAt": "2026-07-29T13:01:45.211Z"
   }
 ]
