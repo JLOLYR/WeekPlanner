@@ -2772,7 +2772,7 @@
     "title": "Basquet",
     "cat": "Personal",
     "subcategory": "Deporte",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-28",
     "time": "21:00",
@@ -2788,6 +2788,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-29T13:01:45.211Z",
-    "updatedAt": "2026-07-29T13:01:45.211Z"
+    "updatedAt": "2026-07-29T13:01:47.366Z"
   }
 ]
