@@ -2795,7 +2795,7 @@
     "title": "Tenida 1ro",
     "cat": "MSN",
     "subcategory": "Tenida",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-07-29",
     "time": "20:00",
@@ -2811,6 +2811,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-29T13:04:39.236Z",
-    "updatedAt": "2026-07-29T13:04:39.236Z"
+    "updatedAt": "2026-07-29T13:04:41.673Z"
   }
 ]
