@@ -2812,5 +2812,28 @@
     "addToCal": false,
     "createdAt": "2026-07-29T13:04:39.236Z",
     "updatedAt": "2026-07-30T18:22:07.258Z"
+  },
+  {
+    "id": "msd8fajy7682",
+    "title": "Organización Semanal",
+    "cat": "Administración",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-03",
+    "time": "08:30",
+    "duration": "30",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-03",
+    "recurrenceEnd": "2026-12-24",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T12:55:26.254Z",
+    "updatedAt": "2026-08-03T12:55:26.254Z"
   }
 ]
