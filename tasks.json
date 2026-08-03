@@ -3019,5 +3019,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T13:03:54.564Z",
     "updatedAt": "2026-08-03T13:03:54.564Z"
+  },
+  {
+    "id": "msd8r5yac7aj",
+    "title": "Tenida 2do",
+    "cat": "MSN",
+    "subcategory": "Tenida",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-05",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T13:04:40.162Z",
+    "updatedAt": "2026-08-03T13:04:40.162Z"
   }
 ]
