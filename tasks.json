@@ -2996,5 +2996,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T13:03:21.121Z",
     "updatedAt": "2026-08-03T13:03:21.121Z"
+  },
+  {
+    "id": "msd8q6rofs5k",
+    "title": "Mec Flu IIM350",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-07",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-07",
+    "recurrenceEnd": "2026-12-10",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T13:03:54.564Z",
+    "updatedAt": "2026-08-03T13:03:54.564Z"
   }
 ]
