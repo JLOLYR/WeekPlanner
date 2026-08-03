@@ -3065,5 +3065,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T13:05:01.580Z",
     "updatedAt": "2026-08-03T13:05:01.580Z"
+  },
+  {
+    "id": "msd8sa2i7kne",
+    "title": "Basquet",
+    "cat": "Personal",
+    "subcategory": "Deporte",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-04",
+    "time": "21:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T13:05:32.154Z",
+    "updatedAt": "2026-08-03T13:05:32.154Z"
   }
 ]
