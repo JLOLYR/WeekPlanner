@@ -2858,5 +2858,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T12:58:39.662Z",
     "updatedAt": "2026-08-03T12:58:39.662Z"
+  },
+  {
+    "id": "msd8l610oeyd",
+    "title": "Mec Flu IIM250",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-03",
+    "time": "08:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-03",
+    "recurrenceEnd": "2026-12-10",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T13:00:00.324Z",
+    "updatedAt": "2026-08-03T13:00:00.324Z"
   }
 ]
