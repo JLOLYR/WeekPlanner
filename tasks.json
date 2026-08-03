@@ -2726,7 +2726,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-03",
     "time": "11:00",
@@ -2741,7 +2741,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-24T16:50:21.588Z",
-    "updatedAt": "2026-07-24T16:50:21.588Z",
+    "updatedAt": "2026-08-03T14:54:20.815Z",
     "recurrenceParent": "mprc39eiy6vc"
   },
   {
@@ -2818,7 +2818,7 @@
     "title": "Organización Semanal",
     "cat": "Administración",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-03",
     "time": "08:30",
@@ -2834,14 +2834,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T12:55:26.254Z",
-    "updatedAt": "2026-08-03T12:55:26.254Z"
+    "updatedAt": "2026-08-03T14:54:17.496Z"
   },
   {
     "id": "msd8jfseyac5",
     "title": "Mec Ind IIM259",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-03",
     "time": "10:50",
@@ -2857,14 +2857,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T12:58:39.662Z",
-    "updatedAt": "2026-08-03T12:58:39.662Z"
+    "updatedAt": "2026-08-03T14:54:18.415Z"
   },
   {
     "id": "msd8l610oeyd",
     "title": "Mec Flu IIM350",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-03",
     "time": "08:30",
@@ -2880,7 +2880,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:00:00.324Z",
-    "updatedAt": "2026-08-03T13:04:12.484Z"
+    "updatedAt": "2026-08-03T14:54:19.791Z"
   },
   {
     "id": "msd8lstwcs2p",
