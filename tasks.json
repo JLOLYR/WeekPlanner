@@ -2973,5 +2973,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T13:02:58.578Z",
     "updatedAt": "2026-08-03T13:02:58.578Z"
+  },
+  {
+    "id": "msd8pgypxjnn",
+    "title": "Eólica IIM117",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-07",
+    "time": "08:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T13:03:21.121Z",
+    "updatedAt": "2026-08-03T13:03:21.121Z"
   }
 ]
