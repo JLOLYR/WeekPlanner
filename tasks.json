@@ -3088,5 +3088,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T13:05:32.154Z",
     "updatedAt": "2026-08-03T13:05:32.154Z"
+  },
+  {
+    "id": "msd8t78j7el0",
+    "title": "Aletheia",
+    "cat": "Aletheia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-05",
+    "time": "00:30",
+    "duration": "240",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T13:06:15.139Z",
+    "updatedAt": "2026-08-03T13:06:15.139Z"
   }
 ]
