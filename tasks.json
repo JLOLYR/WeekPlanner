@@ -2950,5 +2950,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T13:02:24.709Z",
     "updatedAt": "2026-08-03T13:02:24.709Z"
+  },
+  {
+    "id": "msd8ozki3h1q",
+    "title": "Mec Ind IIM259",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-06",
+    "time": "08:30",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-03T13:02:58.578Z",
+    "updatedAt": "2026-08-03T13:02:58.578Z"
   }
 ]
