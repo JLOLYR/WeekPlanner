@@ -3071,7 +3071,7 @@
     "title": "Basquet",
     "cat": "Personal",
     "subcategory": "Deporte",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-04",
     "time": "21:00",
@@ -3087,7 +3087,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:05:32.154Z",
-    "updatedAt": "2026-08-03T13:05:32.154Z"
+    "updatedAt": "2026-08-04T20:00:23.088Z"
   },
   {
     "id": "msd8t78j7el0",
