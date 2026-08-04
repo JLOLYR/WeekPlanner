@@ -2887,7 +2887,7 @@
     "title": "Sist Mec Flu IIM251",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-04",
     "time": "10:50",
@@ -2903,14 +2903,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:00:29.876Z",
-    "updatedAt": "2026-08-03T13:00:29.876Z"
+    "updatedAt": "2026-08-04T14:33:19.431Z"
   },
   {
     "id": "msd8n5wrpuvd",
     "title": "Eólica IIM117",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-04",
     "time": "08:30",
@@ -2926,7 +2926,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:01:33.484Z",
-    "updatedAt": "2026-08-03T14:54:31.887Z"
+    "updatedAt": "2026-08-04T14:33:18.582Z"
   },
   {
     "id": "msd8o9fp499e",
