@@ -2749,7 +2749,7 @@
     "title": "Reunión L&F",
     "cat": "L&F",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-05",
     "time": "11:00",
@@ -2764,7 +2764,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-07-24T16:50:21.588Z",
-    "updatedAt": "2026-07-24T16:50:21.588Z",
+    "updatedAt": "2026-08-05T12:39:01.253Z",
     "recurrenceParent": "mpy1zhsqnur1"
   },
   {
@@ -2933,7 +2933,7 @@
     "title": "Sist Mec Flu IIM251",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-05",
     "time": "08:30",
@@ -2949,7 +2949,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:02:24.709Z",
-    "updatedAt": "2026-08-03T13:02:24.709Z"
+    "updatedAt": "2026-08-05T12:39:00.022Z"
   },
   {
     "id": "msd8ozki3h1q",
