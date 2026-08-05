@@ -3094,7 +3094,7 @@
     "title": "Aletheia",
     "cat": "Aletheia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-05",
     "time": "00:30",
@@ -3110,6 +3110,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:06:15.139Z",
-    "updatedAt": "2026-08-03T13:06:15.139Z"
+    "updatedAt": "2026-08-05T15:17:33.745Z"
   }
 ]
