@@ -3048,7 +3048,7 @@
     "title": "Convocación R+C",
     "cat": "R+C",
     "subcategory": "Convocación miembros",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-06",
     "time": "20:00",
@@ -3064,7 +3064,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:05:01.580Z",
-    "updatedAt": "2026-08-03T13:05:01.580Z"
+    "updatedAt": "2026-08-06T21:20:49.312Z"
   },
   {
     "id": "msd8sa2i7kne",
