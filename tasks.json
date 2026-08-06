@@ -3157,5 +3157,28 @@
     "addToCal": false,
     "createdAt": "2026-08-06T12:48:07.346Z",
     "updatedAt": "2026-08-06T12:48:22.859Z"
+  },
+  {
+    "id": "mshx9ozcf32e",
+    "title": "Reunión App Astral",
+    "cat": "Apps Astral",
+    "subcategory": "Reunión Diario Astral",
+    "status": "done",
+    "type": "evento",
+    "date": "2026-08-06",
+    "time": "14:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-06T19:42:00.120Z",
+    "updatedAt": "2026-08-06T19:42:01.856Z"
   }
 ]
