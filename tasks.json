@@ -3117,7 +3117,7 @@
     "title": "Reunión Dpto IA",
     "cat": "Administración",
     "subcategory": "Reunión Depto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-06",
     "time": "10:50",
@@ -3133,7 +3133,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-06T12:47:47.003Z",
-    "updatedAt": "2026-08-06T12:47:47.003Z"
+    "updatedAt": "2026-08-06T14:59:04.506Z"
   },
   {
     "id": "mshihfw20gv8",
