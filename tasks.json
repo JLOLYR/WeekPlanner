@@ -3134,5 +3134,28 @@
     "addToCal": false,
     "createdAt": "2026-08-06T12:47:47.003Z",
     "updatedAt": "2026-08-06T12:47:47.003Z"
+  },
+  {
+    "id": "mshihfw20gv8",
+    "title": "Programa de asignaturas",
+    "cat": "Docencia",
+    "subcategory": "Preparación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-03",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-08-03",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-06T12:48:07.346Z",
+    "updatedAt": "2026-08-06T12:48:07.346Z"
   }
 ]
