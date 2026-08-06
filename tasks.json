@@ -3111,5 +3111,28 @@
     "addToCal": false,
     "createdAt": "2026-08-03T13:06:15.139Z",
     "updatedAt": "2026-08-05T15:17:33.745Z"
+  },
+  {
+    "id": "mshih06zt1xy",
+    "title": "Reunión Dpto IA",
+    "cat": "Administración",
+    "subcategory": "Reunión Depto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-06",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-06T12:47:47.003Z",
+    "updatedAt": "2026-08-06T12:47:47.003Z"
   }
 ]
