@@ -2956,7 +2956,7 @@
     "title": "Mec Ind IIM259",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-06",
     "time": "08:30",
@@ -2972,7 +2972,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-03T13:02:58.578Z",
-    "updatedAt": "2026-08-03T13:02:58.578Z"
+    "updatedAt": "2026-08-06T12:45:41.644Z"
   },
   {
     "id": "msd8pgypxjnn",
