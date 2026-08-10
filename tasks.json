@@ -7550,5 +7550,28 @@
     "addToCal": false,
     "createdAt": "2026-08-10T12:33:03.567Z",
     "updatedAt": "2026-08-10T12:33:03.567Z"
+  },
+  {
+    "id": "msn7pz6m05xa",
+    "title": "Tenida 3ro",
+    "cat": "MSN",
+    "subcategory": "Tenida",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-12",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-10T12:33:26.878Z",
+    "updatedAt": "2026-08-10T12:33:26.878Z"
   }
 ]
