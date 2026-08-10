@@ -7596,5 +7596,28 @@
     "addToCal": false,
     "createdAt": "2026-08-10T12:33:51.838Z",
     "updatedAt": "2026-08-10T12:33:51.838Z"
+  },
+  {
+    "id": "msn7r7jx81py",
+    "title": "Entrevista MSN",
+    "cat": "MSN",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-10",
+    "time": "18:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-10T12:34:24.381Z",
+    "updatedAt": "2026-08-10T12:34:24.381Z"
   }
 ]
