@@ -3278,7 +3278,7 @@
     "title": "Organización Semanal",
     "cat": "Administración",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-10",
     "time": "08:30",
@@ -3294,14 +3294,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:55:41.902Z",
-    "updatedAt": "2026-08-07T12:55:41.902Z"
+    "updatedAt": "2026-08-10T13:07:51.566Z"
   },
   {
     "id": "msiy71am71lp",
     "title": "Mec Ind IIM259",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-10",
     "time": "10:50",
@@ -3317,14 +3317,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:55:41.902Z",
-    "updatedAt": "2026-08-07T12:55:41.902Z"
+    "updatedAt": "2026-08-10T13:07:54.726Z"
   },
   {
     "id": "msiy71amhgfa",
     "title": "Mec Flu IIM350",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-10",
     "time": "08:30",
@@ -3340,7 +3340,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:55:41.902Z",
-    "updatedAt": "2026-08-07T12:55:41.902Z"
+    "updatedAt": "2026-08-10T13:07:53.502Z"
   },
   {
     "id": "msiy71amzy85",
