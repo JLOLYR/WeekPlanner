@@ -7579,7 +7579,7 @@
     "title": "Cámara 3ro",
     "cat": "MSN",
     "subcategory": "Cámara",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-08-10",
     "time": "20:00",
@@ -7595,7 +7595,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-10T12:33:51.838Z",
-    "updatedAt": "2026-08-10T12:33:51.838Z"
+    "updatedAt": "2026-08-10T18:45:02.570Z"
   },
   {
     "id": "msn7r7jx81py",
