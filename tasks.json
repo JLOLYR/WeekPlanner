@@ -7527,5 +7527,28 @@
     "addToCal": false,
     "createdAt": "2026-08-10T12:32:31.958Z",
     "updatedAt": "2026-08-10T12:32:31.958Z"
+  },
+  {
+    "id": "msn7ph73lvb6",
+    "title": "Reunion Roberto Restrepo",
+    "cat": "Personal",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-12",
+    "time": "19:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-10T12:33:03.567Z",
+    "updatedAt": "2026-08-10T12:33:03.567Z"
   }
 ]
