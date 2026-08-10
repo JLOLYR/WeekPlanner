@@ -7619,5 +7619,28 @@
     "addToCal": false,
     "createdAt": "2026-08-10T12:34:24.381Z",
     "updatedAt": "2026-08-10T12:34:24.381Z"
+  },
+  {
+    "id": "msn7rlvrxinp",
+    "title": "Reunión Aletheia",
+    "cat": "Aletheia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-10",
+    "time": "14:00",
+    "duration": "180",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-10T12:34:42.951Z",
+    "updatedAt": "2026-08-10T12:34:42.951Z"
   }
 ]
