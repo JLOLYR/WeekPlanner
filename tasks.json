@@ -7717,7 +7717,7 @@
     "title": "Reunión planificación académica",
     "cat": "Docencia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-08-10",
     "time": "",
@@ -7733,6 +7733,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-11T20:31:08.706Z",
-    "updatedAt": "2026-08-11T20:31:08.706Z"
+    "updatedAt": "2026-08-11T20:31:11.503Z"
   }
 ]
