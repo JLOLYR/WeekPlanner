@@ -7688,5 +7688,28 @@
     "addToCal": false,
     "createdAt": "2026-08-11T16:13:56.680Z",
     "updatedAt": "2026-08-11T16:13:56.680Z"
+  },
+  {
+    "id": "msow21qqwqno",
+    "title": "Video llamada Angelica",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-12",
+    "time": "15:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-11T16:42:27.026Z",
+    "updatedAt": "2026-08-11T16:42:27.026Z"
   }
 ]
