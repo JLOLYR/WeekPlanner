@@ -7711,5 +7711,28 @@
     "addToCal": false,
     "createdAt": "2026-08-11T16:42:27.026Z",
     "updatedAt": "2026-08-11T16:42:27.026Z"
+  },
+  {
+    "id": "msp485gikl9a",
+    "title": "Reunión planificación académica",
+    "cat": "Docencia",
+    "subcategory": "Reunión",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-10",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-08-10",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-11T20:31:08.706Z",
+    "updatedAt": "2026-08-11T20:31:08.706Z"
   }
 ]
