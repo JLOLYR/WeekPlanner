@@ -3347,7 +3347,7 @@
     "title": "Eólica IIM117",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-11",
     "time": "08:30",
@@ -3363,7 +3363,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:55:41.902Z",
-    "updatedAt": "2026-08-07T12:55:41.902Z"
+    "updatedAt": "2026-08-11T13:18:04.982Z"
   },
   {
     "id": "msiy71amfgzv",
