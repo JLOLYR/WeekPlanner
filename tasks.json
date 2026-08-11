@@ -7665,5 +7665,28 @@
     "addToCal": false,
     "createdAt": "2026-08-11T16:13:07.012Z",
     "updatedAt": "2026-08-11T16:13:07.012Z"
+  },
+  {
+    "id": "msov1e1405jg",
+    "title": "Reunión P. Betancour",
+    "cat": "Investigación",
+    "subcategory": "Redacción Paper",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-13",
+    "time": "09:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-11T16:13:56.680Z",
+    "updatedAt": "2026-08-11T16:13:56.680Z"
   }
 ]
