@@ -3393,7 +3393,7 @@
     "title": "Eólica IIM117",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-14",
     "time": "08:30",
@@ -3409,7 +3409,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:55:41.902Z",
-    "updatedAt": "2026-08-07T12:55:41.902Z"
+    "updatedAt": "2026-08-12T12:24:40.077Z"
   },
   {
     "id": "msiy71ampoxt",
@@ -3439,7 +3439,7 @@
     "title": "Mec Ind IIM259",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-13",
     "time": "08:30",
@@ -3455,7 +3455,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:08.724Z",
-    "updatedAt": "2026-08-07T12:56:08.724Z"
+    "updatedAt": "2026-08-12T12:24:38.232Z"
   },
   {
     "id": "msiy7vb7fzmn",
