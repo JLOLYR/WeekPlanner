@@ -7734,5 +7734,28 @@
     "addToCal": false,
     "createdAt": "2026-08-11T20:31:08.706Z",
     "updatedAt": "2026-08-12T21:25:45.535Z"
+  },
+  {
+    "id": "msrjkjwrqb5j",
+    "title": "Reunión URP",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-14",
+    "time": "08:15",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-14",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-13T13:16:13.900Z",
+    "updatedAt": "2026-08-13T13:16:13.900Z"
   }
 ]
