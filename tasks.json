@@ -7740,9 +7740,9 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
-    "date": "2026-08-14",
+    "date": "2026-08-13",
     "time": "08:15",
     "duration": "60",
     "deadline": "",
@@ -7756,6 +7756,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-13T13:16:13.900Z",
-    "updatedAt": "2026-08-13T13:16:13.900Z"
+    "updatedAt": "2026-08-14T13:31:00.120Z"
   }
 ]
