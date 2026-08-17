@@ -7458,5 +7458,28 @@
     "addToCal": false,
     "createdAt": "2026-08-17T14:10:35.321Z",
     "updatedAt": "2026-08-17T14:10:35.321Z"
+  },
+  {
+    "id": "msxhmadui2sf",
+    "title": "Agregar Fecha Pruebas",
+    "cat": "Administración",
+    "subcategory": "",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-17",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-08-21",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-17T17:08:12.690Z",
+    "updatedAt": "2026-08-17T17:08:12.690Z"
   }
 ]
