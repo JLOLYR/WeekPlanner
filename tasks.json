@@ -7803,5 +7803,28 @@
     "addToCal": false,
     "createdAt": "2026-08-17T12:26:50.820Z",
     "updatedAt": "2026-08-17T12:26:50.820Z"
+  },
+  {
+    "id": "msx9168v8kkn",
+    "title": "Registro Claustro",
+    "cat": "Administración",
+    "subcategory": "",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-17",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-08-21",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-17T13:07:50.623Z",
+    "updatedAt": "2026-08-17T13:07:50.623Z"
   }
 ]
