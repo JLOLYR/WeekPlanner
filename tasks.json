@@ -6845,26 +6845,26 @@
     "updatedAt": "2026-08-17T17:08:12.690Z"
   },
   {
-    "id": "msxhs54bynw8",
-    "title": "Mec Sist Flu IIM251",
-    "cat": "Docencia",
-    "subcategory": "Clase",
+    "id": "msxhso4xo57h",
+    "title": "Reunión URP",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
     "status": "pending",
     "type": "evento",
-    "date": "2026-08-18",
-    "time": "10:50",
-    "duration": "120",
+    "date": "2026-08-27",
+    "time": "08:00",
+    "duration": "60",
     "deadline": "",
-    "recurrence": "none",
-    "recurrenceStart": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-14",
     "recurrenceEnd": "",
-    "recurrenceParent": null,
+    "recurrenceParent": "msrjkjwrqb5j",
     "location": "",
     "participants": "",
     "notes": "",
     "priority": "medium",
     "addToCal": false,
-    "createdAt": "2026-08-17T17:12:45.803Z",
-    "updatedAt": "2026-08-17T17:13:05.470Z"
+    "createdAt": "2026-08-17T17:13:10.449Z",
+    "updatedAt": "2026-08-17T17:13:10.449Z"
   }
 ]
