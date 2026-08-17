@@ -6452,5 +6452,28 @@
     "addToCal": false,
     "createdAt": "2026-08-17T17:13:10.449Z",
     "updatedAt": "2026-08-17T17:13:10.449Z"
+  },
+  {
+    "id": "msxhtyf5u4b1",
+    "title": "Sist Mec Flu IIM251",
+    "cat": "Docencia",
+    "subcategory": "Clase",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-25",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-25",
+    "recurrenceEnd": "2026-12-10",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-17T17:14:10.433Z",
+    "updatedAt": "2026-08-17T17:14:10.433Z"
   }
 ]
