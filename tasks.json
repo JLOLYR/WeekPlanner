@@ -3531,7 +3531,7 @@
     "title": "Mec Flu IIM350",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-17",
     "time": "08:30",
@@ -3547,7 +3547,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:20.804Z",
-    "updatedAt": "2026-08-07T12:56:20.804Z"
+    "updatedAt": "2026-08-17T13:08:11.339Z"
   },
   {
     "id": "msiy7vb8o0pn",
