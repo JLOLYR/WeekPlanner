@@ -7780,5 +7780,28 @@
     "addToCal": false,
     "createdAt": "2026-08-14T13:31:12.529Z",
     "updatedAt": "2026-08-14T13:31:12.529Z"
+  },
+  {
+    "id": "msx7kg90s72l",
+    "title": "Horas Comprometidas",
+    "cat": "Administración",
+    "subcategory": "",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-17",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-08-21",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-17T12:26:50.820Z",
+    "updatedAt": "2026-08-17T12:26:50.820Z"
   }
 ]
