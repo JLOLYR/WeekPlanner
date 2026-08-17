@@ -7435,5 +7435,28 @@
     "addToCal": false,
     "createdAt": "2026-08-17T14:10:01.664Z",
     "updatedAt": "2026-08-17T14:10:01.664Z"
+  },
+  {
+    "id": "msxb9v3tmskr",
+    "title": "Reunión Kamaska",
+    "cat": "Personal",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-19",
+    "time": "19:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-17T14:10:35.321Z",
+    "updatedAt": "2026-08-17T14:10:35.321Z"
   }
 ]
