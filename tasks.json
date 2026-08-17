@@ -3442,20 +3442,20 @@
     "status": "pending",
     "type": "evento",
     "date": "2026-08-17",
-    "time": "11:00",
+    "time": "15:00",
     "duration": "90",
     "deadline": "",
     "recurrence": "weekly",
     "recurrenceStart": "2026-06-01",
     "recurrenceEnd": "2026-12-12",
+    "recurrenceParent": "mprc39eiy6vc",
     "location": "",
     "participants": "",
     "notes": "",
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:20.803Z",
-    "updatedAt": "2026-08-07T12:56:20.803Z",
-    "recurrenceParent": "mprc39eiy6vc"
+    "updatedAt": "2026-08-17T13:08:29.419Z"
   },
   {
     "id": "msiy7vb7yzxg",
