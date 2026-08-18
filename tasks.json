@@ -6498,5 +6498,28 @@
     "addToCal": false,
     "createdAt": "2026-08-17T20:51:09.983Z",
     "updatedAt": "2026-08-17T20:51:09.983Z"
+  },
+  {
+    "id": "msyphnsutvsy",
+    "title": "Reunió Tesis",
+    "cat": "Investigación",
+    "subcategory": "Redacción Paper",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-20",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-18T13:36:19.902Z",
+    "updatedAt": "2026-08-18T13:36:19.902Z"
   }
 ]
