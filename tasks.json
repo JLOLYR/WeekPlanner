@@ -3123,7 +3123,7 @@
     "title": "Reunión L&F",
     "cat": "L&F",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-19",
     "time": "11:00",
@@ -3138,7 +3138,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:20.803Z",
-    "updatedAt": "2026-08-07T12:56:20.803Z",
+    "updatedAt": "2026-08-19T15:43:54.950Z",
     "recurrenceParent": "mpy1zhsqnur1"
   },
   {
