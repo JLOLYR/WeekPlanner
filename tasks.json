@@ -6544,5 +6544,28 @@
     "addToCal": false,
     "createdAt": "2026-08-18T16:14:18.664Z",
     "updatedAt": "2026-08-18T16:14:18.664Z"
+  },
+  {
+    "id": "mt1hrup0e18r",
+    "title": "Almuerzo Martín",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-20",
+    "time": "13:00",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-20T12:23:36.996Z",
+    "updatedAt": "2026-08-20T12:23:36.996Z"
   }
 ]
