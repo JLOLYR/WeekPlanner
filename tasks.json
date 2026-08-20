@@ -6504,7 +6504,7 @@
     "title": "Reunió Tesis",
     "cat": "Investigación",
     "subcategory": "Redacción Paper",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-20",
     "time": "10:50",
@@ -6520,7 +6520,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-18T13:36:19.902Z",
-    "updatedAt": "2026-08-18T14:07:26.816Z"
+    "updatedAt": "2026-08-20T20:02:38.741Z"
   },
   {
     "id": "msyv4tns9cqj",
@@ -6550,7 +6550,7 @@
     "title": "Almuerzo Martín",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-20",
     "time": "13:00",
@@ -6566,7 +6566,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-20T12:23:36.996Z",
-    "updatedAt": "2026-08-20T12:23:36.996Z"
+    "updatedAt": "2026-08-20T20:02:37.628Z"
   },
   {
     "id": "mt1hsfq3vgx1",
