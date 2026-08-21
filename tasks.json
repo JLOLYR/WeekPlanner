@@ -6527,7 +6527,7 @@
     "title": "Reunión Aletheia",
     "cat": "Aletheia",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-20",
     "time": "16:00",
@@ -6543,7 +6543,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-18T16:14:18.664Z",
-    "updatedAt": "2026-08-18T16:14:18.664Z"
+    "updatedAt": "2026-08-21T12:25:20.688Z"
   },
   {
     "id": "mt1hrup0e18r",
