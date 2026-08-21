@@ -6578,7 +6578,7 @@
     "date": "2026-08-02",
     "time": "",
     "duration": "",
-    "deadline": "2026-08-20",
+    "deadline": "2026-08-21",
     "recurrence": "none",
     "recurrenceStart": "",
     "recurrenceEnd": "",
@@ -6589,6 +6589,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-20T12:24:04.251Z",
-    "updatedAt": "2026-08-21T12:25:34.820Z"
+    "updatedAt": "2026-08-21T12:25:40.977Z"
   }
 ]
