@@ -6573,7 +6573,7 @@
     "title": "Informe entrevista MSN",
     "cat": "MSN",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-08-02",
     "time": "",
@@ -6589,6 +6589,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-20T12:24:04.251Z",
-    "updatedAt": "2026-08-20T12:24:18.293Z"
+    "updatedAt": "2026-08-21T12:25:27.171Z"
   }
 ]
