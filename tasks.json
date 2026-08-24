@@ -6935,5 +6935,28 @@
     "addToCal": false,
     "createdAt": "2026-08-24T12:58:03.390Z",
     "updatedAt": "2026-08-24T12:58:03.391Z"
+  },
+  {
+    "id": "mt7hlimx1mtq",
+    "title": "Once Criss",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-24",
+    "time": "17:45",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-24T17:05:18.489Z",
+    "updatedAt": "2026-08-24T17:05:18.489Z"
   }
 ]
