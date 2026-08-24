@@ -3287,20 +3287,20 @@
     "status": "pending",
     "type": "evento",
     "date": "2026-08-24",
-    "time": "11:00",
+    "time": "15:00",
     "duration": "90",
     "deadline": "",
     "recurrence": "weekly",
     "recurrenceStart": "2026-06-01",
     "recurrenceEnd": "2026-12-12",
+    "recurrenceParent": "mprc39eiy6vc",
     "location": "",
     "participants": "",
     "notes": "",
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.459Z",
-    "updatedAt": "2026-08-07T12:56:21.459Z",
-    "recurrenceParent": "mprc39eiy6vc"
+    "updatedAt": "2026-08-24T12:51:06.571Z"
   },
   {
     "id": "msiy7vtfdzqy",
@@ -6820,5 +6820,28 @@
     "addToCal": false,
     "createdAt": "2026-08-24T12:38:00.380Z",
     "updatedAt": "2026-08-24T12:38:00.380Z"
+  },
+  {
+    "id": "mt78i121lugg",
+    "title": "Almuerzo Helmuth",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-26",
+    "time": "13:00",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-24T12:50:39.193Z",
+    "updatedAt": "2026-08-24T12:50:39.193Z"
   }
 ]
