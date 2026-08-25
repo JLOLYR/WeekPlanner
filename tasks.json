@@ -3284,7 +3284,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "no_asisto",
+    "status": "pending",
     "type": "evento",
     "date": "2026-08-24",
     "time": "15:00",
@@ -3300,7 +3300,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.459Z",
-    "updatedAt": "2026-08-25T12:29:14.216Z"
+    "updatedAt": "2026-08-25T12:29:31.942Z"
   },
   {
     "id": "msiy7vtfdzqy",
