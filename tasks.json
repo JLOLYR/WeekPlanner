@@ -3286,7 +3286,7 @@
     "subcategory": "Reunión Proyecto",
     "status": "pending",
     "type": "evento",
-    "date": "2026-08-24",
+    "date": "2026-08-25",
     "time": "15:00",
     "duration": "90",
     "deadline": "",
@@ -3300,7 +3300,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.459Z",
-    "updatedAt": "2026-08-25T12:29:31.942Z"
+    "updatedAt": "2026-08-25T12:29:35.867Z"
   },
   {
     "id": "msiy7vtfdzqy",
@@ -6958,5 +6958,28 @@
     "addToCal": false,
     "createdAt": "2026-08-24T17:05:18.489Z",
     "updatedAt": "2026-08-25T12:29:11.655Z"
+  },
+  {
+    "id": "mt8n6sxoa80w",
+    "title": "Reunión L&F",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-24",
+    "time": "11:00",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-06-01",
+    "recurrenceEnd": "2026-12-12",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-25T12:29:35.868Z",
+    "updatedAt": "2026-08-25T12:29:35.868Z",
+    "recurrenceParent": "mprc39eiy6vc"
   }
 ]
