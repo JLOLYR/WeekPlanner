@@ -6981,5 +6981,28 @@
     "createdAt": "2026-08-25T12:29:35.868Z",
     "updatedAt": "2026-08-25T12:29:38.712Z",
     "recurrenceParent": "mprc39eiy6vc"
+  },
+  {
+    "id": "mtabacgjtyby",
+    "title": "Armado Impresora",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-31",
+    "time": "15:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-26T16:31:58.099Z",
+    "updatedAt": "2026-08-26T16:31:58.099Z"
   }
 ]
