@@ -7004,5 +7004,28 @@
     "addToCal": false,
     "createdAt": "2026-08-26T16:31:58.099Z",
     "updatedAt": "2026-08-26T16:31:58.099Z"
+  },
+  {
+    "id": "mtakle3idccd",
+    "title": "Reunion OTL",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-01",
+    "time": "14:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-26T20:52:29.982Z",
+    "updatedAt": "2026-08-26T20:52:29.982Z"
   }
 ]
