@@ -3307,7 +3307,7 @@
     "title": "Reunión L&F",
     "cat": "L&F",
     "subcategory": "Reunión",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-26",
     "time": "11:00",
@@ -3322,7 +3322,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.459Z",
-    "updatedAt": "2026-08-07T12:56:21.459Z",
+    "updatedAt": "2026-08-26T16:31:29.794Z",
     "recurrenceParent": "mpy1zhsqnur1"
   },
   {
@@ -6826,7 +6826,7 @@
     "title": "Almuerzo Helmuth",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-26",
     "time": "13:00",
@@ -6842,7 +6842,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-24T12:50:39.193Z",
-    "updatedAt": "2026-08-24T12:50:39.193Z"
+    "updatedAt": "2026-08-26T16:31:30.928Z"
   },
   {
     "id": "mt78jb36z49z",
