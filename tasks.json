@@ -3399,7 +3399,7 @@
     "title": "Sist Mec Flu IIM251",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-26",
     "time": "08:30",
@@ -3415,7 +3415,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.460Z",
-    "updatedAt": "2026-08-07T12:56:21.460Z"
+    "updatedAt": "2026-08-26T12:24:55.126Z"
   },
   {
     "id": "msiy7vtgznrs",
