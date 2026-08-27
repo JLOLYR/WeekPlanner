@@ -6970,9 +6970,9 @@
     "time": "11:00",
     "duration": "90",
     "deadline": "",
-    "recurrence": "none",
-    "recurrenceStart": "",
-    "recurrenceEnd": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-28",
+    "recurrenceEnd": "2026-12-11",
     "recurrenceParent": null,
     "location": "",
     "participants": "",
@@ -6980,6 +6980,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-27T12:32:41.380Z",
-    "updatedAt": "2026-08-27T12:32:41.380Z"
+    "updatedAt": "2026-08-27T12:32:57.531Z"
   }
 ]
