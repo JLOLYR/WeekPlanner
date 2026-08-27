@@ -6435,7 +6435,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-08-27",
     "time": "08:00",
@@ -6451,7 +6451,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-17T17:13:10.449Z",
-    "updatedAt": "2026-08-17T17:13:10.449Z"
+    "updatedAt": "2026-08-27T12:31:47.318Z"
   },
   {
     "id": "msxhtyf5u4b1",
