@@ -3445,7 +3445,7 @@
     "title": "Eólica IIM117",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "done",
+    "status": "pending",
     "type": "evento",
     "date": "2026-08-28",
     "time": "08:30",
@@ -3461,7 +3461,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.460Z",
-    "updatedAt": "2026-08-27T14:57:40.630Z"
+    "updatedAt": "2026-08-27T14:57:43.998Z"
   },
   {
     "id": "msiy7w4ca7tz",
@@ -6734,7 +6734,7 @@
     "title": "Convocación R+C",
     "cat": "R+C",
     "subcategory": "Convocación miembros",
-    "status": "done",
+    "status": "pending",
     "type": "evento",
     "date": "2026-08-27",
     "time": "20:00",
@@ -6750,7 +6750,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-24T12:38:00.380Z",
-    "updatedAt": "2026-08-27T14:57:38.909Z"
+    "updatedAt": "2026-08-27T14:57:45.645Z"
   },
   {
     "id": "mt78i121lugg",
