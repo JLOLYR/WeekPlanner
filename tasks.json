@@ -6958,5 +6958,28 @@
     "addToCal": false,
     "createdAt": "2026-08-26T20:52:29.982Z",
     "updatedAt": "2026-08-26T20:52:29.982Z"
+  },
+  {
+    "id": "mtbi6heszzxm",
+    "title": "Reunion Tesis Jorge Lui",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-28",
+    "time": "11:00",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-27T12:32:41.380Z",
+    "updatedAt": "2026-08-27T12:32:41.380Z"
   }
 ]
