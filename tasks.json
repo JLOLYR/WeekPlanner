@@ -6987,7 +6987,7 @@
     "title": "Adm Docente",
     "cat": "Administración",
     "subcategory": "Informes",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-24",
     "time": "09:00",
@@ -7003,6 +7003,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-27T15:47:48.534Z",
-    "updatedAt": "2026-08-27T15:47:48.534Z"
+    "updatedAt": "2026-08-27T15:47:59.789Z"
   }
 ]
