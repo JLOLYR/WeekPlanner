@@ -6598,7 +6598,7 @@
     "subcategory": "Redacción Paper",
     "status": "pending",
     "type": "evento",
-    "date": "2026-08-27",
+    "date": "2026-08-28",
     "time": "10:50",
     "duration": "120",
     "deadline": "",
@@ -6612,7 +6612,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-21T12:28:46.339Z",
-    "updatedAt": "2026-08-21T12:28:46.339Z"
+    "updatedAt": "2026-08-27T12:32:02.280Z"
   },
   {
     "id": "mt3dz2txibv8",
@@ -7027,5 +7027,28 @@
     "addToCal": false,
     "createdAt": "2026-08-26T20:52:29.982Z",
     "updatedAt": "2026-08-26T20:52:29.982Z"
+  },
+  {
+    "id": "mtbi5n8qtivm",
+    "title": "Reunió Tesis",
+    "cat": "Investigación",
+    "subcategory": "Redacción Paper",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-27",
+    "time": "10:50",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-20",
+    "recurrenceEnd": "2026-12-11",
+    "recurrenceParent": "msyphnsutvsy",
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-27T12:32:02.282Z",
+    "updatedAt": "2026-08-27T12:32:02.282Z"
   }
 ]
