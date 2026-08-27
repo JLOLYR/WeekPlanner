@@ -6981,5 +6981,28 @@
     "addToCal": false,
     "createdAt": "2026-08-27T12:32:41.380Z",
     "updatedAt": "2026-08-27T14:57:33.198Z"
+  },
+  {
+    "id": "mtbp5epi1ktt",
+    "title": "Adm Docente",
+    "cat": "Administración",
+    "subcategory": "Informes",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-08-24",
+    "time": "09:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "weekly",
+    "recurrenceStart": "2026-08-24",
+    "recurrenceEnd": "2026-12-11",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-27T15:47:48.534Z",
+    "updatedAt": "2026-08-27T15:47:48.534Z"
   }
 ]
