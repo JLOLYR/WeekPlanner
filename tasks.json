@@ -7073,5 +7073,28 @@
     "addToCal": false,
     "createdAt": "2026-08-31T12:48:29.686Z",
     "updatedAt": "2026-08-31T12:48:29.686Z"
+  },
+  {
+    "id": "mth8ipt1x1xk",
+    "title": "Basquet",
+    "cat": "Personal",
+    "subcategory": "Deporte",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-03",
+    "time": "21:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-31T12:48:53.029Z",
+    "updatedAt": "2026-08-31T12:48:53.029Z"
   }
 ]
