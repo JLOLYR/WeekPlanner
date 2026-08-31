@@ -7257,28 +7257,5 @@
     "addToCal": false,
     "createdAt": "2026-08-31T12:54:18.981Z",
     "updatedAt": "2026-08-31T12:54:18.981Z"
-  },
-  {
-    "id": "mth8scyifrl0",
-    "title": "Prep Calendario R+C",
-    "cat": "R+C",
-    "subcategory": "Reunión",
-    "status": "pending",
-    "type": "evento",
-    "date": "2026-08-31",
-    "time": "",
-    "duration": "60",
-    "deadline": "",
-    "recurrence": "none",
-    "recurrenceStart": "",
-    "recurrenceEnd": "",
-    "recurrenceParent": null,
-    "location": "",
-    "participants": "",
-    "notes": "",
-    "priority": "medium",
-    "addToCal": false,
-    "createdAt": "2026-08-31T12:56:22.938Z",
-    "updatedAt": "2026-08-31T12:56:22.938Z"
   }
 ]
