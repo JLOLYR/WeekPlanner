@@ -7240,7 +7240,7 @@
     "title": "Preparar C4 - Eólica",
     "cat": "Docencia",
     "subcategory": "Preparación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-08-31",
     "time": "",
@@ -7256,6 +7256,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-31T12:54:18.981Z",
-    "updatedAt": "2026-08-31T12:54:18.981Z"
+    "updatedAt": "2026-08-31T13:49:08.143Z"
   }
 ]
