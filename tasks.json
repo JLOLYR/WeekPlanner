@@ -7119,5 +7119,28 @@
     "addToCal": false,
     "createdAt": "2026-08-31T12:50:42.293Z",
     "updatedAt": "2026-08-31T12:50:42.293Z"
+  },
+  {
+    "id": "mth8lpmbes29",
+    "title": "Preparar Lab 1 - IIM251",
+    "cat": "Docencia",
+    "subcategory": "Preparación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-31",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-04",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-31T12:51:12.755Z",
+    "updatedAt": "2026-08-31T12:51:12.755Z"
   }
 ]
