@@ -7234,5 +7234,28 @@
     "addToCal": false,
     "createdAt": "2026-08-31T12:53:56.364Z",
     "updatedAt": "2026-08-31T12:53:56.364Z"
+  },
+  {
+    "id": "mth8ppb9p9te",
+    "title": "Preparar C4 - Eólica",
+    "cat": "Docencia",
+    "subcategory": "Preparación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-31",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-08-31",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-31T12:54:18.981Z",
+    "updatedAt": "2026-08-31T12:54:18.981Z"
   }
 ]
