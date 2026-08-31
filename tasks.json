@@ -7217,7 +7217,7 @@
     "title": "Horarios Salas",
     "cat": "Administración",
     "subcategory": "Documentos",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-08-31",
     "time": "",
@@ -7233,7 +7233,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-31T12:53:56.364Z",
-    "updatedAt": "2026-08-31T12:53:56.364Z"
+    "updatedAt": "2026-08-31T17:55:32.580Z"
   },
   {
     "id": "mth8ppb9p9te",
