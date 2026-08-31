@@ -7211,5 +7211,28 @@
     "addToCal": false,
     "createdAt": "2026-08-31T12:53:21.452Z",
     "updatedAt": "2026-08-31T12:53:21.452Z"
+  },
+  {
+    "id": "mth8p7v0zmma",
+    "title": "Horarios Salas",
+    "cat": "Administración",
+    "subcategory": "Documentos",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-31",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-01",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-31T12:53:56.364Z",
+    "updatedAt": "2026-08-31T12:53:56.364Z"
   }
 ]
