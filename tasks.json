@@ -6918,7 +6918,7 @@
     "title": "Armado Impresora",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-08-31",
     "time": "15:30",
@@ -6934,7 +6934,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-26T16:31:58.099Z",
-    "updatedAt": "2026-08-26T16:31:58.099Z"
+    "updatedAt": "2026-08-31T19:21:24.656Z"
   },
   {
     "id": "mtakle3idccd",
