@@ -7280,5 +7280,28 @@
     "addToCal": false,
     "createdAt": "2026-08-31T18:17:25.905Z",
     "updatedAt": "2026-08-31T18:17:25.905Z"
+  },
+  {
+    "id": "mthpiewj2y5w",
+    "title": "Reunion IDEA",
+    "cat": "Investigación",
+    "subcategory": "Reunión Proyecto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-02",
+    "time": "17:30",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-31T20:44:32.371Z",
+    "updatedAt": "2026-08-31T20:44:32.371Z"
   }
 ]
