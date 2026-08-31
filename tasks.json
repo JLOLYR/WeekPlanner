@@ -7096,5 +7096,28 @@
     "addToCal": false,
     "createdAt": "2026-08-31T12:48:53.029Z",
     "updatedAt": "2026-08-31T12:48:53.029Z"
+  },
+  {
+    "id": "mth8l245lpqb",
+    "title": "Revisar T1 - Eólica",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-08-31",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-04",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-08-31T12:50:42.293Z",
+    "updatedAt": "2026-08-31T12:50:42.293Z"
   }
 ]
