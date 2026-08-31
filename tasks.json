@@ -3468,7 +3468,7 @@
     "title": "Reunión L&F",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-08-31",
     "time": "11:00",
@@ -3483,7 +3483,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.852Z",
-    "updatedAt": "2026-08-07T12:56:21.852Z",
+    "updatedAt": "2026-08-31T19:27:52.126Z",
     "recurrenceParent": "mprc39eiy6vc"
   },
   {
