@@ -3514,7 +3514,7 @@
     "title": "Organización Semanal",
     "cat": "Administración",
     "subcategory": "",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-08-31",
     "time": "08:30",
@@ -3530,7 +3530,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.852Z",
-    "updatedAt": "2026-08-07T12:56:21.852Z"
+    "updatedAt": "2026-08-31T12:58:13.856Z"
   },
   {
     "id": "msiy7w4cgq7w",
