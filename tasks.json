@@ -6941,7 +6941,7 @@
     "title": "Reunion OTL",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-09-01",
     "time": "14:30",
@@ -6957,7 +6957,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-26T20:52:29.982Z",
-    "updatedAt": "2026-08-26T20:52:29.982Z"
+    "updatedAt": "2026-09-01T18:44:38.882Z"
   },
   {
     "id": "mtbi6heszzxm",
