@@ -7056,7 +7056,7 @@
     "title": "Tenida 2do",
     "cat": "MSN",
     "subcategory": "Tenida",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-02",
     "time": "20:00",
@@ -7072,7 +7072,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-31T12:48:29.686Z",
-    "updatedAt": "2026-08-31T12:48:29.686Z"
+    "updatedAt": "2026-09-01T21:06:26.862Z"
   },
   {
     "id": "mth8ipt1x1xk",
@@ -7556,5 +7556,28 @@
     "addToCal": false,
     "createdAt": "2026-09-01T14:22:12.216Z",
     "updatedAt": "2026-09-01T14:45:34.408Z"
+  },
+  {
+    "id": "mtj5qecfmhcz",
+    "title": "Reunión los Flamigeros",
+    "cat": "Personal",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-02",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-01T21:06:24.927Z",
+    "updatedAt": "2026-09-01T21:06:24.927Z"
   }
 ]
