@@ -7533,5 +7533,28 @@
     "addToCal": false,
     "createdAt": "2026-09-01T12:27:24.166Z",
     "updatedAt": "2026-09-01T12:27:24.166Z"
+  },
+  {
+    "id": "mtiraku0omyr",
+    "title": "Calendario Mes R+C",
+    "cat": "R+C",
+    "subcategory": "Convocatoria Abierta",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-01",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-01",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-01T14:22:12.216Z",
+    "updatedAt": "2026-09-01T14:22:12.216Z"
   }
 ]
