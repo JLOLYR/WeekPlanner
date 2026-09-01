@@ -7539,7 +7539,7 @@
     "title": "Calendario Mes R+C",
     "cat": "R+C",
     "subcategory": "Convocatoria Abierta",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-09-01",
     "time": "",
@@ -7555,6 +7555,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-01T14:22:12.216Z",
-    "updatedAt": "2026-09-01T14:22:12.216Z"
+    "updatedAt": "2026-09-01T14:45:34.408Z"
   }
 ]
