@@ -7579,5 +7579,28 @@
     "addToCal": false,
     "createdAt": "2026-09-01T21:06:24.927Z",
     "updatedAt": "2026-09-01T21:06:24.927Z"
+  },
+  {
+    "id": "mtk2mlfusmv5",
+    "title": "Almuerzo Jorge Lui",
+    "cat": "Personal",
+    "subcategory": "Ocio",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-03",
+    "time": "13:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-02T12:27:14.826Z",
+    "updatedAt": "2026-09-02T12:27:14.826Z"
   }
 ]
