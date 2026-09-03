@@ -3606,7 +3606,7 @@
     "title": "Mec Ind IIM259",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-09-03",
     "time": "08:30",
@@ -3622,7 +3622,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:21.852Z",
-    "updatedAt": "2026-08-07T12:56:21.853Z"
+    "updatedAt": "2026-09-03T12:27:34.602Z"
   },
   {
     "id": "msiy7w4d6iww",
@@ -6596,7 +6596,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-03",
     "time": "08:00",
@@ -6612,7 +6612,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-21T21:14:15.199Z",
-    "updatedAt": "2026-08-21T21:14:15.199Z"
+    "updatedAt": "2026-09-03T12:27:33.161Z"
   },
   {
     "id": "mt3g63vje5h3",
