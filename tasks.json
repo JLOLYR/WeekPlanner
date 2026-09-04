@@ -7010,7 +7010,7 @@
     "title": "Reunion Tesis Jorge Lui",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-04",
     "time": "11:00",
@@ -7026,7 +7026,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-31T12:44:13.854Z",
-    "updatedAt": "2026-08-31T12:44:13.854Z"
+    "updatedAt": "2026-09-04T14:18:11.705Z"
   },
   {
     "id": "mth8cqe6310v",
@@ -7585,7 +7585,7 @@
     "title": "Almuerzo Jorge Lui",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-04",
     "time": "13:00",
@@ -7601,6 +7601,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-02T12:27:14.826Z",
-    "updatedAt": "2026-09-04T12:30:14.214Z"
+    "updatedAt": "2026-09-04T14:18:12.376Z"
   }
 ]
