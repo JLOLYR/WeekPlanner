@@ -7585,9 +7585,9 @@
     "title": "Almuerzo Jorge Lui",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "no_asisto",
+    "status": "pending",
     "type": "evento",
-    "date": "2026-09-03",
+    "date": "2026-09-04",
     "time": "13:00",
     "duration": "60",
     "deadline": "",
@@ -7601,6 +7601,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-02T12:27:14.826Z",
-    "updatedAt": "2026-09-03T15:48:55.981Z"
+    "updatedAt": "2026-09-04T12:30:14.214Z"
   }
 ]
