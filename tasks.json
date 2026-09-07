@@ -7809,5 +7809,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T11:51:52.245Z",
     "updatedAt": "2026-09-07T11:51:52.245Z"
+  },
+  {
+    "id": "mtr6l07aftvy",
+    "title": "Curso Docencia Pregrado Modulo 3",
+    "cat": "Administración",
+    "subcategory": "Informes",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-07",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-11",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-07T11:52:22.342Z",
+    "updatedAt": "2026-09-07T11:52:22.342Z"
   }
 ]
