@@ -7838,7 +7838,7 @@
     "title": "Prep Clase Eólica",
     "cat": "Docencia",
     "subcategory": "Preparación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-09-07",
     "time": "",
@@ -7854,6 +7854,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-07T11:53:57.389Z",
-    "updatedAt": "2026-09-07T11:53:57.389Z"
+    "updatedAt": "2026-09-07T12:15:04.732Z"
   }
 ]
