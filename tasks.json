@@ -7671,5 +7671,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T11:48:02.991Z",
     "updatedAt": "2026-09-07T11:48:46.910Z"
+  },
+  {
+    "id": "mtr6hhvywwz7",
+    "title": "Revisar Controles Eólica",
+    "cat": "Docencia",
+    "subcategory": "Evaluación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-07",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-07",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-07T11:49:38.638Z",
+    "updatedAt": "2026-09-07T11:49:38.638Z"
   }
 ]
