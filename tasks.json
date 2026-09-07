@@ -7878,5 +7878,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T12:21:48.481Z",
     "updatedAt": "2026-09-07T12:21:50.290Z"
+  },
+  {
+    "id": "mtrj3okdogny",
+    "title": "Prep Clase Sis Mec Flu",
+    "cat": "Docencia",
+    "subcategory": "Preparación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-07",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-07",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-07T17:42:49.117Z",
+    "updatedAt": "2026-09-07T17:42:49.117Z"
   }
 ]
