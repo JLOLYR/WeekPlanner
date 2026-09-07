@@ -7855,5 +7855,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T11:53:57.389Z",
     "updatedAt": "2026-09-07T12:15:04.732Z"
+  },
+  {
+    "id": "mtr7muyp3f16",
+    "title": "Informar App Subida",
+    "cat": "Apps Astral",
+    "subcategory": "Reunión Técnica",
+    "status": "done",
+    "type": "entregable",
+    "date": "2026-09-07",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-07",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-07T12:21:48.481Z",
+    "updatedAt": "2026-09-07T12:21:50.290Z"
   }
 ]
