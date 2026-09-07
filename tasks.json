@@ -7786,5 +7786,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T11:51:33.676Z",
     "updatedAt": "2026-09-07T11:51:33.676Z"
+  },
+  {
+    "id": "mtr6kcz9p95o",
+    "title": "Paper - Turbina",
+    "cat": "Investigación",
+    "subcategory": "Redacción Paper",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-07",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-11",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-07T11:51:52.245Z",
+    "updatedAt": "2026-09-07T11:51:52.245Z"
   }
 ]
