@@ -7832,5 +7832,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T11:52:22.342Z",
     "updatedAt": "2026-09-07T11:52:22.342Z"
+  },
+  {
+    "id": "mtr6n1jhq1vx",
+    "title": "Prep Clase Eólica",
+    "cat": "Docencia",
+    "subcategory": "Preparación",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-07",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-07",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-07T11:53:57.389Z",
+    "updatedAt": "2026-09-07T11:53:57.389Z"
   }
 ]
