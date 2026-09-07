@@ -7763,5 +7763,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T11:51:14.661Z",
     "updatedAt": "2026-09-07T11:51:14.661Z"
+  },
+  {
+    "id": "mtr6jyngfdla",
+    "title": "Paper - Laser",
+    "cat": "Investigación",
+    "subcategory": "Redacción Paper",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-07",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-11",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-07T11:51:33.676Z",
+    "updatedAt": "2026-09-07T11:51:33.676Z"
   }
 ]
