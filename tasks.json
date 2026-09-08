@@ -7884,7 +7884,7 @@
     "title": "Prep Clase Sis Mec Flu",
     "cat": "Docencia",
     "subcategory": "Preparación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-09-07",
     "time": "",
@@ -7900,6 +7900,6 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-07T17:42:49.117Z",
-    "updatedAt": "2026-09-07T17:42:49.117Z"
+    "updatedAt": "2026-09-08T12:55:10.750Z"
   }
 ]
