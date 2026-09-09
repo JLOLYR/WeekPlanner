@@ -7901,5 +7901,28 @@
     "addToCal": false,
     "createdAt": "2026-09-07T17:42:49.117Z",
     "updatedAt": "2026-09-08T12:55:10.750Z"
+  },
+  {
+    "id": "mtuf1nrds7te",
+    "title": "Reunion Abogada L&F",
+    "cat": "L&F",
+    "subcategory": "Reunión",
+    "status": "done",
+    "type": "evento",
+    "date": "2026-09-09",
+    "time": "",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-09T18:12:34.825Z",
+    "updatedAt": "2026-09-09T18:12:36.366Z"
   }
 ]
