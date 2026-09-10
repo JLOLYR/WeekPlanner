@@ -3790,7 +3790,7 @@
     "title": "Mec Ind IIM259",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-09-10",
     "time": "08:30",
@@ -3806,7 +3806,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:22.076Z",
-    "updatedAt": "2026-08-07T12:56:22.076Z"
+    "updatedAt": "2026-09-10T11:17:46.970Z"
   },
   {
     "id": "msiy7wakj9pp",
@@ -7723,7 +7723,7 @@
     "title": "Revisar Prueba Mec Ind",
     "cat": "Docencia",
     "subcategory": "Evaluación",
-    "status": "pending",
+    "status": "done",
     "type": "entregable",
     "date": "2026-09-07",
     "time": "",
@@ -7739,7 +7739,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-07T11:50:35.950Z",
-    "updatedAt": "2026-09-07T11:50:35.950Z"
+    "updatedAt": "2026-09-10T13:57:38.300Z"
   },
   {
     "id": "mtr6jjz9qblj",
