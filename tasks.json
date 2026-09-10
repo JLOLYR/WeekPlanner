@@ -7309,7 +7309,7 @@
     "title": "Reunión URP",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-10",
     "time": "08:00",
@@ -7325,7 +7325,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-01T12:26:28.629Z",
-    "updatedAt": "2026-09-01T12:26:28.629Z"
+    "updatedAt": "2026-09-10T11:17:44.603Z"
   },
   {
     "id": "mtin5r4lymqa",
