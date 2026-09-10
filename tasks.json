@@ -3813,7 +3813,7 @@
     "title": "Eólica IIM117",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-11",
     "time": "08:30",
@@ -3829,7 +3829,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:22.076Z",
-    "updatedAt": "2026-08-07T12:56:22.076Z"
+    "updatedAt": "2026-09-10T20:23:19.429Z"
   },
   {
     "id": "msiy7wp9s9uy",
@@ -7355,7 +7355,7 @@
     "title": "Reunion Tesis Jorge Lui",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-11",
     "time": "11:00",
@@ -7371,7 +7371,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-01T12:26:28.629Z",
-    "updatedAt": "2026-09-01T12:26:28.629Z"
+    "updatedAt": "2026-09-10T20:23:20.588Z"
   },
   {
     "id": "mtin5r4l7wx2",
