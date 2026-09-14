@@ -8177,5 +8177,28 @@
     "addToCal": false,
     "createdAt": "2026-09-14T12:04:16.534Z",
     "updatedAt": "2026-09-14T12:04:16.534Z"
+  },
+  {
+    "id": "mu18ra4p1qn3",
+    "title": "Reunión IPT",
+    "cat": "Administración",
+    "subcategory": "Reunión Depto",
+    "status": "done",
+    "type": "evento",
+    "date": "2026-09-14",
+    "time": "09:00",
+    "duration": "30",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T12:50:56.138Z",
+    "updatedAt": "2026-09-14T12:50:57.533Z"
   }
 ]
