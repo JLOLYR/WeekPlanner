@@ -8108,5 +8108,28 @@
     "addToCal": false,
     "createdAt": "2026-09-14T11:57:51.314Z",
     "updatedAt": "2026-09-14T11:57:51.314Z"
+  },
+  {
+    "id": "mu172cldccqe",
+    "title": "Desayuno 18 FP",
+    "cat": "Administración",
+    "subcategory": "",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-15",
+    "time": "11:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T12:03:33.313Z",
+    "updatedAt": "2026-09-14T12:03:33.313Z"
   }
 ]
