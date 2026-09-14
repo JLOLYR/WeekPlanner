@@ -8154,5 +8154,28 @@
     "addToCal": false,
     "createdAt": "2026-09-14T12:03:59.182Z",
     "updatedAt": "2026-09-14T12:03:59.182Z"
+  },
+  {
+    "id": "mu1739xy6p8n",
+    "title": "Basquet",
+    "cat": "Personal",
+    "subcategory": "Deporte",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-15",
+    "time": "22:00",
+    "duration": "60",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T12:04:16.534Z",
+    "updatedAt": "2026-09-14T12:04:16.534Z"
   }
 ]
