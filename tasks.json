@@ -8085,5 +8085,28 @@
     "addToCal": false,
     "createdAt": "2026-09-14T11:54:13.194Z",
     "updatedAt": "2026-09-14T11:54:13.194Z"
+  },
+  {
+    "id": "mu16v0pejgdu",
+    "title": "Tenida 1ro",
+    "cat": "MSN",
+    "subcategory": "Tenida",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-16",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T11:57:51.314Z",
+    "updatedAt": "2026-09-14T11:57:51.314Z"
   }
 ]
