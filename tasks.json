@@ -8200,5 +8200,28 @@
     "addToCal": false,
     "createdAt": "2026-09-14T12:50:56.138Z",
     "updatedAt": "2026-09-14T12:50:57.533Z"
+  },
+  {
+    "id": "mu1dyz2camd2",
+    "title": "Formación Hitos",
+    "cat": "Administración",
+    "subcategory": "Informes",
+    "status": "pending",
+    "type": "entregable",
+    "date": "2026-09-14",
+    "time": "",
+    "duration": "",
+    "deadline": "2026-09-17",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T15:16:53.124Z",
+    "updatedAt": "2026-09-14T15:16:53.124Z"
   }
 ]
