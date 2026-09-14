@@ -8131,5 +8131,28 @@
     "addToCal": false,
     "createdAt": "2026-09-14T12:03:33.313Z",
     "updatedAt": "2026-09-14T12:03:33.313Z"
+  },
+  {
+    "id": "mu172wjyxv9j",
+    "title": "Desayuno 18 FP DIM",
+    "cat": "Administración",
+    "subcategory": "Reunión Depto",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-16",
+    "time": "11:00",
+    "duration": "90",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T12:03:59.182Z",
+    "updatedAt": "2026-09-14T12:03:59.182Z"
   }
 ]
