@@ -8039,5 +8039,28 @@
     "addToCal": false,
     "createdAt": "2026-09-10T18:57:59.038Z",
     "updatedAt": "2026-09-10T18:57:59.038Z"
+  },
+  {
+    "id": "mu16ppzxyder",
+    "title": "Convocación Abierta R+C",
+    "cat": "R+C",
+    "subcategory": "Convocatoria Abierta",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-14",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T11:53:44.157Z",
+    "updatedAt": "2026-09-14T11:53:44.157Z"
   }
 ]
