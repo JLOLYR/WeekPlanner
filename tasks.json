@@ -7401,7 +7401,7 @@
     "title": "Reunión Paula",
     "cat": "Personal",
     "subcategory": "Ocio",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-09-11",
     "time": "17:30",
@@ -7417,7 +7417,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-01T12:26:52.358Z",
-    "updatedAt": "2026-09-01T12:26:52.358Z"
+    "updatedAt": "2026-09-14T11:53:11.232Z"
   },
   {
     "id": "mtin6eumq2uc",
