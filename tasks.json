@@ -8062,5 +8062,28 @@
     "addToCal": false,
     "createdAt": "2026-09-14T11:53:44.157Z",
     "updatedAt": "2026-09-14T11:53:44.157Z"
+  },
+  {
+    "id": "mu16qceidhsj",
+    "title": "Cámara 3ro",
+    "cat": "MSN",
+    "subcategory": "Cámara",
+    "status": "pending",
+    "type": "evento",
+    "date": "2026-09-14",
+    "time": "20:00",
+    "duration": "120",
+    "deadline": "",
+    "recurrence": "none",
+    "recurrenceStart": "",
+    "recurrenceEnd": "",
+    "recurrenceParent": null,
+    "location": "",
+    "participants": "",
+    "notes": "",
+    "priority": "medium",
+    "addToCal": false,
+    "createdAt": "2026-09-14T11:54:13.194Z",
+    "updatedAt": "2026-09-14T11:54:13.194Z"
   }
 ]
