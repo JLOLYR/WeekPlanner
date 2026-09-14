@@ -7470,7 +7470,7 @@
     "title": "Reunion Tesis Jorge Lui",
     "cat": "Investigación",
     "subcategory": "Reunión Proyecto",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-18",
     "time": "11:00",
@@ -7486,7 +7486,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-01T12:26:59.374Z",
-    "updatedAt": "2026-09-01T12:26:59.374Z"
+    "updatedAt": "2026-09-14T12:04:58.061Z"
   },
   {
     "id": "mtin6eum9efs",
