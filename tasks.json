@@ -3905,7 +3905,7 @@
     "title": "Mec Ind IIM259",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-14",
     "time": "10:50",
@@ -3921,14 +3921,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:22.605Z",
-    "updatedAt": "2026-08-07T12:56:22.605Z"
+    "updatedAt": "2026-09-14T12:04:45.934Z"
   },
   {
     "id": "msiy7wpaexgw",
     "title": "Eólica IIM117",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-15",
     "time": "08:30",
@@ -3944,7 +3944,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-08-07T12:56:22.606Z",
-    "updatedAt": "2026-08-07T12:56:22.606Z"
+    "updatedAt": "2026-09-14T12:04:47.286Z"
   },
   {
     "id": "msiy7wpae53s",
@@ -7447,7 +7447,7 @@
     "title": "Sist Mec Flu IIM251",
     "cat": "Docencia",
     "subcategory": "Clase",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-15",
     "time": "10:50",
@@ -7463,7 +7463,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-01T12:26:59.374Z",
-    "updatedAt": "2026-09-01T12:26:59.374Z"
+    "updatedAt": "2026-09-14T12:04:48.214Z"
   },
   {
     "id": "mtin6eumtuce",
