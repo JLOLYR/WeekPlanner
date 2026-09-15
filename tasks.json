@@ -8114,7 +8114,7 @@
     "title": "Desayuno 18 FP",
     "cat": "Administración",
     "subcategory": "",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-15",
     "time": "11:00",
@@ -8130,7 +8130,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-14T12:03:33.313Z",
-    "updatedAt": "2026-09-14T12:03:33.313Z"
+    "updatedAt": "2026-09-15T18:08:16.539Z"
   },
   {
     "id": "mu172wjyxv9j",
@@ -8160,7 +8160,7 @@
     "title": "Basquet",
     "cat": "Personal",
     "subcategory": "Deporte",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-15",
     "time": "22:00",
@@ -8176,7 +8176,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-14T12:04:16.534Z",
-    "updatedAt": "2026-09-14T12:04:16.534Z"
+    "updatedAt": "2026-09-15T18:08:17.754Z"
   },
   {
     "id": "mu18ra4p1qn3",
