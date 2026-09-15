@@ -8045,7 +8045,7 @@
     "title": "Convocación Abierta R+C",
     "cat": "R+C",
     "subcategory": "Convocatoria Abierta",
-    "status": "pending",
+    "status": "done",
     "type": "evento",
     "date": "2026-09-14",
     "time": "20:00",
@@ -8061,14 +8061,14 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-14T11:53:44.157Z",
-    "updatedAt": "2026-09-14T11:53:44.157Z"
+    "updatedAt": "2026-09-15T11:41:37.289Z"
   },
   {
     "id": "mu16qceidhsj",
     "title": "Cámara 3ro",
     "cat": "MSN",
     "subcategory": "Cámara",
-    "status": "pending",
+    "status": "no_asisto",
     "type": "evento",
     "date": "2026-09-14",
     "time": "20:00",
@@ -8084,7 +8084,7 @@
     "priority": "medium",
     "addToCal": false,
     "createdAt": "2026-09-14T11:54:13.194Z",
-    "updatedAt": "2026-09-14T11:54:13.194Z"
+    "updatedAt": "2026-09-15T11:41:38.698Z"
   },
   {
     "id": "mu16v0pejgdu",
